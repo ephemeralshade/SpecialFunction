@@ -2,4 +2,4 @@
 - 2021年8月26日
 テンプレート作成
 
-[PDF](/main/main/SpecialFunction.pdf)
+[PDF](/main/SpecialFunction.pdf)
