@@ -27,7 +27,7 @@ def w2(a, b, m, z):
     return f1 + f2 + f3
 
 
-m = 3
+m = 7
 c = 1 + m
 W = w2(a, b, m, z)
 F = L(a, b, c, W)
