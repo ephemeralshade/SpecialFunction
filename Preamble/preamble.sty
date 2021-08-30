@@ -1,35 +1,32 @@
 \usepackage{ifdraft}
-\ifdraft{\usepackage{showkeys}}{}
-\usepackage{docmute}
-\usepackage{multicol}
-\usepackage{luacode}
-\usepackage[fleqn]{amsmath}
-\usepackage{ascmac}
+\ifdraft{\usepackage{showkeys}}{}  % draftモードのときのみ参照キー表示
+\usepackage{docmute} % ファイル分割
+\usepackage{multicol} % 多段組
+\usepackage{luacode} % {luacode*}環境
+\usepackage[fleqn]{amsmath} % fleqn:数式の左寄せ
+% \usepackage{ascmac} % 囲み環境
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{mathrsfs}
+\usepackage{mathrsfs} % 筆記体・花文字
 \usepackage{bm}
 \usepackage{mathtools}
-\usepackage{enumitem}
-\usepackage{comment}
-\usepackage{url}
-\usepackage{here}
-\usepackage[unicode,pdfusetitle]{hyperref}
-\usepackage{mleftright}
-\usepackage{exscale}
+\usepackage{enumitem} % 箇条書きなど
+\usepackage{comment} % comment環境(\if0 (hoge) \fi で十分)
+\usepackage{url} 
+\usepackage{here} % 表などをその場所に表示させる\begin{figure}[H] (hoge) \end{figure}
+\usepackage[unicode,pdfusetitle]{hyperref} % ハイパーリンク
+\usepackage{mleftright} % 括弧の調整
+\usepackage{exscale} % 異なるフォントサイズでの大型演算子のサポート
 
-%\usepackage[framemethod = tikz, roundcorner = 10pt]{mdframed}
+%\usepackage[framemethod = tikz, roundcorner = 10pt]{mdframed} % 囲み環境
 
-% \usepackage[version=3]{mhchem} %化学式のパッケージ \ce{H2O}のようにして使う
-% \usepackage{mdwlist}
 %\usepackage{tikz}
 %\usetikzlibrary{intersections, calc, arrows, cd}
 %\usepackage{tikz-3dplot}
-%\usepackage{empheq}
 
-\usepackage{diagbox}
-\usepackage{lscape}
+\usepackage{diagbox} % 表中で斜線を表示
+\usepackage{lscape} % landscape環境を有効化
 
 
 
@@ -49,10 +46,10 @@
 
 \newcommand{\pmat}[1]{\mleft(\begin{matrix} #1 \end{matrix}\mright)} % 括弧付きの行列
 \newcommand{\mat}[1]{\begin{matrix} #1 \end{matrix}} % 括弧なしの行列
-\newcommand{\vctr}[1]{\mleft(\begin{matrix} #1 \end{matrix}\mright)} % ベクトル(縦なら \vctr{a\b\c}のように)
-\DeclareMathOperator{\sgn}{\mathrm{sgn}} % 符号sgn(x)
+\newcommand{\vctr}[1]{\mleft(\begin{matrix} #1 \end{matrix}\mright)} % ベクトル(縦なら\vctr{a\\b\\c}，横なら\vctr{a&b&c}のように)
+\DeclareMathOperator{\sgn}{\mathrm{sgn}} % 符号sgn
 
-\newcommand{\trans}[1]{{}^t{#1}}
+\newcommand{\trans}[1]{{}^t{#1}} % 転置
 
 \newcommand{\spare}[1]{(#1)} % 小括弧
 \newcommand{\pare}[1]{\mleft( #1 \mright)} % 括弧
@@ -77,7 +74,7 @@
 
 \newcommand{\SL}[2]{\mathrm{SL}_{#1}\pare{#2}} % 特殊線形群
 \newcommand{\GL}[2]{\mathrm{GL}_{#1}\pare{#2}} % 一般線形群
-\newcommand{\id}[1]{\mathrm{id}_{#1}}
+\newcommand{\id}[1]{\mathrm{id}_{#1}} % 恒等写像
 \newcommand{\Mat}[3]{\mathrm{Mat}\pare{#1,#2,#3}}
 \newcommand{\fun}[2]{#1 \pare{#2}} % 関数
 \newcommand{\Laplace}[1]{\mathcal{L}\mleft[ #1 \mright]} % Laplace変換
@@ -92,7 +89,18 @@
         \mright|\
         #4\,
     \mright]
-}
+} % Gaussの超幾何函数
+
+\newcommand{\Kummer}[3]{{}_1F_1\mleft[\mleft.
+        \begin{matrix}
+            #1
+            \\
+            #2 
+        \end{matrix}\, 
+        \mright|\
+        #3\,
+    \mright]
+} % Kummerの合流型超幾何函数
 
 \newcommand{\pfq}[5]{{}_{#1}F_{#2}\mleft[\mleft.
     \begin{matrix}
@@ -103,32 +111,33 @@
     \mright|\
     #5\,
     \mright]
-}
+} % 一般化超幾何函数
 
-\newcommand{\sGauss}[4]{{}_{2}F_{1}\mleft({#1},\, {#2}\,;\, {#3}\, ;\, {#4}\mright)}
-\newcommand{\spfq}[5]{{}_{#1}F_{#2}\mleft({#3}\,;\, {#4}\, ;\, {#5}\mright)}
+\newcommand{\sGauss}[4]{{}_{2}F_{1}\mleft({#1},\, {#2}\,;\, {#3}\, ;\, {#4}\mright)} % インライン用のGaussの超幾何函数
+\newcommand{\sKummer}[3]{{}_{2}F_{1}\mleft({#1}\,;\, {#2}\, ;\, {#3}\mright)} % インライン用のKummerの合流型超幾何函数
+\newcommand{\spfq}[5]{{}_{#1}F_{#2}\mleft({#3}\,;\, {#4}\, ;\, {#5}\mright)} % インライン用の一般化超幾何函数
 
-\newcommand{\poch}[2]{\mleft(#1\mright)_{#2}}
+\newcommand{\poch}[2]{\mleft(#1\mright)_{#2}} % Pochhammer記号
 
-\newcommand{\Poch}[2]{\frac{\Gamma\mleft(#1+#2\mright)}{\Gamma\mleft(#1\mright)}}
+\newcommand{\Poch}[2]{\frac{\Gamma\mleft(#1+#2\mright)}{\Gamma\mleft(#1\mright)}} % Pochhammer記号(Gamma函数表示)
 
 
-\DeclareMathOperator{\cosech}{\mathrm{cosech}}
-\DeclareMathOperator{\limn}{\lim_{n\to\infty}}
+\DeclareMathOperator{\cosech}{\mathrm{cosech}} % 1/sinh
+\DeclareMathOperator{\limn}{\lim_{n\to\infty}} % lim_{n\to\infty}の略記
 
-\newcommand{\Li}[2]{\mathrm{Li}_{#1}\mleft(#2\mright)}
+\newcommand{\Li}[2]{\mathrm{Li}_{#1}\mleft(#2\mright)} % 多重対数函数
 
-\newcommand{\re}[1]{\mathrm{Re}\mleft(#1\mright)}
-\newcommand{\im}[1]{\mathrm{Im}\mleft(#1\mright)}
+\newcommand{\re}[1]{\mathrm{Re}\mleft(#1\mright)} % 実部
+\newcommand{\im}[1]{\mathrm{Im}\mleft(#1\mright)} % 虚部
 
-\newcommand{\inner}[2]{\mleft\langle #1\, \middle|\, #2 \mright\rangle}
-\newcommand{\Bra}[1]{\mleft\langle #1\, \middle|\mright.}
+\newcommand{\inner}[2]{\mleft\langle #1\, \middle|\, #2 \mright\rangle} % 内積
+\newcommand{\Bra}[1]{\mleft\langle #1\, \middle|\mright.} 
 \newcommand{\Ket}[1]{\mleft. \middle|\, #1 \mright\rangle}
 
-\newcommand{\diffun}[3]{{#1}^{\mleft({#2}\mright)}\mleft({#3}\mright)}
+\newcommand{\diffun}[3]{{#1}^{\mleft({#2}\mright)}\mleft({#3}\mright)} % w^{(n)}(z) のような表記
 
-\DeclareRobustCommand{\sstir}{\genfrac\{\}{0pt}1}
-\DeclareRobustCommand{\stir}{\genfrac\{\}{0pt}0}
+\DeclareRobustCommand{\stir}{\genfrac\{\}{0pt}0} % 第1種Stirling数
+\DeclareRobustCommand{\sstir}{\genfrac\{\}{0pt}1} % 第1種Stirlling数（インライン用）
 
 \newcommand{\Schrodinger}{Schr\"odinger}
 
@@ -141,7 +150,7 @@
 
 
 
-
+% 定理環境の定義
 \theoremstyle{definition}
 \newtheorem{prob}{問}[chapter]
 \newtheorem{thm}{定理}[chapter]
@@ -155,12 +164,13 @@
 \newtheorem{supple}[thm]{補足}
 
 
-\usepackage{wtref}
-% 参照の定義
+\usepackage{wtref} % 相互参照支援
+% キーの定義
 \newref{part,chap,sec,subsec,subsubsec}
 \newref{equ,tab,fig}
 \newref{thm,prob,defi,lem,cor,eg,prop,nota,supple}
 
+% 参照名の定義
 \setrefstyle{part}{prefix=第, suffix=部}
 \setrefstyle{chap}{prefix=第, suffix=章}
 \setrefstyle{sec}{prefix=第, suffix=節}
@@ -185,26 +195,6 @@
 
 
 
-\if0
-% 数式(演算子など)のスペースを詰める
-% =,→ 間の余白
-\thickmuskip=1.0\thickmuskip
-% +,- 間の余白
-\medmuskip=0.8\medmuskip
-% … などの装飾記号の余白
-\thinmuskip=0.8\thinmuskip
-% 行列を詰める
-\arraycolsep=0.3\arraycolsep
-% 数式の上下のスペースの変更
-\AtBeginDocument{
-  \abovedisplayskip     =0.5\abovedisplayskip
-  \abovedisplayshortskip=0.5\abovedisplayshortskip
-  \belowdisplayskip     =0.5\belowdisplayskip
-  \belowdisplayshortskip=0.5\belowdisplayshortskip}
-  \setlength{\abovedisplayskip}{0pt}
-\setlength{\belowdisplayskip}{0pt}
-\fi
-
 \mathtoolsset{showonlyrefs=true} % 式番号を参照されたもののみ付ける
 
 
@@ -212,11 +202,25 @@
 \makeatletter
 \@addtoreset{equation}{section}
 \def\theequation{\thesection.\arabic{equation}}
+% 表, 図番号をchapterごとにつける
+\@addtoreset{table}{chapter}
+\def\thetable{\thechapter.\arabic{table}}
+\@addtoreset{chapter}{chapter}
+\def\thefigure{\thechapter.\arabic{figure}}
+\makeatother
+
+\if0
+% 式番号をchapterごとにつける
+\makeatletter
+\@addtoreset{equation}{chapter}
+\def\theequation{\thechapter.\arabic{equation}}
+% 表, 図番号をsectionごとにつける
 \@addtoreset{table}{section}
 \def\thetable{\thesection.\arabic{table}}
 \@addtoreset{figure}{section}
 \def\thefigure{\thesection.\arabic{figure}}
 \makeatother
+\fi
 
 % \parindent = 0pt
 \allowdisplaybreaks[1] % 数式途中の改ページを許すかどうか(0:許さない, 1~3:値が大きいほど規制がゆるい)
