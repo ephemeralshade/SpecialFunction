@@ -1,4 +1,7 @@
 \contentsline {part}{第I部\hspace {1\zw }hoge}{4}{part.1}%
 \contentsline {chapter}{\numberline {第1章}piyo}{5}{chapter.1}%
-\contentsline {chapter}{\numberline {付録A}piyo}{6}{appendix.A}%
-\contentsline {chapter}{参考文献}{7}{appendix*.4}%
+\contentsline {chapter}{\numberline {付録A}hoge}{6}{appendix.A}%
+\contentsline {section}{\numberline {A.1}piyo}{6}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}fuga}{6}{subsection.A.1.1}%
+\contentsline {subsubsection}{hogera}{6}{section*.5}%
+\contentsline {chapter}{参考文献}{7}{appendix*.6}%

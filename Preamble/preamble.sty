@@ -3,29 +3,22 @@
 \usepackage{docmute}
 \usepackage{multicol}
 \usepackage{luacode}
-%\usepackage[dvipdfmx]{color}
-%\usepackage[ipaex]{pxchfon}
-
-%\usepackage[top=30truemm, bottom=30truemm, left=20truemm, right=20truemm]{geometry}
-\usepackage{amsmath}
+\usepackage[fleqn]{amsmath}
 \usepackage{ascmac}
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{mathrsfs}
 \usepackage{bm}
-%\usepackage[utf8]{inputenc}
 \usepackage{mathtools}
 \usepackage{enumitem}
 \usepackage{comment}
 \usepackage{url}
 \usepackage{here}
-%\usepackage[unicode,hidelinks,pdfusetitle]{hyperref}
 \usepackage[unicode,pdfusetitle]{hyperref}
-
 \usepackage{mleftright}
-%\usepackage{otf}
 \usepackage{exscale}
+
 %\usepackage[framemethod = tikz, roundcorner = 10pt]{mdframed}
 
 % \usepackage[version=3]{mhchem} %化学式のパッケージ \ce{H2O}のようにして使う
@@ -57,11 +50,11 @@
 \newcommand{\pmat}[1]{\mleft(\begin{matrix} #1 \end{matrix}\mright)} % 括弧付きの行列
 \newcommand{\mat}[1]{\begin{matrix} #1 \end{matrix}} % 括弧なしの行列
 \newcommand{\vctr}[1]{\mleft(\begin{matrix} #1 \end{matrix}\mright)} % ベクトル(縦なら \vctr{a\b\c}のように)
-\newcommand{\sgn}[1]{\mathrm{sgn}\pare{#1}} % 符号sgn(x)
+\DeclareMathOperator{\sgn}{\mathrm{sgn}} % 符号sgn(x)
 
 \newcommand{\trans}[1]{{}^t{#1}}
 
-\newcommand{\spare}[1]{( #1 )} % 小括弧
+\newcommand{\spare}[1]{(#1)} % 小括弧
 \newcommand{\pare}[1]{\mleft( #1 \mright)} % 括弧
 \newcommand{\bra}[1]{\mleft\{ #1 \mright\} } % 中括弧
 \newcommand{\squ}[1]{\mleft[ #1 \mright]} % 大括弧
@@ -72,8 +65,6 @@
 \newcommand{\abs}[1]{\mleft|#1\mright|} % 絶対値
 \newcommand{\card}[1]{\mleft|#1\mright|} % 集合の濃度(個数)
 
-\newcommand{\cinterval}[2]{\mleft[#1,\,#2\mright]}
-
 \newcommand{\relmiddle}[1]{\mathrel{}\middle#1\mathrel{}} % 集合の縦棒
 \newcommand{\set}[2]{\mleft\{ \rule{0pt}{10pt} \ #1 \relmiddle{|} #2\ \mright\}} % 集合
 \newcommand{\sset}[2]{\mleft\{ #1 \relmiddle{|} #2\mright\}} % 集合
@@ -82,7 +73,7 @@
 \newcommand{\gene}[1]{\mleft\langle #1 \mright\rangle} % 生成
 
 \newcommand{\defarrow}{\stackrel{\mathrm{def}}{\Longleftrightarrow}} % 定義矢印(同値矢印の上にdef)
-\newcommand{\ord}[1]{\mathrm{ord}\pare{#1}} % 元の位数
+\DeclareMathOperator{\ord}{\mathrm{ord}} % 元の位数
 
 \newcommand{\SL}[2]{\mathrm{SL}_{#1}\pare{#2}} % 特殊線形群
 \newcommand{\GL}[2]{\mathrm{GL}_{#1}\pare{#2}} % 一般線形群
@@ -122,9 +113,8 @@
 \newcommand{\Poch}[2]{\frac{\Gamma\mleft(#1+#2\mright)}{\Gamma\mleft(#1\mright)}}
 
 
-\newcommand{\cosech}{\mathrm{cosech}}
-
-\newcommand{\limn}{\lim_{n\to\infty}}
+\DeclareMathOperator{\cosech}{\mathrm{cosech}}
+\DeclareMathOperator{\limn}{\lim_{n\to\infty}}
 
 \newcommand{\Li}[2]{\mathrm{Li}_{#1}\mleft(#2\mright)}
 
@@ -142,11 +132,20 @@
 
 \newcommand{\Schrodinger}{Schr\"odinger}
 
+
+
+
+
+
+
+
+
+
+
 \theoremstyle{definition}
-\newtheorem{thm}{定理}[section]
-\newtheorem{prob}{問}[section]
+\newtheorem{prob}{問}[chapter]
+\newtheorem{thm}{定理}[chapter]
 \newtheorem{defi}[thm]{定義}
-\newtheorem{axio}[thm]{公理}
 \newtheorem{lem}[thm]{補題}
 \newtheorem{rem}[thm]{注意}
 \newtheorem{cor}[thm]{系}
@@ -155,7 +154,36 @@
 \newtheorem{nota}[thm]{記法}
 \newtheorem{supple}[thm]{補足}
 
-\newtheorem*{ans}{解答}
+
+\usepackage{wtref}
+% 参照の定義
+\newref{part,chap,sec,subsec,subsubsec}
+\newref{equ,tab,fig}
+\newref{thm,prob,defi,lem,cor,eg,prop,nota,supple}
+
+\setrefstyle{part}{prefix=第, suffix=部}
+\setrefstyle{chap}{prefix=第, suffix=章}
+\setrefstyle{sec}{prefix=第, suffix=節}
+\setrefstyle{subsec}{prefix=第, suffix=小節}
+\setrefstyle{subsubsec}{prefix=第, suffix=小々節}
+
+\setrefstyle{equ}{refcmd=(\ref{#1}), prefix=式}
+\setrefstyle{tab}{prefix=表}
+\setrefstyle{fig}{prefix=図}
+
+\setrefstyle{prob}{prefix=問}
+\setrefstyle{thm}{prefix=定理}
+\setrefstyle{defi}{prefix=定義}
+\setrefstyle{lem}{prefix=補題}
+\setrefstyle{cor}{prefix=系}
+\setrefstyle{eg}{prefix=例}
+\setrefstyle{prop}{prefix=命題}
+\setrefstyle{nota}{prefix=記法}
+\setrefstyle{supple}{prefix=補足}
+
+
+
+
 
 \if0
 % 数式(演算子など)のスペースを詰める
