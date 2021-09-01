@@ -3,7 +3,8 @@
 \usepackage{docmute} % ファイル分割
 \usepackage{multicol} % 多段組
 \usepackage{luacode} % {luacode*}環境
-\usepackage[fleqn]{amsmath} % fleqn:数式の左寄せ
+%\usepackage[fleqn]{amsmath} % fleqn:数式の左寄せ, leqno:数式番号の左寄せ（(section番号).(数式番号)に書き換えるとalignなどで改行が入ってしまう）
+\usepackage{amsmath}
 % \usepackage{ascmac} % 囲み環境
 \usepackage{amsthm}
 \usepackage{amsfonts}
@@ -12,14 +13,14 @@
 \usepackage{bm}
 \usepackage{mathtools}
 \usepackage{enumitem} % 箇条書きなど
-\usepackage{comment} % comment環境(\if0 (hoge) \fi で十分)
+% \usepackage{comment} % comment環境(\if0 (hoge) \fi で十分)
 \usepackage{url} 
 \usepackage{here} % 表などをその場所に表示させる\begin{figure}[H] (hoge) \end{figure}
 \usepackage[unicode,pdfusetitle]{hyperref} % ハイパーリンク
 \usepackage{mleftright} % 括弧の調整
 \usepackage{exscale} % 異なるフォントサイズでの大型演算子のサポート
 
-%\usepackage[framemethod = tikz, roundcorner = 10pt]{mdframed} % 囲み環境
+\usepackage[framemethod = tikz, roundcorner = 5pt, linewidth = 3pt]{mdframed} % 囲み環境
 
 %\usepackage{tikz}
 %\usetikzlibrary{intersections, calc, arrows, cd}
@@ -197,23 +198,22 @@
 
 \mathtoolsset{showonlyrefs=true} % 式番号を参照されたもののみ付ける
 
-
-% 式番号をsectionごとにつける
-\makeatletter
-\@addtoreset{equation}{section}
-\def\theequation{\thesection.\arabic{equation}}
-% 表, 図番号をchapterごとにつける
-\@addtoreset{table}{chapter}
-\def\thetable{\thechapter.\arabic{table}}
-\@addtoreset{chapter}{chapter}
-\def\thefigure{\thechapter.\arabic{figure}}
-\makeatother
-
-\if0
 % 式番号をchapterごとにつける
 \makeatletter
 \@addtoreset{equation}{chapter}
 \def\theequation{\thechapter.\arabic{equation}}
+% 表, 図番号をchapterごとにつける
+\@addtoreset{table}{chapter}
+\def\thetable{\thechapter.\arabic{table}}
+\@addtoreset{figure}{chapter}
+\def\thefigure{\thechapter.\arabic{figure}}
+\makeatother
+
+\if0
+% 式番号をsectionごとにつける
+\makeatletter
+\@addtoreset{equation}{section}
+\def\theequation{\thesection.\arabic{equation}}
 % 表, 図番号をsectionごとにつける
 \@addtoreset{table}{section}
 \def\thetable{\thesection.\arabic{table}}
