@@ -58,6 +58,8 @@
 \newcommand{\mat}[1]{\begin{matrix} #1 \end{matrix}} % 括弧なしの行列
 \newcommand{\vctr}[1]{\mleft(\begin{matrix} #1 \end{matrix}\mright)} % ベクトル(縦なら\vctr{a\\b\\c}，横なら\vctr{a&b&c}のように)
 \DeclareMathOperator{\sgn}{\mathrm{sgn}} % 符号sgn
+\DeclareMathOperator*{\argmax}{\arg\max} % argmax
+\DeclareMathOperator*{\argmin}{\arg\min} % argmin
 
 \newcommand{\trans}[1]{{}^t{#1}} % 転置
 
@@ -211,6 +213,8 @@
 \newtheorem{supple}[thm]{補足}
 
 
+\mathtoolsset{showonlyrefs=true} % 式番号を参照されたもののみ付ける
+
 \usepackage{wtref} % 相互参照支援
 % キーの定義
 \newref{part,chap,sec,subsec,subsubsec}
@@ -238,11 +242,13 @@
 \setrefstyle{nota}{prefix=記法}
 \setrefstyle{supple}{prefix=補足}
 
+\makeatletter
+\let\xx@temp\equref
+\def\equref#1{\xx@temp{#1}%
+\immediate\write\@auxout{\string\MT@newlabel{equ:#1}}}
+\makeatother
 
 
-
-
-\mathtoolsset{showonlyrefs=true} % 式番号を参照されたもののみ付ける
 
 % 式番号をchapterごとにつける
 \makeatletter
