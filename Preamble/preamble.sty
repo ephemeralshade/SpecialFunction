@@ -74,9 +74,11 @@
 \newcommand{\abs}[1]{\mleft|#1\mright|} % 絶対値
 \newcommand{\card}[1]{\mleft|#1\mright|} % 集合の濃度(個数)
 
-\newcommand{\relmiddle}[1]{\mathrel{}\middle#1\mathrel{}} % 集合の縦棒
-\newcommand{\set}[2]{\mleft\{ \rule{0pt}{10pt} \ #1 \relmiddle{|} #2\ \mright\}} % 集合
-\newcommand{\sset}[2]{\mleft\{ #1 \relmiddle{|} #2\mright\}} % 集合
+%\newcommand{\relmiddle}[1]{\mathrel{}\middle#1\mathrel{}} % 集合の縦棒
+%\newcommand{\set}[2]{\mleft\{ \rule{0pt}{10pt} \ #1 \relmiddle{|} #2\ \mright\}} % 集合
+%\newcommand{\sset}[2]{\mleft\{ #1 \relmiddle{|} #2\mright\}} % 集合
+\newcommand{\set}[2]{\mleft\{\rule{0pt}{9pt}\  #1 \ ; \  #2\ \mright\}} % 集合
+\newcommand{\sset}[2]{\mleft\{ #1 \, ;\,  #2\mright\}} % 集合
 \newcommand{\seq}[2]{\mleft\{#1\mright\}_{#2}} % 数列
 \newcommand{\fset}[2]{\mleft\{#1\mright\}_{#2}} % 集合族
 \newcommand{\gene}[1]{\mleft\langle #1 \mright\rangle} % 生成
@@ -242,6 +244,8 @@
 \setrefstyle{nota}{prefix=記法}
 \setrefstyle{supple}{prefix=補足}
 
+
+% 式参照した場合auxに書き込み（これをしないと\mathtoolsset{showonlyrefs=true}と共存できない）
 \makeatletter
 \let\xx@temp\equref
 \def\equref#1{\xx@temp{#1}%
