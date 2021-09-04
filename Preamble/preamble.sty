@@ -3,8 +3,8 @@
 \usepackage{docmute} % ファイル分割
 \usepackage{multicol} % 多段組
 \usepackage{luacode} % {luacode*}環境
-%\usepackage[fleqn]{amsmath} % fleqn:数式の左寄せ, leqno:数式番号の左寄せ（(section番号).(数式番号)に書き換えるとalignなどで改行が入ってしまう）
-\usepackage{amsmath}
+\usepackage[fleqn]{amsmath} % fleqn:数式の左寄せ, leqno:数式番号の左寄せ（(section番号).(数式番号)に書き換えるとalignなどで改行が入ってしまう）
+%\usepackage{amsmath}
 % \usepackage{ascmac} % 囲み環境
 \usepackage{amsthm}
 \usepackage{amsfonts}
@@ -16,7 +16,16 @@
 % \usepackage{comment} % comment環境(\if0 (hoge) \fi で十分)
 \usepackage{url} 
 \usepackage{here} % 表などをその場所に表示させる\begin{figure}[H] (hoge) \end{figure}
+
 \usepackage[unicode,pdfusetitle]{hyperref} % ハイパーリンク
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks=false,
+    citebordercolor=green,
+    linkbordercolor=red,
+    urlbordercolor=cyan,
+}
+
 \usepackage{mleftright} % 括弧の調整
 \usepackage{exscale} % 異なるフォントサイズでの大型演算子のサポート
 
@@ -70,7 +79,9 @@
 \newcommand{\fset}[2]{\mleft\{#1\mright\}_{#2}} % 集合族
 \newcommand{\gene}[1]{\mleft\langle #1 \mright\rangle} % 生成
 
-\newcommand{\defarrow}{\stackrel{\mathrm{def}}{\Longleftrightarrow}} % 定義矢印(同値矢印の上にdef)
+\newcommand{\dummy}{\,\cdot\,} % ダミーのドット
+
+\newcommand{\defarrow}{:\stackrel{\mathrm{def}}{\Longleftrightarrow}} % 定義矢印(同値矢印の上にdef)
 \DeclareMathOperator{\ord}{\mathrm{ord}} % 元の位数
 
 \newcommand{\SL}[2]{\mathrm{SL}_{#1}\pare{#2}} % 特殊線形群
