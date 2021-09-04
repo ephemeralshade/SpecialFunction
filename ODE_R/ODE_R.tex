@@ -1,0 +1,171 @@
+%\documentclass[b5paper,draft]{ltjsbook}
+\documentclass[b5paper]{ltjsbook}
+\usepackage{../Preamble/preamble}
+\begin{document}
+\section{ノルム}
+ノルムに関する以下の定義や命題は\cite{nomura}に拠る。
+
+\begin{defi}[ノルム]
+    $V$を$\CC$上のベクトル空間とする。
+    関数$\norm{\dummy}\colon V\to \R$が以下の条件を満たすとき，$\norm{x}$を$x$のノルムという：
+    \begin{enumerate}[label=(\roman*)]
+        \item （正値性） $\forall x\in V,\ \norm{x}\geq 0$
+        \item （一意性） $\forall x\in V,\ \bsqu{\norm{x}=0\ \Longleftrightarrow\ x=0}$
+        \item （同次性） $\forall k\in \CC,\ \forall x\in V,\ \norm{kx}=\abs{k}\norm{x}$
+        \item （三角不等式） $\forall x, \forall y\in V,\ \norm{x+y}\leq \norm{x}+\norm{y}$
+    \end{enumerate}
+    ノルムの定義されたベクトル空間をノルム空間という。
+\end{defi}
+
+
+\begin{prop}[三角不等式]\proplabel{ノルム三角不等式}
+    ノルムは次の性質も満たす：
+    \begin{equation}
+        \forall x, \forall y\in V,\ \abs{\norm{x}-\norm{y}}\leq \norm{x-y}.
+    \end{equation}
+    \begin{proof}
+        まず，$\norm{x}=\norm{\pare{x-y}+y}\leq \norm{x-y}+\norm{y}$
+        から$\norm{x}-\norm{y}\leq \norm{x-y}$
+        が従う。
+        同様に
+        \begin{equation}
+            \norm{y}=\norm{\pare{y-x}+x}\leq \norm{\pare{-1}\pare{x-y}}+\norm{x}=\abs{-1}\norm{x-y}+\norm{x}=\norm{x-y}+\norm{x}
+        \end{equation}
+        なので，$\norm{y}-\norm{x}\leq \norm{x-y}$である。
+        また，絶対値の特徴付け$\abs{a}= \max\bra{a,-a}$
+        を用いると，$\abs{\norm{x}-\norm{y}}= \max\bra{\norm{x}-\norm{y},\norm{y}-\norm{x}}\leq \norm{x-y}$である。
+        これらにより，$\abs{\norm{x}-\norm{y}}\leq \norm{x-y}$が成立する。
+    \end{proof}
+\end{prop}
+
+\begin{cor}
+    \propref{ノルム三角不等式}において，$y\mapsto -y$として，元の三角不等式と併せれば，
+    \begin{equation}
+        \abs{\norm{x}-\norm{y}}\leq \norm{x+y}\leq \norm{x}+\norm{y}
+    \end{equation}
+    が従う。
+\end{cor}
+
+\begin{cor}[ノルムの連続性]\corlabel{ノルム連続性}
+    ノルムは連続関数である。
+    \begin{proof}
+        示すべきことは以下の通り：
+        \begin{equation}
+            \forall x,\forall y\in V,\ \forall \varepsilon\in\R,\, \squ{
+                \varepsilon>0 \, \Longrightarrow\, \pare{
+                    \exists \delta\in \R;\ \bsqu{
+                        \delta>0\, \land\, \pare{
+                            \norm{x-y}<\delta\, \Longrightarrow\, \abs{\norm{x}-\norm{y}}<\varepsilon
+                        }
+                    }
+                }
+            }.
+        \end{equation}
+
+        実際，$\delta\coloneqq \varepsilon$と取れば，\propref{ノルム三角不等式}により，$\abs{\norm{x}-\norm{y}}\leq \norm{x-y}<\delta =\varepsilon$であるから，ノルムは連続関数である。
+    \end{proof}
+\end{cor}
+
+\begin{defi}[ノルムの同値性]
+    以下が成立するとき，$V$上の2つのノルム$\norm{\dummy}$, $\norm{\dummy}_1$が同値であるという：
+    \begin{equation}
+        \exists m, \exists M\in\R;\ \bsqu{0<m\leq M\ \land \ \pare{
+            \forall x\in V,\ m\norm{x}_1 \leq \norm{x} \leq M\norm{x}_1
+        }}.
+    \end{equation}
+\end{defi}
+
+\begin{prop}\proplabel{ノルム同値関係}
+    ノルムの同値性は同値関係である。
+    \begin{proof}
+        ノルム$\norm{\dummy}$, $\norm{\dummy}_1$が同値であることを$\norm{\dummy}\sim\norm{\dummy}_1$と記すことにする。
+        すなわち，
+        \begin{equation}
+            \norm{\dummy}\sim\norm{\dummy}_1\ \defarrow\ \exists m, \exists M\in\R;\ \bsqu{0<m\leq M\ \land \ \pare{
+                \forall x\in V,\ m\norm{x}_1 \leq \norm{x} \leq M\norm{x}_1
+            }}.
+        \end{equation}
+        このとき関係$\sim$が反射律，対称律，推移律を満たすことを示す。
+        \begin{itemize}
+            \item （反射律）
+            任意の$\norm{\dummy}$に対し，$\norm{\dummy}\sim\norm{\dummy}$が成立することを示す。
+            実際，$m=M=1$とすれば，
+            \begin{equation}
+                0<m=1\leq M=1\ \land \pare{\forall x\in V,\ 1\cdot \norm{x}\leq \norm{x}\leq 1\cdot \norm{x}}
+            \end{equation}
+            であるから成立。
+
+            \item （対称律）
+            $\norm{\dummy}\sim\norm{\dummy}_1$，すなわち
+            \begin{equation}
+                \exists m, \exists M\in\R;\ \bsqu{0<m\leq M\ \land \ \pare{
+                \forall x\in V,\ m\norm{x}_1 \leq \norm{x} \leq M\norm{x}_1
+                }}
+            \end{equation}
+            のとき，$\norm{\dummy}_1\sim\norm{\dummy}$が成立することを示す。
+            後半の不等式を書き直すと，$\frac{1}{M}\norm{x}\leq \norm{x}_1\leq \frac{1}{m}\norm{x}$であり，$0<m\leq M$であるから$0<\frac{1}{M}\leq \frac{1}{m}$であるから，$m' \coloneqq \frac{1}{M}$, $M' \coloneqq  \frac{1}{m}$と取れば確かに$\norm{\dummy}_1\sim\norm{\dummy}$の成立が判る。
+
+            \item （推移律）
+            3つのノルム$\norm{\dummy}$, $\norm{\dummy}_1$, $\norm{\dummy}_2$に対し，$\norm{\dummy}\sim \norm{\dummy}_1$と$\norm{\dummy}_1\sim \norm{\dummy}_2$のとき，$\norm{\dummy}\sim \norm{\dummy}_2$が成立することを示す。
+            仮定から，
+            \begin{align}
+                &\exists m_1, \exists M_2\in\R;\ \bsqu{0<m_1\leq M_2\ \land \ \pare{
+                \forall x\in V,\ m_1\norm{x}_1 \leq \norm{x} \leq M_1\norm{x}_1
+                }},
+                \\
+                &\exists m_2, \exists M_2\in\R;\ \bsqu{0<m_2\leq M_2\ \land \ \pare{
+                \forall x\in V,\ m_2\norm{x}_2 \leq \norm{x}_1 \leq M_2\norm{x}_2
+                }}
+            \end{align}
+            の両方が成立しているから，$\norm{x}\leq M_1\norm{x}_1\leq M_1M_2\norm{x}_2$及び，$\norm{x}\geq m_1\norm{x}_1\geq m_1m_2 \norm{x}_2$より，$m_1m_2\norm{x}_2\leq \norm{x}\leq M_1M_2\norm{x}_2$が従う。
+            これより，$m\coloneqq m_1m_2$, $M\coloneqq M_1M_2$と取れば$0<m_1m_2\leq M_1M_2$も成立するので$\norm{\dummy}\sim \norm{\dummy}_2$である。
+        \end{itemize}
+
+        以上により，ノルムの同値性は同値関係である。
+    \end{proof}
+\end{prop}
+
+\begin{thm}
+    ベクトル空間$V$が有限次元であれば，$V$上の任意の2つのノルムは同値である。
+    \begin{proof}
+        $V$を有限次元ベクトル空間とし，$n\coloneqq \dim{V}$とする。
+        $V$の基底として，$\seq{\ele_k}{0\leq k\leq n-1}$を取り固定する。
+        $V$の元$x$を，$x =\sum_{k=0}^{n-1} x_k \ele_k$と表したときの成分$\seq{x_k}{0\leq k\leq n-1}$を用いて，
+        \begin{equation}
+            \norm{\dummy}\colon V\to \R;\ x\mapsto \norm{x}\coloneqq \max_{0\leq k\leq n-1}\bra{\abs{x_k}}
+            \equlabel{ノルムmax}
+        \end{equation}
+        と定めると$\norm{\dummy}$はノルムになる。
+        以下$\norm{\dummy}$がノルムであることを確かめる：
+        \begin{itemize}
+            \item （正値性）
+            どの$k$についても$0\leq \abs{x_k}$であり，$\displaystyle\norm{x}= \max_k\bra{\abs{x_k}}\geq 0$であるから成立。
+
+            \item （一意性）
+            $x=0$のとき，どの$k$についても$x_k=0$であるから$\displaystyle\norm{x}= \max_k\bra{\abs{x_k}}=0$である。
+            また，$\norm{x}=0$のとき，任意の$k$に対し，絶対値の非負性から$0\leq \abs{x_k}$であって，$\abs{x_k}\leq {x}=0$であるから$\abs{x_k}=0$である。
+            これより$x=0$となる。
+
+            \item （同次性）
+            絶対値の非負性と同次性から，$\displaystyle\norm{cx}=\max_k \bra{\abs{cx}}=\abs{c}\cdot \max_k\bra{\abs{x_k}}=\abs{c}\norm{x}$が従う。
+
+            \item （三角不等式）
+            絶対値の三角不等式から，各$k$に対して$\abs{x_k+y_k}\leq \abs{x_k}+\abs{y_k}$であるから最大値に関してもこの不等号が成り立つので$\norm{x+y}\leq \norm{x}+\norm{y}$が従う。
+        \end{itemize}
+        以上により\equref{ノルムmax}で定められた$\norm{\dummy}$はノルムである。
+
+        次に，$V$上の勝手なノルム$\norm{\dummy}_1$を取ってきたときに，\equref{ノルムmax}で定義した$\norm{\dummy}_1$と$\norm{\dummy}$が同値になってしまうことを示す。
+        $V$のコンパクト集合$S$を$S\coloneqq \sset{y\in V}{\norm{y}=1}$
+        によって定め，関数$f\colon S\to \R$を$\fun{f}{y}\coloneqq \norm{y}_1$と定める。
+        $f$の連続性（\corref{ノルム連続性}）と$S$がコンパクト集合であることから，$f$の値域には最小元$m$と最大元$M$が存在する。
+        $S$上で$y\ne {0}$であり，ノルムの正値性から$0<m\leq M$である。
+        特に，$\norm{y}=1$ならば$y\in S$であり，$m$, $M$の定義から$m\leq \fun{f}{y}\leq M$及び$\fun{f}{y}=\norm{y}_1$なので$m\leq \norm{x}_1\leq M$が従う。
+        ここで，$V$上の一般の$x\ne 0$に対して$y\coloneqq x / \norm{x}$とすると$\norm{y}=\norm{x/\norm{x}}=\norm{x}/\norm{x}=1$より$y\in S$であるから$\fun{f}{y}=\norm{x/\norm{x}}_1=\norm{x}_1/\norm{x}$であって，$m\leq \norm{x}_1/\norm{x}\leq M$より$m\norm{x}\leq \norm{x}_1\leq M\norm{x}$である。
+        $x=0$についても$\norm{0}=\norm{0}_1=0$であって，$m \norm{0}_1\leq \norm{0}\leq M\norm{0}_1$は成立するので，$\norm{\dummy}_1$と$\norm{\dummy}$は同値である。
+
+        有限次元ベクトル空間$V$上で与えられた任意の2つのノルム$\norm{\dummy}_1$, $\norm{\dummy}_2$はそれぞれ\equref{ノルムmax}で定義された$\norm{\dummy}$と同値であり，ノルムの同値は同値関係（\propref{ノルム同値関係}）なので，$\norm{\dummy}_1$と$\norm{\dummy}_2$も同値である。
+    \end{proof}
+\end{thm}
+
+\section{Picardの逐次近似法}
+\end{document}
