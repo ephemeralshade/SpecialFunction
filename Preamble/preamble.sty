@@ -29,7 +29,7 @@
 \usepackage{mleftright} % 括弧の調整
 \usepackage{exscale} % 異なるフォントサイズでの大型演算子のサポート
 
-\usepackage[framemethod = tikz, roundcorner = 5pt, linewidth = 3pt]{mdframed} % 囲み環境
+% \usepackage[framemethod = tikz, roundcorner = 5pt, linewidth = 3pt]{mdframed} % 囲み環境
 
 %\usepackage{tikz}
 %\usetikzlibrary{intersections, calc, arrows, cd}
@@ -130,7 +130,7 @@
 } % 一般化超幾何函数
 
 \newcommand{\sGauss}[4]{{}_{2}F_{1}\mleft({#1},\, {#2}\,;\, {#3}\, ;\, {#4}\mright)} % インライン用のGaussの超幾何函数
-\newcommand{\sKummer}[3]{{}_{2}F_{1}\mleft({#1}\,;\, {#2}\, ;\, {#3}\mright)} % インライン用のKummerの合流型超幾何函数
+\newcommand{\sKummer}[3]{{}_{1}F_{1}\mleft({#1}\,;\, {#2}\, ;\, {#3}\mright)} % インライン用のKummerの合流型超幾何函数
 \newcommand{\spfq}[5]{{}_{#1}F_{#2}\mleft({#3}\,;\, {#4}\, ;\, {#5}\mright)} % インライン用の一般化超幾何函数
 
 \newcommand{\GaussP}[5]{P\mleft\{\begin{array}{ccc}
