@@ -244,6 +244,9 @@
 \setrefstyle{nota}{prefix=記法}
 \setrefstyle{supple}{prefix=補足}
 
+% 問題と解答の連動
+\def\ans#1{\vspace{5pt}\par\noindent\textbf{問\ref{prob:#1}.}}
+\def\endans{\vspace{5pt}\par}
 
 % 式参照した場合auxに書き込み（これをしないと\mathtoolsset{showonlyrefs=true}と共存できない）
 \makeatletter

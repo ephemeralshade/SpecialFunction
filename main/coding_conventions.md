@@ -53,3 +53,23 @@
 \label{eq:a}, \eqref{eq:a}
 ```
 などが残っている恐れがあるので注意。
+
+
+また，問題を，
+```latex
+\begin{prob}\problabel{hoge}
+    (problem)
+\end{prob}
+```
+> 問題 1.1. (problem)
+
+とした場合，解答は，
+```latex
+\begin{ans}{hoge}
+    (answer)
+\end{ans}
+```
+とすれば，
+> 問題 1.1. (answer)
+
+のようになる。
