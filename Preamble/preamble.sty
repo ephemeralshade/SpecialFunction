@@ -1,3 +1,5 @@
+\usepackage[haranoaji, deluxe]{luatexja-preset} % フォント設定
+
 \usepackage{ifdraft}
 \ifdraft{\usepackage{showkeys}}{}  % draftモードのときのみ参照キー表示
 \usepackage{docmute} % ファイル分割
@@ -288,3 +290,6 @@
 % 余白の設定
 \setlength{\textwidth}{\fullwidth}
 \setlength{\evensidemargin}{\oddsidemargin}
+
+
+\setcounter{tocdepth}{4}  % subsubsectionまで表示
