@@ -23,6 +23,7 @@
             "\\usepackage{../Preamble/preamble}",
             
             "\\begin{document}",
+            "\\ifdraft{\\tableofcontents}{}",
             "$1",
             "\\end{document}"
         ]
