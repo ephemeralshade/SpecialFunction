@@ -1,3 +1,6 @@
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+
 \usepackage{ifdraft}
 \ifdraft{\usepackage{showkeys}}{}  % draftモードのときのみ参照キー表示
 \usepackage{docmute} % ファイル分割
@@ -9,25 +12,25 @@
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{mathrsfs} % 筆記体・花文字
+% \usepackage{mathrsfs} % 筆記体・花文字
 \usepackage{bm}
 \usepackage{mathtools}
 \usepackage{enumitem} % 箇条書きなど
 % \usepackage{comment} % comment環境(\if0 (hoge) \fi で十分)
-\usepackage{url} 
-\usepackage{here} % 表などをその場所に表示させる\begin{figure}[H] (hoge) \end{figure}
+% \usepackage{url} 
+% \usepackage{here} % 表などをその場所に表示させる\begin{figure}[H] (hoge) \end{figure}
 
 \usepackage[unicode,pdfusetitle]{hyperref} % ハイパーリンク
 \usepackage{xcolor}
 \hypersetup{
-    colorlinks=false,
-    citebordercolor=green,
-    linkbordercolor=red,
-    urlbordercolor=cyan,
+	colorlinks=true,
+	citecolor=blue,
+	linkcolor=teal,
+	urlcolor=orange,
 }
 
 \usepackage{mleftright} % 括弧の調整
-\usepackage{exscale} % 異なるフォントサイズでの大型演算子のサポート
+% \usepackage{exscale} % 異なるフォントサイズでの大型演算子のサポート
 
 % \usepackage[framemethod = tikz, roundcorner = 5pt, linewidth = 3pt]{mdframed} % 囲み環境
 
@@ -35,8 +38,8 @@
 %\usetikzlibrary{intersections, calc, arrows, cd}
 %\usepackage{tikz-3dplot}
 
-\usepackage{diagbox} % 表中で斜線を表示
-\usepackage{lscape} % landscape環境を有効化
+% \usepackage{diagbox} % 表中で斜線を表示
+% \usepackage{lscape} % landscape環境を有効化
 
 
 
@@ -197,9 +200,17 @@
 
 
 
-
-
-
+\newtheoremstyle{mystyle}%   % スタイル名
+    {}%                      % 上部スペース
+    {}%                      % 下部スペース
+    {\normalfont}%           % 本文フォント
+    {}%                      % インデント量
+    {\textbf}%                   % 見出しフォント
+    {}%                      % 見出し後の句読点, '.'
+    { }%                     % 見出し後のスペース, ' ' or \newline
+    {\underline{\thmname{#1}\thmnumber{#2}\thmnote{（#3）}}}%
+                             % 見出しの書式 (can be left empty, meaning `normal')
+\theoremstyle{mystyle} % スタイルの適用
 
 % 定理環境の定義
 \theoremstyle{definition}
