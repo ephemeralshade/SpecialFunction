@@ -1,7 +1,8 @@
-%\documentclass[b5paper,draft]{ltjsbook}
-\documentclass[b5paper]{ltjsbook}
+% \documentclass[b5paper,draft,oneside,openany]{ltjsbook} % 下書き用
+\documentclass[b5paper,oneside,openany]{ltjsbook} % 清書用
 \usepackage{../Preamble/preamble}
 \begin{document}
+\ifdraft{\tableofcontents}{}
 \section{ノルム}
 ノルムに関する以下の定義や命題は\cite{nomura}に拠る。
 
@@ -125,7 +126,7 @@
     \end{proof}
 \end{prop}
 
-\begin{thm}
+\begin{thm}\thmlabel{ノルム同値性}
     ベクトル空間$V$が有限次元であれば，$V$上の任意の2つのノルムは同値である。
     \begin{proof}
         $V$を有限次元ベクトル空間とし，$n\coloneqq \dim{V}$とする。
@@ -167,5 +168,127 @@
     \end{proof}
 \end{thm}
 
+有限次元複素ベクトル空間$\CC^n$上のノルムの例を挙げる。
+以下では，$x=\pare{x_0,x_2,\dots,x_{n-1}}$の各成分を複素数とし，$\abs{\dummy}$を複素数の絶対値とする。
+
+\begin{eg}[Euclidノルム]\eglabel{ノルムEuclid}
+    標準的な距離：
+    \begin{equation}
+        \norm{x}_2\coloneqq \pare{\sum_{k=0}^{n-1} \abs{x_k}^2}^{\frac{1}{2}}
+    \end{equation}
+    はノルムである。
+\end{eg}
+
+\begin{eg}[一様ノルム]\eglabel{ノルム一様}
+    \thmref{ノルム同値性}の証明において\equref{ノルムmax}：
+    \begin{equation}
+        \norm{x}_\infty \coloneqq \max_{0\leq k\leq n-1}\bra{\abs{x_k}}
+        \tag{\ref{equ:ノルムmax}}
+    \end{equation}
+    はノルムである。
+    後述するように，$p$ノルムにおいて$p\to\infty$の極限で再現されることから，$\infty$ノルムとも呼ぶ。
+\end{eg}
+
+\begin{eg}[$p$ノルム]\eglabel{ノルムpノルム}
+    $p$を$1$以上の実数とする。
+    このとき，
+    \begin{equation}
+        \norm{x}_p \coloneqq \pare{\sum_{k=0}^{n-1} \abs{x_k}^p}^{\frac{1}{p}}
+    \end{equation}
+    はノルムである。
+    $1$ノルムのことをManhattan距離と呼ぶ。
+    $2$ノルムはEuclidノルムに一致する。
+    特に，$p\to\infty$の極限で$p$ノルムは\egref{ノルム一様}の一様ノルムに一致する。
+\end{eg}
+
+以降，有限次元ベクトル空間のノルムは\egref{ノルム一様}の一様ノルムであるとする。
+
+\begin{lem}\lemlabel{ノルム積分の不等式}
+    $I$を$\R$上の閉区間であるとする。
+    $f\colon I\to \R^n$を連続なベクトル値関数とするとき，
+    \begin{equation}
+        \norm{\int_I dt\, \fun{f}{t}}\leq \int_I dt\, \norm{\fun{f}{t}}
+    \end{equation}
+    が成立する。
+    \begin{proof}
+        $I$上可積分な$g$と絶対値に関する以下の不等式：
+        \begin{equation}
+            \abs{\int_I dt\, \fun{g}{t}}\leq \int_I dt\, \abs{\fun{g}{t}}
+        \end{equation}
+        を用いる。
+        \begin{equation}
+            \forall j\in \N,\, \forall t\in I,\ \bsqu{
+                0\leq j\leq n-1\ \Longrightarrow\ \fun{f_j}{t}\leq \abs{\fun{f_j}{t}}\leq \norm{\fun{f}{t}}
+            }
+        \end{equation}
+        であるから，
+        \begin{equation}
+            \forall j\in \N,\, \squ{
+                0\leq j\leq n-1\ \Longrightarrow\ 
+                \int_I dt\, \fun{f_j}{t}\leq \int_I dt\, \abs{\fun{f_j}{t}}
+                \leq \int_I dt\, \norm{\fun{f}{t}}
+            }
+        \end{equation}
+        である。
+        ここで，
+        \begin{equation}
+            \abs{\int_I dt\, \fun{f_j}{t}}\leq \int_I dt\, \abs{\fun{f_j}{t}}\leq \int_I dt\, \norm{\fun{f}{t}}
+        \end{equation}
+        であるから，
+        \begin{equation}
+            \norm{\int_I dt \, \fun{f}{t}}
+            =\max_{0\leq j\leq n-1}\bra{\abs{\int_I dt\, \fun{f_j}{t}}}\leq \int_I dt\, \norm{\fun{f}{t}}
+        \end{equation}
+        が成立する。
+    \end{proof}
+\end{lem}
+
+\begin{lem}
+    $S$, $T$を適当な集合とし，写像$f\colon S\times T\to \R$を与える。
+    このとき，
+    \begin{equation}
+        \sup_{a\in S}\bra{\max_{b\in T}\bra{\fun{f}{a,b}}}
+        =\max_{b\in T}\bra{\sup_{x\in a}\bra{\fun{f}{a,b}}}
+    \end{equation}
+    が成立する。
+    \begin{proof}
+        \begin{prooftree}
+            {
+                close with={\times},
+                to prove={
+                    \pare{\pare{\forall a} \pare{p(a) \to \pare{\pare{\forall b} \pare{ q(b) \to r(a,b)}}}}
+                    \vdash
+                    \pare{\pare{\forall b} \pare{q(b) \to \pare{\pare{\forall a} \pare{ p(a) \to r(a,b)}}}},
+                }
+            }
+            [
+                \pare{\forall a} \pare{p(a) \to \pare{\pare{\forall b} \pare{ q(b) \to r(a,b)}}}, just={Assumption}, name={1}
+                    [\lnot\pare{\pare{\forall b} \pare{q(b) \to \pare{\pare{\forall a} \pare{ p(a) \to r(a,b)}}}}, just={$\lnot$ Conclusion}
+                    [\lnot\pare{q(b')\to\pare{\pare{\forall a}\pare{p(a)\to r(a,b')}}}, just={$\lnot\pare{\forall b}$ {}:!u}
+                        [q(b'), just={$\lnot \to$ {}:!u}, name={4}
+                            [\lnot\pare{\pare{\forall a}\pare{p(a)\to r(a,b')}}, just={$\lnot \to$ {}:!uu}
+                                [\lnot\pare{p(a')\to r(a',b')}, just={$\lnot\pare{\forall a}$ {}:!u}
+                                    [p(a'), just={$\lnot \to$ {}:!u}, name={7}
+                                        [{\lnot r(a',b')}, just={$\lnot\to$ {}:!uu}, name={8}
+                                            [p(a') \to \pare{\pare{\forall b}\pare{q(b)\to r(a',b)}}, just={$\pare{\forall a}$ {}:1} 
+                                                [\lnot p(a'), just={$\to$ {}:!u}, close={:7,!c}]
+                                                [\pare{\forall b}\pare{q(b)\to r(a',b)}
+                                                [{q(b')\to r(a',b')}, just={$\pare{\forall b}$ {}:!u}
+                                                    [\lnot q(b'), , just={$\to$:!u},close={:4,!c}]
+                                                    [{r(a',b')}, close={:8,!c}]
+                                                ]
+                                                ]
+            ]]]]]]]]]
+        \end{prooftree}
+    \end{proof}
+\end{lem}
+
+
+
+\section{Lipschitz条件}
+
+
 \section{Picardの逐次近似法}
+
+
 \end{document}

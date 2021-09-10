@@ -6,7 +6,7 @@
 \usepackage{docmute} % ファイル分割
 \usepackage{multicol} % 多段組
 \usepackage{luacode} % {luacode*}環境
-\usepackage[fleqn]{amsmath} % fleqn:数式の左寄せ, leqno:数式番号の左寄せ（(section番号).(数式番号)に書き換えるとalignなどで改行が入ってしまう）
+\usepackage[leqno,fleqn]{amsmath} % fleqn:数式の左寄せ, leqno:数式番号の左寄せ（(section番号).(数式番号)に書き換えるとalignなどで改行が入ってしまう）
 %\usepackage{amsmath}
 % \usepackage{ascmac} % 囲み環境
 \usepackage{amsthm}
@@ -41,7 +41,7 @@
 % \usepackage{diagbox} % 表中で斜線を表示
 % \usepackage{lscape} % landscape環境を有効化
 
-
+\usepackage{prooftrees} % 証明木
 
 \newcommand{\pdiff}[2]{\frac{\partial #1}{\partial #2}} % 偏微分
 \newcommand{\pdiffn}[3]{\frac{\partial^{#3} #1}{\partial #2^{#3}}} % n階偏微分
