@@ -1,5 +1,5 @@
-% \documentclass[b5paper,draft,oneside,openany]{ltjsbook} % 下書き用
-\documentclass[b5paper,oneside,openany]{ltjsbook} % 清書用
+\documentclass[b5paper,draft,oneside,openany]{ltjsbook} % 下書き用
+%\documentclass[b5paper,oneside,openany]{ltjsbook} % 清書用
 \usepackage{../Preamble/preamble}
 \begin{document}
 \ifdraft{\tableofcontents}{}
@@ -7,7 +7,8 @@
 ノルムに関する以下の定義や命題は\cite{nomura}に拠る。
 
 \begin{defi}[ノルム]\defilabel{ノルム定義}
-    $V$を$\R$または$\CC$上のベクトル空間とする。
+    $V$を$\R$または$\CC$上の線型空間とする。
+    $\abs{\dummy}$を実数または複素数の絶対値とする。
     関数$\norm{\dummy}\colon V\to \R$が以下の条件を満たすとき，$\norm{x}$を$x$のノルムという：
     \begin{enumerate}[label=(\roman*)]
         \item （正値性） $\forall x\in V,\ \norm{x}\geq 0$
@@ -15,7 +16,7 @@
         \item （同次性） $\forall k\in \CC,\ \forall x\in V,\ \norm{kx}=\abs{k}\norm{x}$
         \item （三角不等式） $\forall x, \forall y\in V,\ \norm{x+y}\leq \norm{x}+\norm{y}$
     \end{enumerate}
-    ノルムの定義されたベクトル空間をノルム空間という。
+    ノルムの定義された線型空間をノルム空間という。
 \end{defi}
 
 
@@ -34,12 +35,12 @@
         \end{equation}
         なので，$\norm{y}-\norm{x}\leq \norm{x-y}$である。
         また，絶対値の特徴付け$\abs{a}= \max\bra{a,-a}$
-        を用いると，$\abs{\norm{x}-\norm{y}}= \max\bra{\norm{x}-\norm{y},\norm{y}-\norm{x}}\leq \norm{x-y}$である。
+        を用いると，$ \max\bra{\norm{x}-\norm{y},\norm{y}-\norm{x}} = \abs{\norm{x}-\norm{y}}\leq \norm{x-y}$である。
         これらにより，$\abs{\norm{x}-\norm{y}}\leq \norm{x-y}$が成立する。
     \end{proof}
 \end{prop}
 
-\begin{cor}
+\begin{cor}\corlabel{ノルム三角不等式}
     \propref{ノルム三角不等式}において，$y\mapsto -y$として，元の三角不等式と併せれば，
     \begin{equation}
         \abs{\norm{x}-\norm{y}}\leq \norm{x+y}\leq \norm{x}+\norm{y}
@@ -47,7 +48,7 @@
     が従う。
 \end{cor}
 
-\begin{cor}[ノルムの連続性]\corlabel{ノルム連続性}
+\begin{prop}[ノルムの連続性]\proplabel{ノルム連続性}
     ノルムは連続関数である。
     \begin{proof}
         示すべきことは以下の通り：
@@ -65,9 +66,9 @@
 
         実際，$\delta\coloneqq \varepsilon$と取れば，\propref{ノルム三角不等式}により，$\abs{\norm{x}-\norm{y}}\leq \norm{x-y}<\delta =\varepsilon$であるから，ノルムは連続関数である。
     \end{proof}
-\end{cor}
+\end{prop}
 
-\begin{defi}[ノルムの同値性]
+\begin{defi}[ノルムの同値性]\defilabel{ノルムノルムの同値性}
     以下が成立するとき，$V$上の2つのノルム$\norm{\dummy}$, $\norm{\dummy}_1$が同値であるという：
     \begin{equation}
         \exists m, \exists M\in\R;\ \bsqu{0<m\leq M\ \land \ \pare{
@@ -92,7 +93,7 @@
             任意の$\norm{\dummy}$に対し，$\norm{\dummy}\sim\norm{\dummy}$が成立することを示す。
             実際，$m=M=1$とすれば，
             \begin{equation}
-                0<m=1\leq M=1\ \land \pare{\forall x\in V,\ 1\cdot \norm{x}\leq \norm{x}\leq 1\cdot \norm{x}}
+                0<m=1\leq M=1\ \land\ \pare{\forall x\in V,\ 1\cdot \norm{x}\leq \norm{x}\leq 1\cdot \norm{x}}
             \end{equation}
             であるから成立。
 
@@ -104,7 +105,7 @@
                 }}
             \end{equation}
             のとき，$\norm{\dummy}_1\sim\norm{\dummy}$が成立することを示す。
-            後半の不等式を書き直すと，$\frac{1}{M}\norm{x}\leq \norm{x}_1\leq \frac{1}{m}\norm{x}$であり，$0<m\leq M$であるから$0<\frac{1}{M}\leq \frac{1}{m}$であるから，$m' \coloneqq \frac{1}{M}$, $M' \coloneqq  \frac{1}{m}$と取れば確かに$\norm{\dummy}_1\sim\norm{\dummy}$の成立が判る。
+            後半の不等式を書き直すと，$\frac{1}{M}\norm{x}\leq \norm{x}_1\leq \frac{1}{m}\norm{x}$であり，$0<m\leq M$であるから$0<\frac{1}{M}\leq \frac{1}{m}$であり，$m' \coloneqq \frac{1}{M}$, $M' \coloneqq  \frac{1}{m}$と取れば確かに$\norm{\dummy}_1\sim\norm{\dummy}$の成立が判る。
 
             \item （推移律）
             3つのノルム$\norm{\dummy}$, $\norm{\dummy}_1$, $\norm{\dummy}_2$に対し，$\norm{\dummy}\sim \norm{\dummy}_1$と$\norm{\dummy}_1\sim \norm{\dummy}_2$のとき，$\norm{\dummy}\sim \norm{\dummy}_2$が成立することを示す。
@@ -127,9 +128,9 @@
 \end{prop}
 
 \begin{thm}\thmlabel{ノルム同値性}
-    ベクトル空間$V$が有限次元であれば，$V$上の任意の2つのノルムは同値である。
+    線型空間$V$が有限次元であれば，$V$上の任意の2つのノルムは同値である。
     \begin{proof}
-        $V$を有限次元ベクトル空間とし，$n\coloneqq \dim{V}$とする。
+        $V$を有限次元線型空間とし，$n\coloneqq \dim{V}$とする。
         $V$の基底として，$\seq{\ele_k}{0\leq k\leq n-1}$を取り固定する。
         $V$の元$x$を，$x =\sum_{k=0}^{n-1} x_k \ele_k$と表したときの成分$\seq{x_k}{0\leq k\leq n-1}$を用いて，
         \begin{equation}
@@ -158,25 +159,25 @@
         次に，$V$上の勝手なノルム$\norm{\dummy}_1$を取ってきたときに，\equref{ノルムmax}で定義した$\norm{\dummy}_1$と$\norm{\dummy}$が同値になってしまうことを示す。
         $V$のコンパクト集合$S$を$S\coloneqq \sset{y\in V}{\norm{y}=1}$
         によって定め，関数$f\colon S\to \R$を$\fun{f}{y}\coloneqq \norm{y}_1$と定める。
-        $f$の連続性（\corref{ノルム連続性}）と$S$がコンパクト集合であることから，$f$の値域には最小元$m$と最大元$M$が存在する。
+        $f$の連続性（\propref{ノルム連続性}）と$S$がコンパクト集合であることから，$f$の値域には最小元$m$と最大元$M$が存在する。
         $S$上で$y\ne {0}$であり，ノルムの正値性から$0<m\leq M$である。
         特に，$\norm{y}=1$ならば$y\in S$であり，$m$, $M$の定義から$m\leq \fun{f}{y}\leq M$及び$\fun{f}{y}=\norm{y}_1$なので$m\leq \norm{x}_1\leq M$が従う。
         ここで，$V$上の一般の$x\ne 0$に対して$y\coloneqq x / \norm{x}$とすると$\norm{y}=\norm{x/\norm{x}}=\norm{x}/\norm{x}=1$より$y\in S$であるから$\fun{f}{y}=\norm{x/\norm{x}}_1=\norm{x}_1/\norm{x}$であって，$m\leq \norm{x}_1/\norm{x}\leq M$より$m\norm{x}\leq \norm{x}_1\leq M\norm{x}$である。
         $x=0$についても$\norm{0}=\norm{0}_1=0$であって，$m \norm{0}_1\leq \norm{0}\leq M\norm{0}_1$は成立するので，$\norm{\dummy}_1$と$\norm{\dummy}$は同値である。
 
-        有限次元ベクトル空間$V$上で与えられた任意の2つのノルム$\norm{\dummy}_1$, $\norm{\dummy}_2$はそれぞれ\equref{ノルムmax}で定義された$\norm{\dummy}$と同値であり，ノルムの同値は同値関係（\propref{ノルム同値関係}）なので，$\norm{\dummy}_1$と$\norm{\dummy}_2$も同値である。
+        有限次元線型空間$V$上で与えられた任意の2つのノルム$\norm{\dummy}_1$, $\norm{\dummy}_2$はそれぞれ\equref{ノルムmax}で定義された$\norm{\dummy}$と同値であり，ノルムの同値は同値関係（\propref{ノルム同値関係}）なので，$\norm{\dummy}_1$と$\norm{\dummy}_2$も同値である。
     \end{proof}
 \end{thm}
 
 
-\subsection{実ベクトル空間上のノルム}
+\subsection{実線型空間上のノルム}\subseclabel{ノルム実線型空間上のノルム}
 上ではノルムに関して，一般的な形でやや抽象的に述べた。
 以降では\cite{takano}に基づいて，常微分方程式を実際に扱う際に有用なノルムを具体的に扱う。
-まず，有限次元実ベクトル空間$\R^n$上のノルムの例を挙げる。
+ここでは有限次元実線型空間$\R^n$上のノルムの例を挙げる。
 以下では，$x=\pare{x_0,x_1,\dots,x_{n-1}}$の各成分を実数とし，$\abs{\dummy}$を実数の絶対値とする。
 
-\begin{eg}[Euclidノルム]\eglabel{ノルムEuclid}
-    標準的な距離：
+\begin{eg}[Euclidノルム]\eglabel{ノルムEuclidノルム}
+    原点からの標準的な距離：
     \begin{equation}
         \norm{x}_2\coloneqq \pare{\sum_{k=0}^{n-1} \abs{x_k}^2}^{\frac{1}{2}}
     \end{equation}
@@ -184,28 +185,81 @@
 \end{eg}
 
 \begin{eg}[一様ノルム]\eglabel{ノルム一様}
-    \thmref{ノルム同値性}の証明において\equref{ノルムmax}：
-    \begin{equation}
-        \norm{x}_\infty \coloneqq \max_{0\leq k\leq n-1}\bra{\abs{x_k}}
-        \tag{\ref{equ:ノルムmax}}
-    \end{equation}
-    はノルムである。
-    後述するように，$p$ノルムにおいて$p\to\infty$の極限で再現されることから，$\infty$ノルムとも呼ぶ。
+    \thmref{ノルム同値性}の証明において\equref{ノルムmax}で定義された
+    $\norm{\dummy}$はノルムである。
+    後述するように，$p$ノルムにおいて$p\to\infty$の極限で再現されることから，これを$\norm{\dummy}_\infty$と書いて$\infty$ノルムとも呼ぶ。
 \end{eg}
 
-\begin{eg}[$p$ノルム]\eglabel{ノルムpノルム}
+\begin{defi}[$p$ノルム]\defilabel{ノルムpノルム}
     $p$を$1$以上の実数とする。
-    このとき，
+    このとき，$x$の$p$ノルム$\norm{x}_p$を，
     \begin{equation}
         \norm{x}_p \coloneqq \pare{\sum_{k=0}^{n-1} \abs{x_k}^p}^{\frac{1}{p}}
     \end{equation}
-    はノルムである。
-    $1$ノルムのことをManhattan距離と呼ぶ。
-    $2$ノルムはEuclidノルムに一致する。
-    特に，$p\to\infty$の極限で$p$ノルムは\egref{ノルム一様}の一様ノルムに一致する。
-\end{eg}
+    で定める。
+\end{defi}
 
-以降，有限次元ベクトル空間のノルムは\egref{ノルム一様}の一様ノルムであるとする。
+\begin{prob}\problabel{ノルムpノルムがノルムであることの証明}
+    $p$ノルムがノルムの条件（\defiref{ノルム定義}）を満たしていることを確かめよ。
+\end{prob}
+
+$1$ノルムのことを絶対値ノルムと呼び，絶対値ノルムによって定まる距離をManhattan距離と呼ぶ。
+$2$ノルムはEuclidノルムに一致する。
+
+\begin{prop}\proplabel{ノルムpノルムが一様ノルムに収束する}
+    $p\to\infty$の極限で$p$ノルム$\norm{\dummy}_p$は\egref{ノルム一様}の一様ノルム$\norm{\dummy}_\infty$に一致する。
+    \begin{proof}
+        $x_M$は$x$の成分の$x_0,x_1,\dots,x_{n-1}$のうち絶対値が最大のものであるとする。
+        このとき，$\abs{x_M}=\norm{x}_\infty$と書ける。
+        定義より，
+        \begin{equation}
+            \norm{x}_p=\pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}},\quad
+            \norm{x}_\infty=\max_{0\leq k\leq n-1}\bra{\abs{x_k}}=\abs{x_M}
+        \end{equation}
+        であるから，
+        示すべきことは，
+        \begin{equation}
+            \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}\longrightarrow \abs{x_M}\quad\pare{p\to\infty}
+            \equlabel{ノルムpノルムの極限}
+        \end{equation}
+        である。
+        まず，$1<p<\infty$のとき，$\norm{x}_\infty \leq \norm{x}_p$であることを確かめる。
+        これは，
+        \begin{equation}
+            0\leq \abs{x_M}^p\leq \sum_{k=0}^{n-1}\abs{x_k}^p
+        \end{equation}
+        であることと，$0<p$のとき，$t\in \mleft[0,\infty\mright)$において$\fun{f}{t}=t^{\frac{1}{p}}$が狭義単調増加であること，$0$以上$(n-1)$以下の任意の整数$k$について$\abs{x_k}\geq 0$であることから，
+        \begin{equation}
+            \pare{\abs{x_M}^p}^{\frac{1}{p}}=\abs{x_M}\leq \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}
+        \end{equation}
+        より成立。
+        また，$0$以上$(n-1)$以下の任意の整数$k$について$0\leq \abs{x_k}\leq \abs{x_M}$であり，
+        \begin{equation}
+            0\leq \sum_{k=0}^{n-1} \abs{x_k}^p\leq \sum_{k=0}^{n-1}\abs{x_M}^p=n\abs{x_M}^p
+        \end{equation}
+        が成立する。
+        更に，$n$は固定された正整数であるから
+        \begin{equation}
+            n^{\frac{1}{p}}\longrightarrow n^0=1\quad\pare{p\to\infty}
+        \end{equation}
+        である。
+
+        これらのことから，
+        \begin{equation}
+            0\leq \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}-\abs{x_M}
+            \leq \pare{n\abs{x_M}^p}^{\frac{1}{p}}-\abs{x_M}
+            \leq \pare{n^{\frac{1}{p}}-1}\abs{x_M}
+            \longrightarrow 0\quad\pare{p\to\infty}
+        \end{equation}
+        が従い，はさみうちの原理から，
+        \begin{equation}
+            \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}\longrightarrow \abs{x_M}\quad\pare{p\to\infty}
+        \end{equation}
+        であり，これは\equref{ノルムpノルムの極限}の成立を意味している。
+    \end{proof}
+\end{prop}
+
+以降，有限次元線型空間のノルムは\egref{ノルム一様}の一様ノルムであるとする。
 
 \begin{prop}\proplabel{ノルム積分の不等式}
     $I$を$\R$上の閉区間であるとする。
@@ -217,8 +271,8 @@
     \begin{proof}
         $I$上可積分な$g$と絶対値に関する以下の不等式：
         \begin{equation}
-            \equlabel{ノルム積分絶対値不等式}
             \abs{\int_I dt\, \fun{g}{t}}\leq \int_I dt\, \abs{\fun{g}{t}}
+            \equlabel{ノルム積分絶対値不等式}
         \end{equation}
         を用いる。
         \begin{equation}
@@ -328,7 +382,7 @@
     \end{proof}
 \end{prop}
 
-\begin{prop}
+\begin{prop}\proplabel{ノルム作用素ノルム不等式1}
     \begin{equation}
         \forall x\in \R^n,\ \norm{Ax}\leq \norm{A}\norm{x}
     \end{equation}
@@ -398,7 +452,7 @@
     \end{proof}
 \end{prop}
 
-\begin{prop}
+\begin{prop}\proplabel{ノルム作用素ノルムはノルム}
     \defiref{ノルム作用素ノルム}で定義した$\norm{A}$はノルムである。
     \begin{proof}
         及び，\propref{ノルム作用素ノルム三角不等式}
@@ -422,18 +476,7 @@
     \end{proof}
 \end{prop}
 
-\begin{defi}
-    $\CC^n$上のベクトル$x=\pare{x_0,x_1,\dots,x_{n-1}}$の各成分を複素数，$A\colon\CC^n\to\CC^n$を線型作用素とし，実数の場合と同様に，
-    \begin{equation}
-        \norm{x}\coloneqq \max_{0\leq k\leq n-1}\bra{\abs{x_k}},\
-        \norm{A}\coloneqq \sup_{\norm{x}=1}\bra{\norm{Ax}}
-    \end{equation}
-    と定める。
-\end{defi}
 
-\begin{prop}
-    
-\end{prop}
 
 \begin{prob}\problabel{ノルムその1}
     $\R^n$のベクトル$x$のノルムは\egref{ノルム一様}で述べた一様ノルムとし，
@@ -451,11 +494,12 @@
 \end{prob}
 
 \begin{prob}\problabel{ノルムその2}
-    $\R^n$のベクトルに対して一様ノルムではなく，\egref{ノルムEuclid}で導入したEuclidノルムを用いた場合，\defiref{ノルム作用素ノルム}で定義される$\norm{A}$はどのような性質を持つだろうか。
+    $\R^n$のベクトルに対して一様ノルムではなく，\egref{ノルムEuclidノルム}で導入したEuclidノルムを用いた場合，\defiref{ノルム作用素ノルム}で定義される$\norm{A}$はどのような性質を持つだろうか。
+    例えば，$\R^2$上の一般的な線型作用素の作用素ノルムを，その成分を用いて具体的に表わせ。
     （関連：スペクトルノルム）
 \end{prob}
 
-%%% 複素数上でのノルム
+%%% 複素数上でのノルムは次のchapterで
 
 \section{Lipschitz条件}
 

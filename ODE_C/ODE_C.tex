@@ -1,0 +1,14 @@
+\documentclass[b5paper,draft]{ltjsbook}
+%\documentclass[b5paper]{ltjsbook}
+\usepackage{../Preamble/preamble}
+\begin{document}
+\ifdraft{\tableofcontents}{}
+\begin{defi}\defilabel{ノルム複素数成分のノルム}
+    $\CC^n$上のベクトル$x=\pare{x_0,x_1,\dots,x_{n-1}}$の各成分を複素数，$A\colon\CC^n\to\CC^n$を線型作用素とし，実数の場合と同様に，
+    \begin{equation}
+        \norm{x}\coloneqq \max_{0\leq k\leq n-1}\bra{\abs{x_k}},\
+        \norm{A}\coloneqq \sup_{\norm{x}=1}\bra{\norm{Ax}}
+    \end{equation}
+    と定める。
+\end{defi}
+\end{document}

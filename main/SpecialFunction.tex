@@ -1,7 +1,6 @@
 \RequirePackage[l2tabu, orthodox]{nag}
-% \documentclass[a4paper,draft,oneside,openany]{ltjsbook} % 下書き用
+% \documentclass[b5paper,draft,oneside,openany]{ltjsbook} % 下書き用
 \documentclass[b5paper,oneside,openany]{ltjsbook} % 清書用
-
 \usepackage{../Preamble/preamble}
 
 \title{微分方程式と特殊函数}
@@ -12,12 +11,15 @@
 \begin{document}
 \maketitle % 表紙
 
+\if0
 \chapter*{まえがき}{
     \input{../Introduction/introduction}
 }
+\fi
 
-\setcounter{tocdepth}{4}  % subsubsectionまで表示
 \tableofcontents  % 目次
+
+
 \input{../Notation/notation} % 記法
 
 
@@ -31,10 +33,12 @@
     \input{../ODE_R/ODE_R.tex}
 }
 
+\if0
 \chapter{複素領域における線型常微分方程式}{
     \begin{abstract}
         この章では主に\cite{takano}を参考にして複素領域における線型常微分方程式の一般論について述べる。
     \end{abstract}
+    \input{../ODE_C/ODE_C.tex}
 }
 
 \chapter{Frobeniusの方法}{
@@ -43,7 +47,7 @@
     \end{abstract}
     \input{../FrobeniusMethod/FrobeniusMethod.tex}
 }
-
+\fi
 
 \appendix
 \if0
