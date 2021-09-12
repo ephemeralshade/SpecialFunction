@@ -6,7 +6,7 @@
 \usepackage{docmute} % ファイル分割
 \usepackage{multicol} % 多段組
 \usepackage{luacode} % {luacode*}環境
-\usepackage[leqno,fleqn]{amsmath} % fleqn:数式の左寄せ, leqno:数式番号の左寄せ（(section番号).(数式番号)に書き換えるとalignなどで改行が入ってしまう）
+\usepackage[leqno]{amsmath} % fleqn:数式の左寄せ, leqno:数式番号の左寄せ（(section番号).(数式番号)に書き換えるとalignなどで改行が入ってしまう）
 %\usepackage{amsmath}
 % \usepackage{ascmac} % 囲み環境
 \usepackage{amsthm}
@@ -16,15 +16,16 @@
 \usepackage{bm}
 \usepackage{mathtools}
 \usepackage{enumitem} % 箇条書きなど
+\usepackage{autobreak}
 % \usepackage{comment} % comment環境(\if0 (hoge) \fi で十分)
 % \usepackage{url} 
 % \usepackage{here} % 表などをその場所に表示させる\begin{figure}[H] (hoge) \end{figure}
 
-\usepackage[unicode,pdfusetitle]{hyperref} % ハイパーリンク
+\usepackage[unicode,pdfusetitle,hypertexnames=false]{hyperref} % ハイパーリンク
 \usepackage{xcolor}
 \hypersetup{
 	colorlinks=true,
-	citecolor=blue,
+	citecolor=violet,
 	linkcolor=teal,
 	urlcolor=orange,
 }
@@ -41,7 +42,7 @@
 % \usepackage{diagbox} % 表中で斜線を表示
 % \usepackage{lscape} % landscape環境を有効化
 
-\usepackage{prooftrees} % 証明木
+% \usepackage{prooftrees} % 証明木
 
 \newcommand{\pdiff}[2]{\frac{\partial #1}{\partial #2}} % 偏微分
 \newcommand{\pdiffn}[3]{\frac{\partial^{#3} #1}{\partial #2^{#3}}} % n階偏微分
@@ -225,8 +226,8 @@
 \newtheorem{nota}[thm]{記法}
 \newtheorem{supple}[thm]{補足}
 
-
-\mathtoolsset{showonlyrefs=true} % 式番号を参照されたもののみ付ける
+% showonlyrefsはwtrefやcleverefと相性が悪いので使わない
+%\mathtoolsset{showonlyrefs=true} % 式番号を参照されたもののみ付ける
 
 \usepackage{wtref} % 相互参照支援
 % キーの定義
@@ -259,14 +260,15 @@
 \def\ans#1{\vspace{5pt}\par\noindent\textbf{問\ref{prob:#1}.}}
 \def\endans{\vspace{5pt}\par}
 
+
+\if0
 % 式参照した場合auxに書き込み（これをしないと\mathtoolsset{showonlyrefs=true}と共存できない）
 \makeatletter
 \let\xx@temp\equref
 \def\equref#1{\xx@temp{#1}%
 \immediate\write\@auxout{\string\MT@newlabel{equ:#1}}}
 \makeatother
-
-
+\fi
 
 % 式番号をchapterごとにつける
 \makeatletter
