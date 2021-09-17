@@ -6,7 +6,7 @@
 \usepackage{docmute} % ファイル分割
 \usepackage{multicol} % 多段組
 \usepackage{luacode} % {luacode*}環境
-\usepackage[leqno]{amsmath} % fleqn:数式の左寄せ, leqno:数式番号の左寄せ（(section番号).(数式番号)に書き換えるとalignなどで改行が入ってしまう）
+\usepackage[fleqn]{amsmath} % fleqn:数式の左寄せ, leqno:数式番号の左寄せ（(section番号).(数式番号)に書き換えるとalignなどで改行が入ってしまう）
 %\usepackage{amsmath}
 % \usepackage{ascmac} % 囲み環境
 \usepackage{amsthm}
@@ -57,6 +57,10 @@
 \newcommand{\Q}{\mathbb{Q}} % 有理数全体
 \newcommand{\R}{\mathbb{R}} % 実数全体
 \newcommand{\CC}{\mathbb{C}} % 複素数全体
+
+\newcommand{\setN}[1][n]{\bm{N}_{#1}} % 0以上(n-1)以下の整数全体
+\newcommand{\Rposi}{\mathbb{R}_{>}} % 正の実数
+\newcommand{\Rnonnega}{\mathbb{R}_{\geq}} % 非負の実数
 
 \newcommand{\pmat}[1]{\mleft(\begin{matrix} #1 \end{matrix}\mright)} % 括弧付きの行列
 \newcommand{\mat}[1]{\begin{matrix} #1 \end{matrix}} % 括弧なしの行列

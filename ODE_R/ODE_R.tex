@@ -53,15 +53,10 @@
     \begin{proof}
         示すべきことは以下の通り：
         \begin{equation}
-            \forall x,\forall y\in V,\ \forall \varepsilon\in\R,\, \squ{
-                \varepsilon>0 \, \Longrightarrow\, \pare{
-                    \exists \delta\in \R;\ \bsqu{
-                        \delta>0\, \land\, \pare{
-                            \norm{x-y}<\delta\, \Longrightarrow\, \abs{\norm{x}-\norm{y}}<\varepsilon
-                        }
-                    }
-                }
-            }.
+            \forall x,\forall y\in V,\ \forall \varepsilon\in\Rposi,\
+                \exists \delta\in \Rposi;\ \bsqu{
+                    \norm{x-y}<\delta\, \Longrightarrow\, \abs{\norm{x}-\norm{y}}<\varepsilon
+                }.
         \end{equation}
 
         実際，$\delta\coloneqq \varepsilon$と取れば，\propref{ノルム三角不等式}により，$\abs{\norm{x}-\norm{y}}\leq \norm{x-y}<\delta =\varepsilon$であるから，ノルムは連続関数である。
@@ -219,7 +214,7 @@ $2$ノルムはEuclidノルムに一致する。
         であるから，
         示すべきことは，
         \begin{equation}
-            \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}\longrightarrow \abs{x_M}\quad\pare{p\to\infty}
+            \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}\to \abs{x_M}\quad\pare{p\to\infty}
             \equlabel{ノルムpノルムの極限}
         \end{equation}
         である。
@@ -230,7 +225,7 @@ $2$ノルムはEuclidノルムに一致する。
         \end{equation}
         であることと，$0<p$のとき，$t\in \mleft[0,\infty\mright)$において$\fun{f}{t}=t^{\frac{1}{p}}$が狭義単調増加であること，$0$以上$(n-1)$以下の任意の整数$k$について$\abs{x_k}\geq 0$であることから，
         \begin{equation}
-            \pare{\abs{x_M}^p}^{\frac{1}{p}}=\abs{x_M}\leq \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}
+            \abs{x_M}=\pare{\abs{x_M}^p}^{\frac{1}{p}}\leq \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}
         \end{equation}
         より成立。
         また，$0$以上$(n-1)$以下の任意の整数$k$について$0\leq \abs{x_k}\leq \abs{x_M}$であり，
@@ -240,7 +235,7 @@ $2$ノルムはEuclidノルムに一致する。
         が成立する。
         更に，$n$は固定された正整数であるから
         \begin{equation}
-            n^{\frac{1}{p}}\longrightarrow n^0=1\quad\pare{p\to\infty}
+            n^{\frac{1}{p}}\to n^0=1\quad\pare{p\to\infty}
         \end{equation}
         である。
 
@@ -249,17 +244,26 @@ $2$ノルムはEuclidノルムに一致する。
             0\leq \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}-\abs{x_M}
             \leq \pare{n\abs{x_M}^p}^{\frac{1}{p}}-\abs{x_M}
             \leq \pare{n^{\frac{1}{p}}-1}\abs{x_M}
-            \longrightarrow 0\quad\pare{p\to\infty}
+            \to 0\quad\pare{p\to\infty}
         \end{equation}
         が従い，はさみうちの原理から，
         \begin{equation}
-            \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}\longrightarrow \abs{x_M}\quad\pare{p\to\infty}
+            \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}\to \abs{x_M}\quad\pare{p\to\infty}
         \end{equation}
         であり，これは\equref{ノルムpノルムの極限}の成立を意味している。
     \end{proof}
 \end{prop}
 
 以降，有限次元線型空間のノルムは\egref{ノルム一様}の一様ノルムであるとする。
+
+\begin{nota}\notalabel{ノルムn-1以下の整数}
+    以下では簡単のために，$n-1$以下の非負整数の集合を，
+    \begin{equation}
+        \setN\coloneqq \set{j}{j\in\N\ \land\  0\leq j\leq n-1}
+    \end{equation}
+    と書く。
+\end{nota}
+
 
 \begin{prop}\proplabel{ノルム積分の不等式}
     $I$を$\R$上の閉区間であるとする。
@@ -276,17 +280,14 @@ $2$ノルムはEuclidノルムに一致する。
         \end{equation}
         を用いる。
         \begin{equation}
-            \forall j\in \N,\, \forall t\in I,\ \bsqu{
-                0\leq j\leq n-1\ \Longrightarrow\ \fun{f_j}{t}\leq \abs{\fun{f_j}{t}}\leq \norm{\fun{f}{t}}
-            }
+            \forall j\in \setN,\, \forall t\in I,\ 
+            \fun{f_j}{t}\leq \abs{\fun{f_j}{t}}\leq \norm{\fun{f}{t}}
         \end{equation}
         であるから，
         \begin{equation}
-            \forall j\in \N,\, \squ{
-                0\leq j\leq n-1\ \Longrightarrow\ 
-                \int_I dt\, \fun{f_j}{t}\leq \int_I dt\, \abs{\fun{f_j}{t}}
-                \leq \int_I dt\, \norm{\fun{f}{t}}
-            }
+            \forall j\in \setN,\ 
+            \int_I dt\, \fun{f_j}{t}\leq \int_I dt\, \abs{\fun{f_j}{t}}
+            \leq \int_I dt\, \norm{\fun{f}{t}}
         \end{equation}
         である。
         ここで，\equref{ノルム積分絶対値不等式}の不等式から，
@@ -367,13 +368,13 @@ $2$ノルムはEuclidノルムに一致する。
         \end{equation}
         となり，1つ目の等号成立は，
         \begin{equation}
-            \bsqu{\forall k\in\N,\ \pare{0\leq k\leq n-1 \ \Rightarrow\ a_{jk}x_k\geq 0}}
+            \bsqu{\forall k\in\setN,\ a_{jk}x_k\geq 0}
             \ \lor\ 
-            \bsqu{\forall k\in\N,\ \pare{0\leq k\leq n-1 \ \Rightarrow\ a_{jk}x_k\leq 0}}
+            \bsqu{\forall k\in\setN,\ a_{jk}x_k\leq 0}
         \end{equation}
         のとき，すなわち$a_{jk}x_k$が全て同符号のときである。
         2つ目の等号成立は，$x$の各成分の絶対値が$1$に等しい場合であり，この2つの条件は同時に満たすことができる。
-        実際，各$k$について，$a_{jk}\geq 0$なら$x_k=1$, $a_{jk}<0$なら$x_k=-1$と定めれば，いずれの等号も成立する。
+        実際，各$k$について，$a_{jk}\geq 0$なら$x_k=1$とし，$a_{jk}<0$なら$x_k=-1$と定めれば，いずれの等号も成立する。
         これより，
         \begin{equation}
             \norm{A} = \max_{0\leq j\leq n-1} \bra{\sum_{k=0}^{n-1} \abs{a_{jk}}}
@@ -427,11 +428,9 @@ $2$ノルムはEuclidノルムに一致する。
         
         次に，$m$は，
         \begin{equation}
-            \forall \ell,\ \squ{
-                0\leq \ell \leq n-1\ \Longrightarrow \ 
-                \sum_{k=0}^{n-1}\abs{b_{\ell k}}\leq
-                \sum_{k=0}^{n-1}\abs{b_{m k}}
-            }
+            \forall \ell\in \setN,\
+            \sum_{k=0}^{n-1}\abs{b_{\ell k}}\leq
+            \sum_{k=0}^{n-1}\abs{b_{m k}}
         \end{equation}
         を満たす，すなわち$\norm{B}$を与える行の添字とする。
         このとき，
