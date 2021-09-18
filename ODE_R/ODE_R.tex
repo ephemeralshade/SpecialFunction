@@ -6,11 +6,13 @@
 この章では，実領域における常微分方程式の解の存在性と一意性に関する命題を扱う。
 参考文献は\cite{takano}である。
 
-以下では$t$を実数とし，$x=(x_0,x_1,\dots,x_{n-1})$を$\R^n$の元とする。
-
 まず，記号や用語の準備をする。
-$E$を$\R\times\R^{n}$の部分集合とする。
-$f\colon E\to\R^n;\pare{t,x}\mapsto \fun{f}{t,x}$を既知関数とする。
+以下では$t$を実数とし，$x=(x^0,x^1,\dots,x^{n-1})$を$\R^n$の元とする。
+$E$を$\R\times\R^{n}$の部分集合とし，
+\begin{equation}
+    f\colon E\to\R^n;\pare{t,x}\mapsto \fun{f}{t,x}=(\fun{f^0}{t,x},\fun{f^1}{t,x},\dots,\fun{f^{n-1}}{t,x})
+\end{equation}
+を既知関数とする。
 以降，
 \begin{equation}
     \diff{x}{t}=\fun{f}{t,x}
@@ -19,7 +21,7 @@ $f\colon E\to\R^n;\pare{t,x}\mapsto \fun{f}{t,x}$を既知関数とする。
 で表される微分方程式を扱う。
 成分毎に書けば，
 \begin{equation}
-    \diff{x_j}{t}=\fun{f_j}{t,x_0,x_1,\dots,x_{n-1}},\quad\pare{0\leq j\leq n-1}
+    \diff{x^j}{t}=\fun{f^j}{t,x^0,x^1,\dots,x^{n-1}},\quad\pare{0\leq j\leq n-1}
     \equlabel{ODE_R-微分方程式（成分表記）}
 \end{equation}
 である。
@@ -28,7 +30,7 @@ $f\colon E\to\R^n;\pare{t,x}\mapsto \fun{f}{t,x}$を既知関数とする。
     $I$を$\R$上の区間とする。
     $x=\fun{x}{t}$が区間$I$における\equref{ODE_R-微分方程式（ベクトル表記）}の解であるとは，
     \begin{equation}
-        \forall j\in\setN,\, \forall t\in I,\, \diff{\fun{x_j}{t}}{t}=\fun{f_j}{t,\fun{x_0}{t},\fun{x_1}{t},\dots,\fun{x_{n-1}}{t}}
+        \forall j\in\setN,\, \forall t\in I,\, \diff{\fun{x^j}{t}}{t}=\fun{f^j}{t,\fun{x^0}{t},\fun{x^1}{t},\dots,\fun{x^{n-1}}{t}}
     \end{equation}
     が成立することである。
     但し，区間$I$に有限の上界や下界が存在する場合，区間の端での微分は片側微分係数で定める。
@@ -43,6 +45,139 @@ $f\colon E\to\R^n;\pare{t,x}\mapsto \fun{f}{t,x}$を既知関数とする。
 を満たす解に関して考察する。
 
 \section{Picardの逐次近似法}
+\begin{thm}[Gr\"{o}nwall-Bellmanの不等式]\thmlabel{ODE_R-Gronwall-Bellmanの不等式}
+    $a<a'$とし，$I\coloneqq [a,a']$とする。
+    関数$X\colon I\to \R$は$I$上で連続とする，
+    また，関数$c,L\colon I\to \R$は$I$上連続かつ非負であるとする。
+    \begin{equation}
+        \forall t\in I,\ 0\leq \fun{X}{t}\leq \fun{c}{t} + \int_a^t ds\, \fun{L}{s}\fun{X}{s}
+        \equlabel{ODE_R-Gronwall-Bellmanの不等式-仮定}
+    \end{equation}
+    が成り立つとき，
+    \begin{equation}
+        \forall t\in I,\ 0\leq \fun{X}{t}\leq \fun{c}{t}+\int_a^t ds\, \fun{c}{s}\fun{L}{s}\fun{\exp}{\int_s^t du\, \fun{L}{u}}
+        \equlabel{ODE_R-Gronwall-Bellmanの不等式}
+    \end{equation}
+    が成立する。
+    \begin{proof}
+        $y\colon I\to \R$を，
+        \begin{equation}
+            \fun{y}{t}\coloneqq \int_a^t ds\,\fun{L}{s}\fun{X}{s}
+        \end{equation}
+        と定めると，
+        \begin{equation}
+            0\leq \fun{X}{t}\leq \fun{c}{t}+\fun{y}{t}
+            \equlabel{ODE_R-Gronwall-Bellmanの不等式-yの評価式}
+        \end{equation}
+        となる。
+        微積分学の基本定理により，
+        \begin{equation}
+            \diff{\fun{y}{t}}{t}=\fun{L}{t}\fun{X}{t}
+        \end{equation}
+        である。
+        $\fun{L}{t}$は$I$上で非負であるから，\equref{ODE_R-Gronwall-Bellmanの不等式-仮定}に$\fun{L}{t}$を掛けることで
+        \begin{equation}
+            \forall t\in I,\ \diff{\fun{y}{t}}{t} - \fun{L}{t}\fun{y}{t}\leq \fun{L}{t}\fun{c}{t}
+        \end{equation}
+        が得られる。
+        ここで，両辺に$\exp\spare{-\int_a^t du\, \fun{L}{u}}(> 0)$を掛けると，$I$上の任意の$t$に対し，
+        \begin{equation}
+            \fun{\exp}{-\int_a^t du\, \fun{L}{u}}\diff{\fun{y}{t}}{t}
+            -\fun{L}{t}\fun{\exp}{-\int_a^t du\, \fun{L}{u}}\fun{y}{t}
+            \leq \fun{L}{t}\fun{c}{t}\fun{\exp}{-\int_a^t du\, \fun{L}{u}}
+        \end{equation}
+        が得られる。
+        この式の左辺は，
+        \begin{equation}
+            \diff{}{t}\squ{\fun{\exp}{-\int_a^t du\, \fun{L}{u}} \fun{y}{t}}
+            =\fun{\exp}{-\int_a^t du\, \fun{L}{u}}\diff{\fun{y}{t}}{t}
+            -\fun{L}{t}\fun{\exp}{-\int_a^t du\, \fun{L}{u}}\fun{y}{t}
+        \end{equation}
+        と書けるから，
+        \begin{equation}
+            \forall t\in I,\ \diff{}{t}\squ{\fun{\exp}{-\int_a^t du\, \fun{L}{u}} \fun{y}{t}}
+            \leq \fun{L}{t}\fun{c}{t}\fun{\exp}{-\int_a^t du\, \fun{L}{u}}
+        \end{equation}
+        が成立する。
+        この式の両辺を$a$から$t$まで定積分することを考える。
+        左辺について，定義から$\fun{y}{a}=0$であることに注意すると，
+        \begin{align}
+            &\int_a^t ds\, \diff{}{s}\squ{\fun{\exp}{-\int_a^s du\, \fun{L}{u}} \fun{y}{s}}
+            \\
+            &=\squ{\fun{\exp}{-\int_a^s du\, \fun{L}{u}} \fun{y}{s}}_a^t
+            =\fun{\exp}{-\int_a^t du\, \fun{L}{u}} \fun{y}{t}
+        \end{align}
+        となる。
+        右辺は，
+        \begin{equation}
+            \int_a^t ds\, \fun{L}{s}\fun{c}{s}\fun{\exp}{-\int_a^s du\, \fun{L}{u}}
+        \end{equation}
+        であるから，
+        \begin{equation}
+            \fun{\exp}{-\int_a^t du\, \fun{L}{u}} \fun{y}{t}\leq 
+            \int_a^t ds\, \fun{L}{s}\fun{c}{s}\fun{\exp}{-\int_a^s du\, \fun{L}{u}}
+        \end{equation}
+        が得られる。
+        この式の両辺に$\fun{\exp}{\int_a^t du\, \fun{L}{u}}(>0)$を掛ける。
+        左辺は$\fun{y}{t}$になり，右辺は，
+        \begin{align}
+            &\fun{\exp}{\int_a^t du\, \fun{L}{u}} \int_a^t ds\, \fun{L}{s}\fun{c}{s}\fun{\exp}{-\int_a^s du\, \fun{L}{u}}
+            \\
+            &=\int_a^t ds\, \fun{L}{s}\fun{c}{s}\fun{\exp}{\int_s^t du\, \fun{L}{u}}
+        \end{align}
+        となる。
+        ここで，指数法則と
+        \begin{equation}
+            \int_a^t du\, \fun{L}{u}-\int_a^s du\, \fun{L}{u}
+            =\int_a^t du\, \fun{L}{u}+\int_s^a du\, \fun{L}{u}
+            =\int_s^t du\, \fun{L}{u}
+        \end{equation}
+        を用いた。
+
+        これらにより，
+        \begin{equation}
+            \fun{y}{t}\leq \int_a^t ds\, \fun{L}{s}\fun{c}{s}\fun{\exp}{\int_s^t du\, \fun{L}{u}}
+        \end{equation}
+        が導かれ，\equref{ODE_R-Gronwall-Bellmanの不等式-yの評価式}と併せると，
+        \begin{equation}
+            0\leq \fun{X}{t}\leq \fun{c}{t}+\fun{y}{t}\leq \fun{c}{t}+\int_a^t ds\, \fun{c}{s}\fun{L}{s}\fun{\exp}{\int_s^t du\, \fun{L}{u}}
+        \end{equation}
+        が従い，これは\equref{ODE_R-Gronwall-Bellmanの不等式}の成立を意味する。
+    \end{proof}
+\end{thm}
+
+\begin{cor}\corlabel{ODE_R-Gronwall-Bellmanの不等式の系}
+    \thmref{ODE_R-Gronwall-Bellmanの不等式}において，$c$, $L$を単なる非負定数とすると，
+    \begin{equation}
+        \forall t\in I,\ 0\leq \fun{X}{t}\leq c+L\int_a^t ds\, \fun{X}{s}
+    \end{equation}
+    が成立するとき，
+    \begin{equation}
+        \forall t\in I,\ 0\leq \fun{X}{t}\leq ce^{\pare{t-a}L}
+    \end{equation}
+    が成り立つ。
+    \begin{proof}
+        \equref{ODE_R-Gronwall-Bellmanの不等式}の右辺の積分は，
+        \begin{align}
+            &\int_a^t ds\, cL\fun{\exp}{\int_s^t du\, L}
+            =cL\int_a^t ds\, e^{\pare{s-t}L}
+            =cLe^{-tL}\cdot\squ{-\frac{e^{-sL}}{L}}_a^t
+            \\
+            &=-ce^{tL}\pare{e^{-tL}-e^{-aL}}
+            =-c + ce^{\pare{t-a}L}
+        \end{align}
+        となるから，\equref{ODE_R-Gronwall-Bellmanの不等式}より，
+        \begin{equation}
+            \forall t\in I,\
+            0\leq \fun{X}{t}\leq c + \pare{-c + ce^{\pare{t-a}L}} = ce^{\pare{t-a}L}
+        \end{equation}
+        が従う。
+    \end{proof}
+\end{cor}
+
+\thmref{ODE_R-Gronwall-Bellmanの不等式}から得られた\corref{ODE_R-Gronwall-Bellmanの不等式の系}は，後述する\thmref{ODE_R-Picardの定理}の証明において，Picardの逐次近似法によって構成した解が唯一の解であることを示す際に有用である。
+
+
 \begin{thm}[Picardの定理]\thmlabel{ODE_R-Picardの定理}
     $r$, $\rho$を正数とする。
     $\fun{f}{t,x}$が$\R\times\R^n$上の有界閉領域
@@ -64,15 +199,21 @@ $f\colon E\to\R^n;\pare{t,x}\mapsto \fun{f}{t,x}$を既知関数とする。
         は同値である。
         実際，\equref{ODE_R-積分方程式}を満たす$x=\fun{x}{t}$の第$j$成分は，微積分学の基本定理により，
         \begin{equation}
-            \diff{\fun{x_j}{t}}{t}=\diff{}{t}\pare{b_j+\int_a^t ds\, \fun{f_j}{s,\fun{x}{s}}}
-            =\fun{f_j}{t,\fun{x}{t}}
+            \diff{\fun{x^j}{t}}{t}=\diff{}{t}\pare{b^j+\int_a^t ds\, \fun{f^j}{s,\fun{x}{s}}}
+            =\fun{f^j}{t,\fun{x}{t}}
         \end{equation}
         を満たし，
         \begin{equation}
-            \fun{x_j}{a}=b_j+\int_a^a ds\, \fun{f_j}{s,\fun{x}{s}}=b_j
+            \fun{x^j}{a}=b^j+\int_a^a ds\, \fun{f^j}{s,\fun{x}{s}}=b^j
         \end{equation}
         も満たす。
         ベクトルでまとめて表せば\equref{ODE_R-微分方程式}を満たすことに他ならない。
+
+        証明の流れは以下の通りである。
+        区間$I'$上で\equref{ODE_R-積分方程式}の解をPicardの逐次近似法によって構成する。
+        そして，構成した解が唯一の解であることを\thmref{ODE_R-Gronwall-Bellmanの不等式}から得られた\corref{ODE_R-Gronwall-Bellmanの不等式の系}の不等式を用いて示す。
+
+        %%%
     \end{proof}
 \end{thm}
 
