@@ -22,26 +22,33 @@
 
 \input{../Notation/notation} % 記法
 
+\chapter{実解析}\chaplabel{実解析}{
+    \begin{abstract}
+        この章では，常微分方程式を扱う上で必要になる実解析の事項を簡単に取り扱う。
+    \end{abstract}
+    \input{../RealAnalysis/RealAnalysis.tex}
+}
 
-
+\if0
+\chapter{複素解析}\chaplabel{複素解析}{
+    \input{../ComplexAnalytics/ComplexAnalytics.tex}
+}
+\fi
 
 \part{常微分方程式}
-\chapter{実領域における線型常微分方程式}{
-    \begin{abstract}
-        この章では主に\cite{takano}を参考にして，実領域における線型常微分方程式の一般論について述べる。
-    \end{abstract}
+\chapter{実領域における常微分方程式}\chaplabel{実領域における常微分方程式}{
     \input{../ODE_R/ODE_R.tex}
 }
 
 \if0
-\chapter{複素領域における線型常微分方程式}{
+\chapter{複素領域における常微分方程式}\chaplabel{複素領域における常微分方程式}{
     \begin{abstract}
-        この章では主に\cite{takano}を参考にして複素領域における線型常微分方程式の一般論について述べる。
+        この章では主に\cite{takano}を参考にして，複素領域における線型常微分方程式の一般論について述べる。
     \end{abstract}
     \input{../ODE_C/ODE_C.tex}
 }
 
-\chapter{Frobeniusの方法}{
+\chapter{Frobeniusの方法}\chaplabel{Frobeniusの方法}{
     \begin{abstract}
         This is abstract.
     \end{abstract}
