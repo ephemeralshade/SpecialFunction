@@ -51,7 +51,7 @@
 \begin{prop}[ノルムの連続性]\proplabel{ノルム-連続性}
     ノルムは連続関数である。
     \begin{proof}
-        示すべきことは以下の通り：
+        示すべきことは以下の通り（\defiref{ノルム-関数の連続性}も参照）：
         \begin{equation}
             \forall x,\forall y\in V,\ \forall \varepsilon\in\Rposi,\
                 \exists \delta\in \Rposi;\ \bsqu{
@@ -273,7 +273,7 @@ $2$ノルムはEuclidノルムに一致する。
     \end{equation}
     が成立する。
     \begin{proof}
-        $I$上可積分な$g$と絶対値に関する以下の不等式：
+        $I$上可積分な$g\colon I\to \R$と絶対値に関する以下の不等式：
         \begin{equation}
             \abs{\int_I dt\, \fun{g}{t}}\leq \int_I dt\, \abs{\fun{g}{t}}
             \equlabel{ノルム-積分絶対値不等式}
@@ -501,7 +501,170 @@ $2$ノルムはEuclidノルムに一致する。
 %%% 複素数上でのノルムは次のchapterで
 
 \section{Lipschitz条件}
+$m$, $n$を正整数とする。
+$A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
 
+\begin{defi}[連続性]\defilabel{ノルム-関数の連続性}
+    $f$が$A$上連続であるとは，
+    \begin{equation}
+        \forall \varepsilon\in\Rposi,\, \forall x\in A,\, \exists \delta \in \Rposi;\, \forall y \in A,\ \bsqu{
+            \norm{x-y}<\delta \ \Longrightarrow\ \norm{\fun{f}{x}-\fun{f}{y}}<\varepsilon
+        }
+    \end{equation}
+    が成立することである。
+\end{defi}
+
+\begin{defi}[一様連続性]
+    $f$が$A$上一様連続であるとは，
+    \begin{equation}
+        \forall \varepsilon\in\Rposi,\, \exists \delta \in \Rposi;\,  \forall x, \forall y \in A,\ \bsqu{
+            \norm{x-y}<\delta \ \Longrightarrow\ \norm{\fun{f}{x}-\fun{f}{y}}<\varepsilon
+        }
+    \end{equation}
+    が成立することである。
+\end{defi}
+
+\begin{defi}[Lipschitz連続]
+    $f$が$A$上Lipschitz連続であるとは，
+    \begin{equation}
+        \exists L\in \Rnonnega;\, \forall x, \forall y \in A,\ \bsqu{
+            \norm{\fun{f}{x}-\fun{f}{y}}\leq L \norm{x - y}
+        }
+    \end{equation}
+    が成立することである。
+    このとき，$L$をLipschitz定数という。
+\end{defi}
+
+\begin{rem}
+    Lipschitz定数は一意的ではない。
+    実際，$L$がLipschitz定数のとき，$c>1$を用いると$\norm{\fun{f}{x}-\fun{f}{y}}\leq L \norm{x - y}\leq cL \norm{x-y}$も成立するので，$(L\neq )cL$もLipschitz定数である。
+    上の条件を満たすLipschitz定数全体の下限を改めてLipschitz定数と呼ぶことにすれば，これは一意である。
+\end{rem}
+
+\begin{prop}\proplabel{ノルム-Lipschitz連続なら一様連続}
+    $A$上Lipschitz連続な関数は$A$上一様連続である。
+    \begin{proof}
+        $f$を$A$上Lipschitz連続であると仮定し，Lipschitz定数の一つを$L$と記す。
+        任意の正数$\varepsilon$に対して，$\delta \coloneqq \varepsilon / \pare{L+1}$と置けば，$\delta >0$であり，$\norm{x-y}<\delta = {\varepsilon}/\pare{L+1}$のとき，$L\norm{x-y}<\pare{L+1}\norm{x-y}<\varepsilon$であり，
+        \begin{equation}
+            \norm{\fun{f}{x} - \fun{f}{y}} \leq L \norm{x - y}<\pare{L+1}\norm{x-y}<\varepsilon
+        \end{equation}
+        が成立するので一様連続である。
+    \end{proof}
+\end{prop}
+
+\begin{prop}\proplabel{ノルム-一様連続なら連続}
+    $A$上一様連続な関数は$A$上連続である。
+    \begin{proof}
+        一般に，$\fun{P}{a,b}$を$a$, $b$に関する任意の命題としたとき，
+        \begin{equation}
+            \squ{\exists a;\, \forall b,\, \fun{P}{a,b}} \ \Longrightarrow\ \squ{\forall b,\, \exists a;\, \fun{P}{a,b}}
+            \equlabel{ノルム-恒真命題 exists forall then forall exists}
+        \end{equation}
+        は恒真である。
+        証明木を描いてみると，
+        \figref{ノルム-恒真命題 exists forall then forall existsの証明木}に示すように，\equref{ノルム-恒真命題 exists forall then forall exists}が恒真であることが判る。
+        \ifdraft{}{
+        \begin{figure}[H]
+            \centering
+            \begin{prooftree}
+                {
+                    close with={\times},
+                    to prove={
+                        \squ{\exists a;\, \forall b,\, \fun{P}{a,b}}
+                        \vdash
+                        \squ{\forall b,\, \exists a;\, \fun{P}{a,b}}
+                    }
+                }
+                [
+                    {\exists a;\, \forall b,\, \fun{P}{a,b}}, just={Assumption}, name={Assumption}
+                    [\lnot\squ{\forall b,\, \exists a;\, \fun{P}{a,b}}, just={$\lnot$ Conclusion}
+                    [{\exists b;\, \lnot\squ{\exists a,\, \fun{P}{a,b}}}, just={$\lnot \forall b$ {}:!u}
+                    [{\exists b;\, \forall a,\, \lnot\fun{P}{a,b}}, just={$\lnot \exists a$ {}:!u}
+                    [{\forall b,\, \fun{P}{a',b}}, just={$\exists a$ {}:Assumption}
+                    [{\forall a,\, \lnot \fun{P}{a,b'}}, just={$\exists b$ {}:!uu}
+                    [{\fun{P}{a',b'}}, just={$\forall b$ {}:!uu}
+                    [{\lnot\fun{P}{a',b'}}, just={$\forall a$ {}:!uu}, close={{}:!u,!c}
+                    ]]]]]]]]
+            \end{prooftree}
+            \caption{\equref{ノルム-恒真命題 exists forall then forall exists}の証明木}
+            \figlabel{ノルム-恒真命題 exists forall then forall existsの証明木}
+        \end{figure}}
+        一様連続性では$\exists \delta;\, \forall x$の順であるのに対し，連続性では$\forall x,\, \exists \delta;$の順であるから，一様連続なら連続である。
+    \end{proof}
+\end{prop}
+
+\begin{cor}
+    $A$上Lipschitz連続な関数は$A$上連続である。
+    \begin{proof}
+        \propref{ノルム-Lipschitz連続なら一様連続}と
+        \propref{ノルム-一様連続なら連続}から直ちに従う。
+    \end{proof}
+\end{cor}
+
+\begin{prop}
+    $-\infty<a<b<\infty$とし，$I\coloneqq [a,b]$と定め，$f\colon I\to \R^n$は$I$上で有界かつ可積分とする。
+    $F\colon I\to \R^n$を，
+    \begin{equation}
+        \fun{F}{x}\coloneqq \int_a^x dt\, \fun{f}{t}
+    \end{equation}
+    によって定めると，$F$は$I$上Lipschitz連続である。
+    \begin{proof}
+        $x,y\in I$に対し，
+        \begin{equation}
+            \fun{F_j}{x}-\fun{F_j}{y}=\int_a^x dt\, \fun{f_j}{t} - \int_a^y dt\, \fun{f_j}{t}=\int_y^x dt\, \fun{f_j}{t}
+        \end{equation}
+        である。
+        $f$は$I$上で有界であるから，
+        \begin{equation}
+            L\coloneqq \sup_{t\in I}\bra{\norm{\fun{f}{t}}}\geq 0
+        \end{equation}
+        と定めておくと，$I$上で常に$\abs{\fun{f_j}{t}}\leq L$であり，\equref{ノルム-積分絶対値不等式}により，
+        \begin{equation}
+            \abs{\fun{F_j}{x}-\fun{F_j}{y}}=\abs{\int_y^x dt\, \fun{f_j}{t}}
+            \leq \abs{\int_x^y dt\, \abs{\fun{f_j}{t}}}\leq \abs{\int_x^y dt\, L}
+            = L\abs{x-y}
+        \end{equation}
+        である。
+        これより，$I$上の任意の$x$, $y$に関して
+        \begin{equation}
+            \norm{\fun{F}{x}-\fun{F}{y}}\leq L\abs{x-y}
+        \end{equation}
+        が成立するから，$F$は$I$上Lipschitz連続である。
+    \end{proof}
+\end{prop}
+
+\begin{prop}
+    $a<b$とする。
+    $f\colon [a,b]\to \R^n$は$[a,b]$上で連続，$(a,b)$上で微分可能とし，$(a,b)$上で$\norm{\fun{f'}{t}}$は有限であるとする。
+    このとき，$f$は$[a,b]$上でLipschitz連続である。
+    \begin{proof}
+        $(a,b)$上での$\norm{\fun{f'}{t}}$の有界性から，
+        \begin{equation}
+            L\coloneqq \sup_{t\in(a,b)}\max_{j}\bra{\abs{\fun{f'_j}{t}}}<\infty
+        \end{equation}
+        が定まり，$L\geq 0$である。
+        $f$の各成分について，平均値の定理より，
+        \begin{equation}
+            \forall j\in \setN, \forall x,\forall y\in[a,b], \squ{
+                x<y\, \Rightarrow\, \exists c_j\in (a,b); \pare{x<c_j<y\, \land \ \fun{f_j}{x}-\fun{f_j}{y}=\fun{f'_j}{c_j}\pare{x-y}}
+            }
+        \end{equation}
+        が成立する。
+        このような$c_j$を取ったとき，
+        \begin{equation}
+            \norm{\fun{f}{x}-\fun{f}{y}}=\max_{j}\bra{\abs{\fun{f_j}{x}-\fun{f_j}{y}}}
+            =\max_{j}\bra{\abs{\fun{f'_j}{c_j}}\abs{x-y}}\leq L\abs{x-y}
+            \equlabel{ノルム-f'が有界ならLipschitz連続-不等式}
+        \end{equation}
+        である。
+        $x>y$のときにも平均値の定理により適当な定数$\tilde{c}_j$の存在が言えるので，\equref{ノルム-f'が有界ならLipschitz連続-不等式}は同様に成立する。
+        $x=y$のとき，$\norm{0}\leq L\abs{0}$は成立するので\equref{ノルム-f'が有界ならLipschitz連続-不等式}も成立する。
+        これより，$[a,b]$上の任意の$x$, $y$に関して
+        $\norm{\fun{f}{x}-\fun{f}{y}}\leq L\abs{x-y}$の成立が言えた。
+        従って，$f$はLipschitz連続である。
+    \end{proof}
+\end{prop}
 
 \section{Picardの逐次近似法}
 
