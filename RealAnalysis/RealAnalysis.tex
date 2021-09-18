@@ -123,32 +123,39 @@
     \end{proof}
 \end{prop}
 
+\begin{nota}[上添字]
+    $\R^n$のベクトル$x$の成分の添字は上に付けて表すことにする。
+    すなわち，$x=(x^0,x^1,\dots,x^{n-1})$のように記す。
+    成分の冪を表すわけではないことに注意。
+    ベクトルの添字を$x_0=(x^0_0,x^1_0,\dots,x^{n-1}_0)$, $x_1=(x^0_1,x^1_1,\dots,x^{n-1}_1),\dots$のように下に付けて記した場合，複数あるベクトルのいずれかの番号を意味する。
+\end{nota}
+
 \begin{thm}\thmlabel{実ノルム-同値性}
     線型空間$V$が有限次元であれば，$V$上の任意の2つのノルムは同値である。
     \begin{proof}
         $V$を有限次元線型空間とし，$n\coloneqq \dim{V}$とする。
         $V$の基底として，$\seq{\ele_k}{0\leq k\leq n-1}$を取り固定する。
-        $V$の元$x$を，$x =\sum_{k=0}^{n-1} x_k \ele_k$と表したときの成分$\seq{x_k}{0\leq k\leq n-1}$を用いて，
+        $V$の元$x$を，$x =\sum_{k=0}^{n-1} x^k \ele_k$と表したときの成分$\seq{x^k}{0\leq k\leq n-1}$を用いて，
         \begin{equation}
-            \norm{\dummy}\colon V\to \R;\ x\mapsto \norm{x}\coloneqq \max_{0\leq k\leq n-1}\bra{\abs{x_k}}
+            \norm{\dummy}\colon V\to \R;\ x\mapsto \norm{x}\coloneqq \max_{0\leq k\leq n-1}\bra{\abs{x^k}}
             \equlabel{実ノルム-max}
         \end{equation}
         と定めると$\norm{\dummy}$はノルムになる。
         以下$\norm{\dummy}$がノルムであることを確かめる：
         \begin{enumerate}[label=(\roman*)]
             \item （正値性）
-            どの$k$についても$0\leq \abs{x_k}$であり，$\displaystyle\norm{x}= \max_k\bra{\abs{x_k}}\geq 0$であるから成立。
+            どの$k$についても$0\leq \abs{x^k}$であり，$\displaystyle\norm{x}= \max_k\bra{\abs{x^k}}\geq 0$であるから成立。
 
             \item （一意性）
-            $x=0$のとき，どの$k$についても$x_k=0$であるから$\displaystyle\norm{x}= \max_k\bra{\abs{x_k}}=0$である。
-            また，$\norm{x}=0$のとき，任意の$k$に対し，絶対値の非負性から$0\leq \abs{x_k}$であって，$\abs{x_k}\leq {x}=0$であるから$\abs{x_k}=0$である。
+            $x=0$のとき，どの$k$についても$x^k=0$であるから$\displaystyle\norm{x}= \max_k\bra{\abs{x^k}}=0$である。
+            また，$\norm{x}=0$のとき，任意の$k$に対し，絶対値の非負性から$0\leq \abs{x^k}$であって，$\abs{x^k}\leq \norm{x}=0$であるから$\abs{x^k}=0$である。
             これより$x=0$となる。
 
             \item （同次性）
-            絶対値の非負性と同次性から，$\displaystyle\norm{cx}=\max_k \bra{\abs{cx}}=\abs{c}\cdot \max_k\bra{\abs{x_k}}=\abs{c}\norm{x}$が従う。
+            絶対値の非負性と同次性から，$\displaystyle\norm{cx}=\max_k \bra{\abs{cx}}=\abs{c}\cdot \max_k\bra{\abs{x^k}}=\abs{c}\norm{x}$が従う。
 
             \item （三角不等式）
-            絶対値の三角不等式から，各$k$に対して$\abs{x_k+y_k}\leq \abs{x_k}+\abs{y_k}$であるから最大値に関してもこの不等号が成り立つので$\norm{x+y}\leq \norm{x}+\norm{y}$が従う。
+            絶対値の三角不等式から，各$k$に対して$\abs{x^k+y^k}\leq \abs{x^k}+\abs{y^k}$であるから最大値に関してもこの不等号が成り立つので$\norm{x+y}\leq \norm{x}+\norm{y}$が従う。
         \end{enumerate}
         以上により\equref{実ノルム-max}で定められた$\norm{\dummy}$はノルムである。
 
@@ -170,12 +177,12 @@
 上ではノルムに関して，一般的な形でやや抽象的に述べた。
 以降では\cite{takano}に基づいて，常微分方程式を実際に扱う際に有用なノルムを具体的に扱う。
 ここでは有限次元実線型空間$\R^n$上のノルムの例を挙げる。
-以下では，$x=\pare{x_0,x_1,\dots,x_{n-1}}$の各成分を実数とし，$\abs{\dummy}$を実数の絶対値とする。
+以下では，$x=\pare{x^0,x^1,\dots,x^{n-1}}$の各成分を実数とし，$\abs{\dummy}$を実数の絶対値とする。
 
 \begin{eg}[Euclidノルム]\eglabel{実ノルム-Euclidノルム}
     原点からの標準的な距離：
     \begin{equation}
-        \norm{x}_2\coloneqq \pare{\sum_{k=0}^{n-1} \abs{x_k}^2}^{\frac{1}{2}}
+        \norm{x}_2\coloneqq \pare{\sum_{k=0}^{n-1} \abs{x^k}^2}^{\frac{1}{2}}
     \end{equation}
     はノルムである。
 \end{eg}
@@ -190,7 +197,7 @@
     $p$を$1$以上の実数とする。
     このとき，$x$の$p$ノルム$\norm{x}_p$を，
     \begin{equation}
-        \norm{x}_p \coloneqq \pare{\sum_{k=0}^{n-1} \abs{x_k}^p}^{\frac{1}{p}}
+        \norm{x}_p \coloneqq \pare{\sum_{k=0}^{n-1} \abs{x^k}^p}^{\frac{1}{p}}
     \end{equation}
     で定める。
 \end{defi}
@@ -205,33 +212,33 @@ $2$ノルムはEuclidノルムに一致する。
 \begin{prop}\proplabel{実ノルム-pノルムが一様ノルムに収束する}
     $p\to\infty$の極限で$p$ノルム$\norm{\dummy}_p$は\egref{実ノルム-一様}の一様ノルム$\norm{\dummy}_\infty$に一致する。
     \begin{proof}
-        $x_M$は$x$の成分の$x_0,x_1,\dots,x_{n-1}$のうち絶対値が最大のものであるとする。
-        このとき，$\abs{x_M}=\norm{x}_\infty$と書ける。
+        $x^M$は$x$の成分の$x^0,x^1,\dots,x^{n-1}$のうち絶対値が最大のものであるとする。
+        このとき，$\abs{x^M}=\norm{x}_\infty$と書ける。
         定義より，
         \begin{equation}
-            \norm{x}_p=\pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}},\quad
-            \norm{x}_\infty=\max_{0\leq k\leq n-1}\bra{\abs{x_k}}=\abs{x_M}
+            \norm{x}_p=\pare{\sum_{k=0}^{n-1}\abs{x^k}^p}^{\frac{1}{p}},\quad
+            \norm{x}_\infty=\max_{0\leq k\leq n-1}\bra{\abs{x^k}}=\abs{x^M}
         \end{equation}
         であるから，
         示すべきことは，
         \begin{equation}
-            \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}\to \abs{x_M}\quad\pare{p\to\infty}
+            \pare{\sum_{k=0}^{n-1}\abs{x^k}^p}^{\frac{1}{p}}\to \abs{x^M}\quad\pare{p\to\infty}
             \equlabel{実ノルム-pノルムの極限}
         \end{equation}
         である。
         まず，$1<p<\infty$のとき，$\norm{x}_\infty \leq \norm{x}_p$であることを確かめる。
         これは，
         \begin{equation}
-            0\leq \abs{x_M}^p\leq \sum_{k=0}^{n-1}\abs{x_k}^p
+            0\leq \abs{x^M}^p\leq \sum_{k=0}^{n-1}\abs{x^k}^p
         \end{equation}
-        であることと，$0<p$のとき，$t\in \mleft[0,\infty\mright)$において$\fun{f}{t}=t^{\frac{1}{p}}$が狭義単調増加であること，$0$以上$(n-1)$以下の任意の整数$k$について$\abs{x_k}\geq 0$であることから，
+        であることと，$0<p$のとき，$t\in \mleft[0,\infty\mright)$において$\fun{f}{t}=t^{\frac{1}{p}}$が狭義単調増加であること，$0$以上$(n-1)$以下の任意の整数$k$について$\abs{x^k}\geq 0$であることから，
         \begin{equation}
-            \abs{x_M}=\pare{\abs{x_M}^p}^{\frac{1}{p}}\leq \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}
+            \abs{x^M}=\pare{\abs{x^M}^p}^{\frac{1}{p}}\leq \pare{\sum_{k=0}^{n-1}\abs{x^k}^p}^{\frac{1}{p}}
         \end{equation}
         より成立。
-        また，$0$以上$(n-1)$以下の任意の整数$k$について$0\leq \abs{x_k}\leq \abs{x_M}$であり，
+        また，$0$以上$(n-1)$以下の任意の整数$k$について$0\leq \abs{x^k}\leq \abs{x^M}$であり，
         \begin{equation}
-            0\leq \sum_{k=0}^{n-1} \abs{x_k}^p\leq \sum_{k=0}^{n-1}\abs{x_M}^p=n\abs{x_M}^p
+            0\leq \sum_{k=0}^{n-1} \abs{x^k}^p\leq \sum_{k=0}^{n-1}\abs{x^M}^p=n\abs{x^M}^p
         \end{equation}
         が成立する。
         更に，$n$は固定された正整数であるから
@@ -242,14 +249,14 @@ $2$ノルムはEuclidノルムに一致する。
 
         これらのことから，
         \begin{equation}
-            0\leq \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}-\abs{x_M}
-            \leq \pare{n\abs{x_M}^p}^{\frac{1}{p}}-\abs{x_M}
-            \leq \pare{n^{\frac{1}{p}}-1}\abs{x_M}
+            0\leq \pare{\sum_{k=0}^{n-1}\abs{x^k}^p}^{\frac{1}{p}}-\abs{x^M}
+            \leq \pare{n\abs{x^M}^p}^{\frac{1}{p}}-\abs{x^M}
+            \leq \pare{n^{\frac{1}{p}}-1}\abs{x^M}
             \to 0\quad\pare{p\to\infty}
         \end{equation}
         が従い，はさみうちの原理から，
         \begin{equation}
-            \pare{\sum_{k=0}^{n-1}\abs{x_k}^p}^{\frac{1}{p}}\to \abs{x_M}\quad\pare{p\to\infty}
+            \pare{\sum_{k=0}^{n-1}\abs{x^k}^p}^{\frac{1}{p}}\to \abs{x^M}\quad\pare{p\to\infty}
         \end{equation}
         であり，これは\equref{実ノルム-pノルムの極限}の成立を意味している。
     \end{proof}
@@ -282,23 +289,23 @@ $2$ノルムはEuclidノルムに一致する。
         を用いる。
         \begin{equation}
             \forall j\in \setN,\, \forall t\in I,\ 
-            \fun{f_j}{t}\leq \abs{\fun{f_j}{t}}\leq \norm{\fun{f}{t}}
+            \fun{f^j}{t}\leq \abs{\fun{f^j}{t}}\leq \norm{\fun{f}{t}}
         \end{equation}
         であるから，
         \begin{equation}
             \forall j\in \setN,\ 
-            \int_I dt\, \fun{f_j}{t}\leq \int_I dt\, \abs{\fun{f_j}{t}}
+            \int_I dt\, \fun{f^j}{t}\leq \int_I dt\, \abs{\fun{f^j}{t}}
             \leq \int_I dt\, \norm{\fun{f}{t}}
         \end{equation}
         である。
         ここで，\equref{実ノルム-積分絶対値不等式}の不等式から，
         \begin{equation}
-            \abs{\int_I dt\, \fun{f_j}{t}}\leq \int_I dt\, \abs{\fun{f_j}{t}}\leq \int_I dt\, \norm{\fun{f}{t}}
+            \abs{\int_I dt\, \fun{f^j}{t}}\leq \int_I dt\, \abs{\fun{f^j}{t}}\leq \int_I dt\, \norm{\fun{f}{t}}
         \end{equation}
         であるから，
         \begin{equation}
             \norm{\int_I dt \, \fun{f}{t}}
-            =\max_{0\leq j\leq n-1}\bra{\abs{\int_I dt\, \fun{f_j}{t}}}\leq \int_I dt\, \norm{\fun{f}{t}}
+            =\max_{0\leq j\leq n-1}\bra{\abs{\int_I dt\, \fun{f^j}{t}}}\leq \int_I dt\, \norm{\fun{f}{t}}
         \end{equation}
         が成立する。
     \end{proof}
@@ -354,31 +361,31 @@ $2$ノルムはEuclidノルムに一致する。
     で定める。
 \end{defi}
 
-以降，$A$を線型作用素とし，その$\pare{j,k}$成分を$a_{jk}$と書く。
+以降，$A$を線型作用素とし，その$\pare{j,k}$成分を$a^j_k$と書く。
 
 \begin{prop}\proplabel{実ノルム-作用素ノルム具体形}
     \begin{equation}
-        \norm{A} = \max_{0\leq j\leq n-1} \bra{\sum_{k=0}^{n-1} \abs{a_{jk}}}
+        \norm{A} = \max_{0\leq j\leq n-1} \bra{\sum_{k=0}^{n-1} \abs{a^j_k}}
     \end{equation}
     \begin{proof}
         $\norm{x}=1$のとき，$x$の各成分の絶対値は$1$以下である。
         このとき，$Ax$の第$j$成分$\pare{Ax}_j$に関して，
         \begin{equation}
-            \abs{\pare{Ax}_j}=\abs{\sum_{k=0}^{n-1}a_{jk} x_k}
-            \leq \sum_{k=0}^{n-1}\abs{a_{jk}}\abs{x_k}\leq \sum_{k=0}^{n-1}\abs{a_{jk}}
+            \abs{\pare{Ax}_j}=\abs{\sum_{k=0}^{n-1}a^j_k x^k}
+            \leq \sum_{k=0}^{n-1}\abs{a^j_k}\abs{x^k}\leq \sum_{k=0}^{n-1}\abs{a^j_k}
         \end{equation}
         となり，1つ目の等号成立は，
         \begin{equation}
-            \bsqu{\forall k\in\setN,\ a_{jk}x_k\geq 0}
+            \bsqu{\forall k\in\setN,\ a^j_kx^k\geq 0}
             \ \lor\ 
-            \bsqu{\forall k\in\setN,\ a_{jk}x_k\leq 0}
+            \bsqu{\forall k\in\setN,\ a^j_kx^k\leq 0}
         \end{equation}
-        のとき，すなわち$a_{jk}x_k$が全て同符号のときである。
+        のとき，すなわち$a^j_kx^k$が全て同符号のときである。
         2つ目の等号成立は，$x$の各成分の絶対値が$1$に等しい場合であり，この2つの条件は同時に満たすことができる。
-        実際，各$k$について，$a_{jk}\geq 0$なら$x_k=1$とし，$a_{jk}<0$なら$x_k=-1$と定めれば，いずれの等号も成立する。
+        実際，各$k$について，$a^j_k\geq 0$なら$x^k=1$とし，$a^j_k<0$なら$x^k=-1$と定めれば，いずれの等号も成立する。
         これより，
         \begin{equation}
-            \norm{A} = \max_{0\leq j\leq n-1} \bra{\sum_{k=0}^{n-1} \abs{a_{jk}}}
+            \norm{A} = \max_{0\leq j\leq n-1} \bra{\sum_{k=0}^{n-1} \abs{a^j_k}}
         \end{equation}
         である。
     \end{proof}
@@ -389,12 +396,12 @@ $2$ノルムはEuclidノルムに一致する。
         \forall x\in \R^n,\ \norm{Ax}\leq \norm{A}\norm{x}
     \end{equation}
     \begin{proof}
-        各$k$について$\abs{x_k}\leq \norm{x}$であるから，
+        各$k$について$\abs{x^k}\leq \norm{x}$であるから，
         $Ax$の第$j$成分について，
         \begin{equation}
-            \abs{\pare{Ax}_j}=\abs{\sum_{k=0}^{n-1}a_{jk}x_k}
-            \leq \sum_{k=0}^{n-1} \abs{a_{jk}}\abs{x_k}
-            \leq \pare{\sum_{k=0}^{n-1}\abs{a_{jk}}}\cdot \norm{x}
+            \abs{\pare{Ax}_j}=\abs{\sum_{k=0}^{n-1}a^j_kx^k}
+            \leq \sum_{k=0}^{n-1} \abs{a^j_k}\abs{x^k}
+            \leq \pare{\sum_{k=0}^{n-1}\abs{a^j_k}}\cdot \norm{x}
         \end{equation}
         が成立して，
         \begin{equation}
@@ -412,40 +419,40 @@ $2$ノルムはEuclidノルムに一致する。
     \end{equation}
     が成立する。
     \begin{proof}
-        $A$, $B$の$\pare{j,k}$成分をそれぞれ$a_{jk}$, $b_{jk}$とする。
+        $A$, $B$の$\pare{j,k}$成分をそれぞれ$a^j_k$, $b^j_k$とする。
         まず，
         \begin{equation}
-            \sum_{k=0}^{n-1}\abs{a_{jk}+b_{jk}}
-            \leq \sum_{k=0}^{n-1}\abs{a_{jk}}
-            +\sum_{k=0}^{n-1}\abs{b_{jk}}
+            \sum_{k=0}^{n-1}\abs{a^j_k+b^j_k}
+            \leq \sum_{k=0}^{n-1}\abs{a^j_k}
+            +\sum_{k=0}^{n-1}\abs{b^j_k}
         \end{equation}
         であるから，
         \begin{equation}
-            \max_{0\leq j\leq n-1}\bra{\sum_{k=0}^{n-1}\abs{a_{jk}+b_{jk}}}
-            \leq \max_{0\leq j\leq n-1}\bra{\sum_{k=0}^{n-1}\abs{a_{jk}}}
-            +\max_{0\leq j\leq n-1}\bra{\sum_{k=0}^{n-1}\abs{b_{jk}}}
+            \max_{0\leq j\leq n-1}\bra{\sum_{k=0}^{n-1}\abs{a^j_k+b^j_k}}
+            \leq \max_{0\leq j\leq n-1}\bra{\sum_{k=0}^{n-1}\abs{a^j_k}}
+            +\max_{0\leq j\leq n-1}\bra{\sum_{k=0}^{n-1}\abs{b^j_k}}
         \end{equation}
         であり，$\norm{A+B}\leq \norm{A}+\norm{B}$である。
         
         次に，$m$は，
         \begin{equation}
             \forall \ell\in \setN,\
-            \sum_{k=0}^{n-1}\abs{b_{\ell k}}\leq
-            \sum_{k=0}^{n-1}\abs{b_{m k}}
+            \sum_{k=0}^{n-1}\abs{b^{\ell}_k}\leq
+            \sum_{k=0}^{n-1}\abs{b^m_k}
         \end{equation}
         を満たす，すなわち$\norm{B}$を与える行の添字とする。
         このとき，
         \begin{equation}
-            \sum_{k=0}^{n-1}\abs{\sum_{\ell=0}^{n-1}a_{j\ell}b_{\ell k}}
-            \leq \sum_{k=0}^{n-1}\pare{\sum_{\ell=0}^{n-1}\abs{a_{j\ell}}\abs{b_{\ell k}}}
-            =\sum_{\ell=0}^{n-1}\pare{\abs{a_{j\ell}}\sum_{k=0}^{n-1}\abs{b_{\ell k}}}
-            \leq \pare{\sum_{\ell=0}^{n-1}\abs{a_{j\ell}}}
-            \pare{\sum_{k=0}^{n-1}\abs{b_{mk}}}
+            \sum_{k=0}^{n-1}\abs{\sum_{\ell=0}^{n-1}a^j_\ell b^\ell_k}
+            \leq \sum_{k=0}^{n-1}\pare{\sum_{\ell=0}^{n-1}\abs{a^j_\ell }\abs{b^\ell_k}}
+            =\sum_{\ell=0}^{n-1}\pare{\abs{a^j_\ell }\sum_{k=0}^{n-1}\abs{b^\ell_k}}
+            \leq \pare{\sum_{\ell=0}^{n-1}\abs{a^j_\ell }}
+            \pare{\sum_{k=0}^{n-1}\abs{b^m_k}}
         \end{equation}
         より，
         \begin{equation}
-            \max_{0\leq j\leq n-1}\bra{\sum_{k=0}^{n-1}\abs{\sum_{\ell=0}^{n-1}a_{j\ell}b_{\ell k}}}
-            \leq \max_{0\leq j\leq n-1}\bra{\sum_{\ell=0}^{n-1}\abs{a_{j\ell}}}\cdot \max_{0\leq m\leq n-1}\bra{\sum_{k=0}^{n-1}\abs{b_{mk}}}
+            \max_{0\leq j\leq n-1}\bra{\sum_{k=0}^{n-1}\abs{\sum_{\ell=0}^{n-1}a^j_\ell b^\ell_k}}
+            \leq \max_{0\leq j\leq n-1}\bra{\sum_{\ell=0}^{n-1}\abs{a^j_\ell }}\cdot \max_{0\leq j\leq n-1}\bra{\sum_{k=0}^{n-1}\abs{b^j_k}}
         \end{equation}
         が従うので，
         $\norm{AB}\leq \norm{A}\norm{B}$である。
@@ -462,12 +469,12 @@ $2$ノルムはEuclidノルムに一致する。
             \propref{実ノルム-作用素ノルム具体形}から，各項にある絶対値は非負なので，$\norm{A} \geq 0$である。
 
             \item （一意性）
-            \propref{実ノルム-作用素ノルム具体形}から，$\norm{A}=0$だとすれば，絶対値の非負性から，どの$j$に関しても$\sum_{k=0}^{n-1}\abs{a_{jk}}=0$であり，これが成立するためには全ての$\pare{j,k}$に関して$A_{jk}=0$でなければならず，このとき$A=O$（零行列）である。
+            \propref{実ノルム-作用素ノルム具体形}から，$\norm{A}=0$だとすれば，絶対値の非負性から，どの$j$に関しても$\sum_{k=0}^{n-1}\abs{a^j_k}=0$であり，これが成立するためには全ての$\pare{j,k}$に関して$A_{jk}=0$でなければならず，このとき$A=O$（零行列）である。
 
             \item （同次性）
             \propref{実ノルム-作用素ノルム具体形}から，
             \begin{equation}
-                \norm{cA}=\max_{0\leq j\leq n-1} \bra{\sum_{k=0}^{n-1} \abs{c}\abs{a_{jk}}}=\abs{c}\cdot \max_{0\leq j\leq n-1} \bra{\sum_{k=0}^{n-1} \abs{a_{jk}}}=\abs{c}\norm{A}.
+                \norm{cA}=\max_{0\leq j\leq n-1} \bra{\sum_{k=0}^{n-1} \abs{c}\abs{a^j_k}}=\abs{c}\cdot \max_{0\leq j\leq n-1} \bra{\sum_{k=0}^{n-1} \abs{a^j_k}}=\abs{c}\norm{A}.
             \end{equation}
 
             \item （三角不等式）
@@ -502,6 +509,8 @@ $2$ノルムはEuclidノルムに一致する。
 %%% 複素数上でのノルムは次のchapterで
 
 \section{Lipschitz連続}\seclabel{Lipschitz連続}
+ここでは関数の連続性，一様連続性，Lipschitz連続性について述べる。
+参考文献は\cite{sugiura}である。
 $m$, $n$を正整数とする。
 $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
 
@@ -613,17 +622,17 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
     \begin{proof}
         $x,y\in I$に対し，
         \begin{equation}
-            \fun{F_j}{x}-\fun{F_j}{y}=\int_a^x dt\, \fun{f_j}{t} - \int_a^y dt\, \fun{f_j}{t}=\int_y^x dt\, \fun{f_j}{t}
+            \fun{F^j}{x}-\fun{F^j}{y}=\int_a^x dt\, \fun{f^j}{t} - \int_a^y dt\, \fun{f^j}{t}=\int_y^x dt\, \fun{f^j}{t}
         \end{equation}
         である。
         $f$は$I$上で有界であるから，
         \begin{equation}
             L\coloneqq \sup_{t\in I}\bra{\norm{\fun{f}{t}}}\geq 0
         \end{equation}
-        と定めておくと，$I$上で常に$\abs{\fun{f_j}{t}}\leq L$であり，\equref{実ノルム-積分絶対値不等式}により，
+        と定めておくと，$I$上で常に$\abs{\fun{f^j}{t}}\leq L$であり，\equref{実ノルム-積分絶対値不等式}により，
         \begin{equation}
-            \abs{\fun{F_j}{x}-\fun{F_j}{y}}=\abs{\int_y^x dt\, \fun{f_j}{t}}
-            \leq \abs{\int_x^y dt\, \abs{\fun{f_j}{t}}}\leq \abs{\int_x^y dt\, L}
+            \abs{\fun{F^j}{x}-\fun{F^j}{y}}=\abs{\int_y^x dt\, \fun{f^j}{t}}
+            \leq \abs{\int_x^y dt\, \abs{\fun{f^j}{t}}}\leq \abs{\int_x^y dt\, L}
             = L\abs{x-y}
         \end{equation}
         である。
@@ -642,20 +651,20 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
     \begin{proof}
         $(a,b)$上での$\norm{\fun{f'}{t}}$の有界性から，
         \begin{equation}
-            L\coloneqq \sup_{t\in(a,b)}\max_{j}\bra{\abs{\fun{f'_j}{t}}}<\infty
+            L\coloneqq \sup_{t\in(a,b)}\max_{j}\bra{\abs{\fun{(f^j)'}{t}}}<\infty
         \end{equation}
         が定まり，$L\geq 0$である。
         $f$の各成分について，平均値の定理より，
         \begin{equation}
             \forall j\in \setN, \forall x,\forall y\in[a,b], \squ{
-                x<y\, \Rightarrow\, \exists c_j\in (a,b); \pare{x<c_j<y\, \land \ \fun{f_j}{x}-\fun{f_j}{y}=\fun{f'_j}{c_j}\pare{x-y}}
+                x<y\, \Rightarrow\, \exists c_j\in (a,b); \pare{\pare{x<c_j<y}\, \land\, \frac{\fun{f^j}{x}-\fun{f^j}{y}}{x-y}=\fun{(f^j)'}{c_j}}
             }
         \end{equation}
         が成立する。
-        このような$c_j$を取ったとき，
+        このような$c_j$を取ったとき，$\fun{(f^j)'}{c_j}\leq L$であるから，
         \begin{equation}
-            \norm{\fun{f}{x}-\fun{f}{y}}=\max_{j}\bra{\abs{\fun{f_j}{x}-\fun{f_j}{y}}}
-            =\max_{j}\bra{\abs{\fun{f'_j}{c_j}}\abs{x-y}}\leq L\abs{x-y}
+            \norm{\fun{f}{x}-\fun{f}{y}}=\max_{j}\bra{\abs{\fun{f^j}{x}-\fun{f^j}{y}}}
+            =\max_{j}\bra{\abs{\fun{(f^j)'}{c_j}}\abs{x-y}}\leq L\abs{x-y}
             \equlabel{Lipschitz-f'が有界ならLipschitz連続-不等式}
         \end{equation}
         である。
