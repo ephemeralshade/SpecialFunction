@@ -183,11 +183,13 @@ $E$を$\R\times\R^{n}$の部分集合とし，
     $\fun{f}{t,x}$が$\R\times\R^n$上の有界閉領域
     \begin{equation}
         E\coloneqq \set{\pare{t,x}\in\R\times\R^n}{\abs{t-a}\leq r,\, \norm{x-b}\leq \rho}
+        \equlabel{ODE_R-Eの定義}
     \end{equation}
     上でLipschitz連続\footnote{\defiref{Lipschitz-Lipschitz連続}参照}であるとする。
     \begin{equation}
         M\coloneqq \max_{\pare{t,x}\in E}\bra{\norm{\fun{f}{t,x}}},\
         r'\coloneqq \min\bra{r,\frac{\rho}{M}}
+        \equlabel{ODE_R-Mrの定義}
     \end{equation}
     としたとき，\equref{ODE_R-微分方程式}を満たす解が区間$I'\coloneqq [a-r',a+r']$において一意的に存在する。
     \begin{proof}
@@ -210,10 +212,72 @@ $E$を$\R\times\R^{n}$の部分集合とし，
         ベクトルでまとめて表せば\equref{ODE_R-微分方程式}を満たすことに他ならない。
 
         証明の流れは以下の通りである。
-        区間$I'$上で\equref{ODE_R-積分方程式}の解をPicardの逐次近似法によって構成する。
+        解の存在性を示すために，Picardの逐次近似法によって区間$I'$上で\equref{ODE_R-積分方程式}の解を構成する。
         そして，構成した解が唯一の解であることを\thmref{ODE_R-Gronwall-Bellmanの不等式}から得られた\corref{ODE_R-Gronwall-Bellmanの不等式の系}の不等式を用いて示す。
 
-        %%%
+        まずは解の存在性を示すためのPicardの逐次近似法について述べる。
+        $\fun{x_0}{t}$は，
+        \begin{equation}
+            \forall t\in I',\ \norm{\fun{x_0}{t}-b}\leq \rho
+            \equlabel{ODE_R-x0の不等式}
+        \end{equation}
+        を満たす任意の連続関数とする。
+        このとき，
+        \begin{equation}
+            \fun{x_1}{t}\coloneqq b + \int_a^t ds\, \fun{f}{s,\fun{x_0}{s}}
+        \end{equation}
+        によって$\fun{x_1}{t}$を定めると，
+        \begin{equation}
+            \forall t\in I',\ \norm{\fun{x_1}{t}-b}\leq \rho
+        \end{equation}
+        も満たすことを示す。
+        実際，
+        \begin{equation}
+            \norm{\fun{x_1}{t}-b}=\norm{\int_a^t ds\, \fun{f}{s,\fun{x_0}{s}}}
+            \leq \abs{\int_a^t ds\, \norm{\fun{f}{s,\fun{x_0}{s}}}}
+            \leq M\abs{t-a}\leq Mr'\leq \rho
+            \equlabel{ODE_R-x1の不等式}
+        \end{equation}
+        である。
+        
+        \equref{ODE_R-x1の不等式}のそれぞれの不等号の理由を順に述べる。
+        最初の不等号では，\propref{実ノルム-積分の不等式}の不等式を用いており，今回は$t\in I'=[a-r',a+r']$であるから，$t<a$の場合もあるので最初の不等号の式には絶対値が付く。
+        二番目の不等号では\equref{ODE_R-Mrの定義}における$M$の定義から，
+        \begin{equation}
+            \forall \pare{t,x}\in E,\
+            \norm{\fun{f}{t,x}}\leq M
+        \end{equation}
+        が成立することと\equref{実ノルム-積分絶対値不等式}の不等式を用いている。
+        最後の不等号では，\equref{ODE_R-Mrの定義}における$r'$の定義から，$r'\leq \rho/M$であり，これを$M$で払うことで$Mr'\leq \rho$である。
+
+        これにより，$t\in I'$のとき$\norm{\fun{x_1}{t}-b}\leq \rho$である。
+        次に，\equref{ODE_R-x0の不等式}を満たす$\fun{x_0}{t}$を用いて，
+        \begin{equation}
+            \fun{x_{m+1}}{t} \coloneqq b + \int_a^t ds\, \fun{f}{s,\fun{x_m}{t}},\ \pare{m\in\N,\, t\in I'}
+            \equlabel{ODE_R-xmの定義式}
+        \end{equation}
+        によって$\fun{x_1}{t}$, $\fun{x_2}{t}$, $\fun{x_3}{t},\dots$を定める。
+        $f$の定義域は\equref{ODE_R-Eの定義}で定義された$E$上であるから，右辺の積分が定義されるためには，
+        \begin{equation}
+            \forall m\in \N,\ \forall t\in I',\ \norm{\fun{x_m}{t}-b}\leq \rho 
+            \equlabel{ODE_R-xmの不等式}
+        \end{equation}
+        である必要があるが，これは次に述べるように満たされている。
+        適当な自然数$m$で，
+        \begin{equation}
+            \forall t\in I',\ \norm{\fun{x_m}{t}-b}\leq \rho 
+        \end{equation}
+        が満たされていると仮定すると，\equref{ODE_R-x1の不等式}の議論と全く同じように任意の$t\in I'$に対して
+        \begin{equation}
+            \norm{\fun{x_{m+1}}{t}-b}=\norm{\int_a^t ds\, \fun{f}{s,\fun{x_m}{s}}}
+            \leq \abs{\int_a^t ds\, \norm{\fun{f}{s,\fun{x_m}{s}}}}
+            \leq M\abs{t-a}\leq Mr'\leq \rho
+        \end{equation}
+        であり，$\fun{x_1}{t}$についての成立は\equref{ODE_R-x1の不等式}で確かめているので，数学的帰納法によって\equref{ODE_R-xmの不等式}は成立する。
+
+        以上の議論により，\equref{ODE_R-xmの定義式}によって任意の自然数$m$に対して$\fun{x_m}{t}$が定まる。
+        次に，\equref{ODE_R-xmの定義式}で定義された$\fun{x_m}{t}$は，$m\to\infty$の極限で\equref{ODE_R-積分方程式}の解になることを示す。
+        そのためには，$\fun{x_m}{t}$が一様収束することを示し，$f$の連続性から極限と積分を入れ替えられることを用いる。
     \end{proof}
 \end{thm}
 
