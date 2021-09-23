@@ -1,7 +1,8 @@
 # PDFはこちら
 [PDF](/main/SpecialFunction.pdf)
 
-（GitHubのプレビューからだとハイパーリンクが動作しないようです）
+## ソースコードなどはこちら
+[GitHubページ](https://github.com/ephemeralshade/SpecialFunction)
 
 ## PDF更新履歴
 ### 2021年
