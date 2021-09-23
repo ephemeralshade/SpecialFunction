@@ -1,5 +1,6 @@
 # 微分方程式と特殊函数
 少しずつ書き足しています。
+
 何かあれば[Twitter(@FugaciousShade)](https://twitter.com/FugaciousShade)まで。
 
 ## PDFはこちら
@@ -7,6 +8,9 @@
 
 ## ソースコードなどはこちら
 [GitHubページ](https://github.com/ephemeralshade/SpecialFunction)
+
+### 加筆予定の項目はこちら
+[TODO](main/todo.md)
 
 ## PDF更新履歴
 ### 2021年
