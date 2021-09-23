@@ -1,6 +1,8 @@
 # PDFはこちら
 [PDF](/main/SpecialFunction.pdf)
 
+（GitHubのプレビューからだとハイパーリンクが動作しないようです）
+
 ## PDF更新履歴
 ### 2021年
 - 8月26日
