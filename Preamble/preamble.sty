@@ -229,6 +229,22 @@
 \newtheorem{prop}[thm]{命題}
 \newtheorem{nota}[thm]{記法}
 \newtheorem{supple}[thm]{補足}
+\newtheorem*{policy}{方針}
+
+% proof環境修正
+\renewcommand{\proofname}{証明}
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+  \item[\hskip\labelsep
+        \bfseries
+    #1\@addpunct{.}]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
 
 % showonlyrefsはwtrefやcleverefと相性が悪いので使わない
 %\mathtoolsset{showonlyrefs=true} % 式番号を参照されたもののみ付ける
