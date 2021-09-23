@@ -483,6 +483,39 @@ $2$ノルムはEuclidノルムに一致する。
     \end{proof}
 \end{prop}
 
+\begin{rem}
+    上で述べたことは複素線型空間上のノルムでもほとんど同様に成り立つ。
+    証明も，$\abs{\dummy}$を複素数の絶対値に読み替えれば成立するが，\propref{実ノルム-作用素ノルム具体形}の証明中の等号成立条件だけ注意が必要である。
+\end{rem}
+
+
+\begin{defi}[$L^p$ノルム]\defilabel{実ノルム-Lpノルム}
+    $I$を$\R$上の区間とし，$f\colon I\to \CC$は$I$上可積分とし，$1\leq p <\infty$する。
+    このとき，$f$のノルム$\norm{f}_p$を，
+    \begin{equation}
+        \norm{f}_p \coloneqq \pare{\int_I dx\, \abs{\fun{f}{x}}^p}^{\frac{1}{p}}
+    \end{equation}
+    と定める。
+\end{defi}
+
+\begin{supple}
+    \defiref{実ノルム-Lpノルム}は多変数ベクトル値関数に拡張することができる。
+    詳細は\cite{nomura}など。
+\end{supple}
+
+\begin{defi}[$L^\infty$ノルム]\defilabel{実ノルム-Linftyノルム}
+    $I$を$\R$上の区間とし，$f\colon I\to \CC$は$I$上可積分とし，$1\leq p <\infty$する。
+    このとき，$f$のノルム$\norm{f}_\infty$を，
+    \begin{equation}
+        \norm{f}_\infty \coloneqq \sup_{x \in I}\bra{ \abs{\fun{f}{x}} }
+    \end{equation}
+    と定める。
+\end{defi}
+
+\begin{rem}
+    \defiref{実ノルム-pノルム, 実ノルム-Lpノルム}及び\defiref{実ノルム-一様, 実ノルム-Linftyノルム}について，一般には$\norm{f}_p\ne\norm{\fun{f}{x}}$及び$\norm{f}_\infty\ne\norm{\fun{f}{x}}_\infty$であることに注意。
+    $\norm{f}$は関数のノルムであるが，$\norm{\fun{f}{x}}$は$f$に$x$を入れた$\fun{f}{x}$というベクトルに対するノルムである。
+\end{rem}
 
 
 \begin{prob}\problabel{実ノルム-その1}
