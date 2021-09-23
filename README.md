@@ -24,4 +24,4 @@ Lipschitz連続性についての記述を追加
 Gaussの超幾何微分方程式におけるFrobenius法の数値計算プログラムを追加
 
 ### 超幾何関数
-以前のPDFは[こちら（ブログ）](https://fugaciousshade.blogspot.com/2021/05/HypergeometricFunction-PDF.html)または[こちら](https://github.com/ephemeralshade/HypergeometricFunction/blob/6e522e1d27fbcb13115d872a90b564e1c37465bb/HypergeometricFunction.pdf)から。
+以前のPDFは[こちら（ブログ）](https://fugaciousshade.blogspot.com/2021/05/HypergeometricFunction-PDF.html)または[こちら](OldFile/HypergeometricFunction.pdf)から。
