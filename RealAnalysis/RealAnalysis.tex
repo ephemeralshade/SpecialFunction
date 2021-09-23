@@ -504,16 +504,16 @@ $2$ノルムはEuclidノルムに一致する。
 \end{supple}
 
 \begin{defi}[$L^\infty$ノルム]\defilabel{実ノルム-Linftyノルム}
-    $I$を$\R$上の区間とし，$f\colon I\to \CC$は$I$上可積分とし，$1\leq p <\infty$する。
-    このとき，$f$のノルム$\norm{f}_\infty$を，
+    $A$を$\R^m$上の区間とし，$f\colon A\to \R^n$とする。
+    $f$のノルム$\norm{f}_\infty$を，
     \begin{equation}
         \norm{f}_\infty \coloneqq \sup_{x \in I}\bra{ \abs{\fun{f}{x}} }
     \end{equation}
     と定める。
 \end{defi}
 
-\begin{rem}
-    \defiref{実ノルム-pノルム, 実ノルム-Lpノルム}及び\defiref{実ノルム-一様, 実ノルム-Linftyノルム}について，一般には$\norm{f}_p\ne\norm{\fun{f}{x}}$及び$\norm{f}_\infty\ne\norm{\fun{f}{x}}_\infty$であることに注意。
+\begin{rem}\remlabel{実ノルム-ベクトルと関数のノルム}
+    \defiref{実ノルム-pノルム, 実ノルム-Lpノルム}及び\egref{実ノルム-一様}, \defiref{実ノルム-Linftyノルム}について，一般には$\norm{f}_p\ne\norm{\fun{f}{x}}$及び$\norm{f}_\infty\ne\norm{\fun{f}{x}}_\infty$であることに注意。
     $\norm{f}$は関数のノルムであるが，$\norm{\fun{f}{x}}$は$f$に$x$を入れた$\fun{f}{x}$というベクトルに対するノルムである。
 \end{rem}
 
@@ -546,6 +546,8 @@ $2$ノルムはEuclidノルムに一致する。
 参考文献は\cite{sugiura}である。
 $m$, $n$を正整数とする。
 $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
+
+以降，特に断らない限り，ベクトル$x$のノルム$\norm{x}$は\egref{実ノルム-一様}の一様ノルムとし，関数$f$のノルム$\norm{f}$は\defiref{実ノルム-Linftyノルム}の$L^\infty$ノルムとする\footnote{\remref{実ノルム-ベクトルと関数のノルム}に注意。$\norm{f}$と$\norm{\fun{f}{x}}$は一般には異なる。}。
 
 \begin{defi}[連続性]\defilabel{Lipschitz-関数の連続性}
     $f$が$A$上連続であるとは，
@@ -596,17 +598,16 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
     \end{proof}
 \end{prop}
 
-\begin{prop}\proplabel{Lipschitz-一様連続なら連続}
-    $A$上一様連続な関数は$A$上連続である。
+\begin{lem}\lemlabel{Lipschitz-forallとexistsの順序交換}
+    一般に，$\fun{P}{a,b}$を$a$, $b$に関する任意の命題としたとき，
+    \begin{equation}
+        \squ{\exists a;\, \forall b,\, \fun{P}{a,b}} \ \Longrightarrow\ \squ{\forall b,\, \exists a;\, \fun{P}{a,b}}
+        \equlabel{Lipschitz-恒真命題 exists forall then forall exists}
+    \end{equation}
+    は$\fun{P}{a,b}$の内容に依らず真である。
     \begin{proof}
-        一般に，$\fun{P}{a,b}$を$a$, $b$に関する任意の命題としたとき，
-        \begin{equation}
-            \squ{\exists a;\, \forall b,\, \fun{P}{a,b}} \ \Longrightarrow\ \squ{\forall b,\, \exists a;\, \fun{P}{a,b}}
-            \equlabel{Lipschitz-恒真命題 exists forall then forall exists}
-        \end{equation}
-        は恒真である。
         証明木を描いてみると，
-        \figref{Lipschitz-恒真命題 exists forall then forall existsの証明木}に示すように，\equref{Lipschitz-恒真命題 exists forall then forall exists}が恒真であることが判る。
+        \figref{Lipschitz-恒真命題 exists forall then forall existsの証明木}に示すように，\equref{Lipschitz-恒真命題 exists forall then forall exists}が真であることが判る。
         \ifdraft{}{
         \begin{figure}[H]
             \centering
@@ -633,6 +634,13 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
             \caption{\equref{Lipschitz-恒真命題 exists forall then forall exists}の証明木}
             \figlabel{Lipschitz-恒真命題 exists forall then forall existsの証明木}
         \end{figure}}
+    \end{proof}
+\end{lem}
+
+\begin{prop}\proplabel{Lipschitz-一様連続なら連続}
+    $A$上一様連続な関数は$A$上連続である。
+    \begin{proof}
+        \lemref{Lipschitz-forallとexistsの順序交換}を用いる。
         一様連続性では$\exists \delta;\, \forall x$の順であるのに対し，連続性では$\forall x,\, \exists \delta;$の順であるから，一様連続なら連続である。
     \end{proof}
 \end{prop}
@@ -706,6 +714,140 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
         これより，$[a,b]$上の任意の$x$, $y$に関して
         $\norm{\fun{f}{x}-\fun{f}{y}}\leq L\abs{x-y}$の成立が言えた。
         従って，$f$はLipschitz連続である。
+    \end{proof}
+\end{prop}
+
+\section{一様収束}\seclabel{一様収束}
+
+\begin{defi}[各点収束・一様収束]\defilabel{一様収束-各点収束と一様収束の定義}
+    $m_1$, $m_2$を正整数，$A\subseteq\R^{m_1}$とし，$f\colon A\to \R^{m_2}$とする。
+    また，各自然数$n$に対し，$f_n\colon I\to \R$による関数列$\seq{f_n}{n\in\N}$を考える。
+    関数列$\seq{f_n}{n\in\N}$が$A$上で$f$に各点収束するとは，
+    \begin{equation}
+        \forall\varepsilon\in\Rposi,\,\forall x\in I,\, \exists N\in\N;\ \bsqu{
+            \forall n\in \N,\, \pare{N\leq n\ \Longrightarrow\ \norm{\fun{f_n}{x}-\fun{f}{x}}<\varepsilon}
+        }
+    \end{equation}
+    が成立することである。
+    また，関数列$\seq{f_n}{n\in\N}$が$A$上で$f$に一様収束するとは，
+    \begin{equation}
+        \forall\varepsilon\in\Rposi,\, \exists N\in\N;\, \forall x\in I,\ \bsqu{
+            \forall n\in \N,\, \pare{N\leq n\ \Longrightarrow\ \norm{\fun{f_n}{x}-\fun{f}{x}}<\varepsilon}
+        }
+        \equlabel{一様収束-一様収束の定義}
+    \end{equation}
+    が成立することである。
+\end{defi}
+
+\begin{lem}\lemlabel{一様収束-forallの順序交換}
+    $\fun{P}{y}$を$y$に関する命題，$\fun{Q}{x,y}$を$x$, $y$に関する命題とする。
+    このとき，
+    \begin{equation}
+        \squ{\forall x,\, \forall y,\, \pare{\fun{P}{y}\, \Longrightarrow\, \fun{Q}{x,y}}}\, \Longleftrightarrow\, \squ{\forall y,\, \pare{\fun{P}{y}\, \Longrightarrow\, \forall x,\, \fun{Q}{x,y}}}
+        \equlabel{一様収束-forallの順序交換}
+    \end{equation}
+    は$\fun{P}{y}$, $\fun{Q}{x,y}$の内容に依らず真である。
+    \begin{policy}
+        背理法によって示す。
+        \begin{align}
+            &\lnot\pare{A\Leftrightarrow B}
+            \\
+            \Longleftrightarrow\quad & \lnot\squ{\pare{A\Rightarrow B} \land \pare{B\Rightarrow A}}
+            \\
+            \Longleftrightarrow\quad & \lnot\pare{A\Rightarrow B} \lor \lnot\pare{B\Rightarrow A}
+            \\
+            \Longleftrightarrow\quad & \pare{A\land \lnot B} \lor \pare{\lnot A\land B}
+        \end{align}
+        を用いる。
+    \end{policy}
+    \begin{proof}
+        証明木を描いてみると，
+        \figref{Lipschitz-恒真命題forallの順序交換の証明木}に示すように，\equref{一様収束-forallの順序交換}が真であることが判る。
+        \ifdraft{}{
+        \begin{figure}[H]
+            \centering
+            \begin{prooftree}
+                {
+                    close with={\times},
+                    to prove={
+                        \squ{\forall x, \forall y, \pare{\fun{P}{y} \Rightarrow \fun{Q}{x,y}}} \Leftrightarrow \squ{\forall y, \pare{\fun{P}{y} \Rightarrow \forall x, \fun{Q}{x,y}}}
+                    }
+                }
+                [
+                    {\lnot\pare{\squ{\forall x, \forall y, \pare{\fun{P}{y} \Rightarrow \fun{Q}{x,y}}} \Leftrightarrow \squ{\forall y, \pare{\fun{P}{y} \Rightarrow \forall x, \fun{Q}{x,y}}}}}, just={$\lnot$ Conclusion}
+                    [{\forall x, \forall y, \pare{\fun{P}{y} \Rightarrow \fun{Q}{x,y}}}, just={$\lnot \Leftrightarrow$ :!u}, name={2-1}
+                    [{\lnot\squ{\forall y, \pare{\fun{P}{y} \Rightarrow \forall x, \fun{Q}{x,y}}}}, just={$\lnot \Leftrightarrow$ :!uu}
+                    [{\exists y;\lnot\pare{\fun{P}{y}\Rightarrow \forall x,\fun{Q}{x,y}}}, just={$\lnot \forall$ :!u}
+                    [{\lnot\pare{\fun{P}{y'}\Rightarrow \forall x,\fun{Q}{x,y'}}}, just={$\exists y$ :!u}
+                    [{\fun{P}{y'}}, just={$\lnot\Rightarrow$ :!u}, name={6-1}
+                    [{\lnot\pare{\forall x,\fun{Q}{x,y'}}}, just={$\lnot\Rightarrow$ :!uu}
+                    [{\exists x;\lnot\fun{Q}{x,y'}}, just={$\lnot \forall$ :!u}
+                    [{\lnot\fun{Q}{x',y'}}, just={$\exists x$ :!u}, name={9-1}
+                    [{\forall y,\pare{\fun{P}{y}\Rightarrow \fun{Q}{x',y}}}, just={$\forall x$ :2-1}
+                    [{\fun{P}{y'}\Rightarrow \fun{Q}{x',y'}}, just={$\forall y$ :!u}
+                    %
+                    [{\lnot \fun{P}{y'}}, just={$\Rightarrow$ :!u}, close={:6-1,!c}]
+                    %
+                    [{\fun{Q}{x',y'}}, close={:9-1,!c}
+                    ]%
+                    ]]]]]]]]]]
+                    %
+                    [{\lnot\squ{\forall x, \forall y, \pare{\fun{P}{y} \Rightarrow \fun{Q}{x,y}}}}
+                    [{\forall y, \pare{\fun{P}{y} \Rightarrow \forall x, \fun{Q}{x,y}}}, name={3-2}
+                    [{\exists x;\lnot\squ{\forall y, \pare{\fun{P}{y}\Rightarrow\fun{Q}{x,y}}}}, just={$\lnot \forall$ :!uu}%, move by=6
+                    [{\exists x;\exists y; \lnot\pare{\fun{P}{y}\Rightarrow\fun{Q}{x,y}}}, just={$\lnot \forall$ :!u}
+                    [{\exists y; \lnot\pare{\fun{P}{y}\Rightarrow\fun{Q}{x',y}}}, just={$\exists x$ :!u}
+                    [{\lnot\pare{\fun{P}{y'}\Rightarrow\fun{Q}{x',y'}}}, just={$\exists y$ :!u}
+                    [{\fun{P}{y'}}, just={$\lnot\Rightarrow$ :!u}, name={17-2}
+                    [{\lnot\fun{Q}{x',y'}}, just={$\lnot\Rightarrow$ :!uu}, name={18-2}
+                    %
+                    [{\fun{P}{y'}\Rightarrow \forall x,\fun{Q}{x,y'}}, just={$\forall y$ :3-2}
+                    %
+                    [{\lnot\fun{P}{y'}}, just={$\Rightarrow$ :!u}, close={:17-2,!c}
+                    ]
+                    %
+                    [{\forall x,\fun{Q}{x,y'}}
+                    [{\fun{Q}{x',y'}}, just={$\forall x$ :!u}, close={:18-2,!c}
+                    ]]
+                    ]]]]]]]]]
+                ]
+            \end{prooftree}
+            \caption{\equref{一様収束-forallの順序交換}の証明木}
+            \figlabel{Lipschitz-恒真命題forallの順序交換の証明木}
+        \end{figure}}
+    \end{proof}
+\end{lem}
+
+\begin{prop}
+    関数列$\seq{f_n}{n\in\N}$が$A$上で$f$に一様収束することと，\defiref{実ノルム-Linftyノルム}のノルム$\norm{\dummy}$を用いた以下は同値：
+    \begin{equation}
+        \forall\varepsilon\in\Rposi,\, \exists N\in\N;\ \bsqu{
+            \forall n\in\N,\, \pare{N\leq n\ \Longrightarrow\ \norm{f_n-f}<\varepsilon}
+        }.
+    \end{equation}
+    \begin{proof}
+        \defiref{実ノルム-Linftyノルム}により，
+        \begin{equation}
+            \norm{f_n-f}<\varepsilon\ \Longleftrightarrow\ \sup_{x\in A}\bra{\norm{\fun{f}{x}}}<\varepsilon\ \Longleftrightarrow\ \forall x\in A,\, \norm{\fun{f_n}{x}-\fun{f}{x}}<\varepsilon
+        \end{equation}
+        である。
+        このことと，\lemref{一様収束-forallの順序交換}で示した\equref{一様収束-forallの順序交換}を用いれば，
+        \begin{align}
+            &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\ \bsqu{
+            \forall n\in\N,\, \pare{N\leq n\ \Longrightarrow\ \norm{f_n-f}<\varepsilon}
+            }
+            \\
+            \Longleftrightarrow\
+            &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\ \bsqu{
+                \forall n\in\N,\, \pare{N\leq n\ \Longrightarrow\ \forall x\in A,\, \norm{\fun{f_n}{x}-\fun{f}{x}}<\varepsilon}
+            }
+            \\
+            \Longleftrightarrow\
+            &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\, \forall x\in I,\ \bsqu{
+                \forall n\in \N,\, \pare{N\leq n\ \Longrightarrow\ \norm{\fun{f_n}{x}-\fun{f}{x}}<\varepsilon}
+            }
+        \end{align}
+        となり，\defiref{一様収束-各点収束と一様収束の定義}の\equref{一様収束-一様収束の定義}と同値であることが示された。
     \end{proof}
 \end{prop}
 
