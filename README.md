@@ -1,4 +1,5 @@
-# PDFはこちら
+# 特殊函数と微分方程式
+## PDFはこちら
 [PDF](/main/SpecialFunction.pdf)
 
 ## ソースコードなどはこちら
