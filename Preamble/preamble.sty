@@ -220,7 +220,7 @@
 % 定理環境の定義
 \theoremstyle{definition}
 \newtheorem{prob}{問}[chapter]
-\newtheorem{thm}{定理}[chapter]
+\newtheorem{thm}{定理}[section]
 \newtheorem{defi}[thm]{定義}
 \newtheorem{lem}[thm]{補題}
 \newtheorem{rem}[thm]{注意}
@@ -253,7 +253,7 @@
 % キーの定義
 \newref{part,chap,sec,subsec,subsubsec}
 \newref{equ,tab,fig}
-\newref{thm,prob,defi,lem,cor,eg,prop,nota,supple}
+\newref{thm,prob,defi,lem,rem,cor,eg,prop,nota,supple}
 
 % 参照名の定義
 \setrefstyle{part}{prefix=第, suffix=部}
@@ -270,6 +270,7 @@
 \setrefstyle{thm}{prefix=定理}
 \setrefstyle{defi}{prefix=定義}
 \setrefstyle{lem}{prefix=補題}
+\setrefstyle{rem}{prefix=注意}
 \setrefstyle{cor}{prefix=系}
 \setrefstyle{eg}{prefix=例}
 \setrefstyle{prop}{prefix=命題}
