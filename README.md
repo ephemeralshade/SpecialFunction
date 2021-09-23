@@ -3,7 +3,7 @@
 何かあれば[Twitter(@FugaciousShade)](https://twitter.com/FugaciousShade)まで。
 
 ## PDFはこちら
-[PDF](/main/SpecialFunction.pdf)
+[微分方程式と特殊函数PDF](/main/SpecialFunction.pdf)
 
 ## ソースコードなどはこちら
 [GitHubページ](https://github.com/ephemeralshade/SpecialFunction)
