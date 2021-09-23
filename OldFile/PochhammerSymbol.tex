@@ -1,0 +1,322 @@
+\documentclass[a4paper,draft]{ltjsarticle}
+\usepackage{preamble}
+
+\begin{document}
+%\maketitle
+
+\section{Pochhammer記号}\label{sec:poch}
+この章ではPochhammer記号についての公式をまとめる。
+出典の多くは\cite{nkswtr}による。
+
+
+\begin{defi}[Pochhammer記号]
+    $a$を複素数，$n$を整数とする。
+    Pochhammer記号$\poch{a}{n}$とは，Gamma関数$\fun{\Gamma}{z}$を用いて，
+    \begin{equation}
+        \poch{a}{n}\coloneqq \dfrac{\fun{\Gamma}{a+n}}{\fun{\Gamma}{a}}
+    \end{equation}
+    と定義されるものである。
+\end{defi}
+
+\begin{defi}[Pochhammer記号の積]
+    （この章では直接用いることはないが，）Pochhammer記号の積を，
+    \begin{equation}
+        \poch{a_1,a_2,\dots,a_m}{n}\coloneqq \prod_{k=1}^m\poch{a_k}{n}=\frac{\fun{\Gamma}{a_1+n}\fun{\Gamma}{a_2+n}\cdots\fun{\Gamma}{a_m+n}}{\fun{\Gamma}{a_1}\fun{\Gamma}{a_2}\cdots\fun{\Gamma}{a_m}}
+    \end{equation}
+    と表記することがある。
+\end{defi}
+
+Gamma関数を用いた定義をすれば，$n$は整数である必要はないが，実用上はほとんど整数に限ってよい。
+
+以降，特に断りがなければ$a$, $b$を複素数，$n$, $k$を自然数とする。
+
+
+
+\begin{prop}
+    \begin{equation}
+        \poch{1}{n}=n!
+    \end{equation}
+    \begin{proof}
+        $n$を自然数としたとき，$\fun{\Gamma}{n+1}=n!$に注意すれば，
+        \begin{equation}
+            \poch{1}{n}=\frac{\fun{\Gamma}{1+n}}{\fun{\Gamma}{1}}=\frac{n!}{0!}=n!
+        \end{equation}
+        となる。
+    \end{proof}
+\end{prop}
+
+\begin{prop}\label{prop:poch-(-m)_{n}=0}
+    $m$を自然数とし，$n$は$m+1\leq n$を満たす自然数であるとすると，
+    \begin{equation}
+        \poch{-m}{n}=0
+    \end{equation}
+    である。
+    \begin{proof}
+        $m$を自然数としたとき，$\fun{\Gamma}{-m}$は1位の極になっていることを用いる。
+        $-m+n\geq 1$だから$\fun{\Gamma}{-m+n}$は有限の値を取るので，
+        \begin{align}
+            \poch{-m}{n}=\frac{\fun{\Gamma}{-m+n}}{\fun{\Gamma}{-m}}=0
+        \end{align}
+        である。
+    \end{proof}
+\end{prop}
+
+命題\ref{prop:poch-(-m)_{n}=0}は，超幾何級数が有限次の多項式になるための条件を導く際に用いる。
+これは，偏微分方程式を変数分離した際に出てくる定数の条件を，解が発散しないための条件（超幾何級数が有限次で切れる）から決める際にも用いる\footnote{例えば，水素原子のSchr\"{o}dinger方程式の$\theta$方向の方程式（Legendreの陪微分方程式）が，$\theta=0$, $\pi$で発散しないための条件}。
+
+\begin{prop}\label{prop:poch-an+b}
+    \begin{align}
+        n+a&=a\cdot \frac{\poch{a+1}{n}}{\poch{a}{n}}
+        \\
+        an+b&=b\cdot \frac{\poch{\frac{b}{a}+1}{n}}{\poch{\frac{b}{a}}{n}} 
+    \end{align}
+    \begin{proof}
+        1つ目は，
+        \begin{align}
+            n+a&=\pare{n+a}\cdot\frac{\fun{\Gamma}{n+a}}{\fun{\Gamma}{n+a}}
+            =\Poch{a+1}{n}\cdot \frac{\fun{\Gamma}{a}}{\fun{\Gamma}{n+a}}\cdot\frac{\fun{\Gamma}{a+1}}{\fun{\Gamma}{a}}
+            \\
+            &=\poch{a+1}{n}\cdot\frac{1}{\poch{a}{n}}\cdot a=a\cdot \frac{\poch{a+1}{n}}{\poch{a}{n}}
+        \end{align}
+        とすればよい。
+
+        2つ目は，直前に示した式を用いて，
+        \begin{equation}
+            an+b=a\pare{n+\frac{b}{a}}
+            =a\cdot \frac{b}{a}\cdot \frac{\poch{\frac{b}{a}+1}{n}}{\poch{\frac{b}{a}}{n}}=b\cdot \frac{\poch{\frac{b}{a}+1}{n}}{\poch{\frac{b}{a}}{n}} 
+        \end{equation}
+        である。
+    \end{proof}
+\end{prop}
+
+命題\ref{prop:poch-an+b}は，Maclaurin級数が既知であるような冪級数を超幾何級数表示に直す際に，最も頻繁に用いる公式である。
+
+\begin{prop}\label{prop:poch-(a)_n=prod(a+k)}
+    \begin{align}
+        \poch{a}{0}&=1
+        \\
+        \poch{a}{n}&=\prod_{k=0}^{n-1}\pare{a+k}\quad\pare{n \geq 1}
+        \\
+        \poch{a}{-n}&=\prod_{k=1}^{n}\frac{1}{a-k}\quad\pare{n\geq 1}
+    \end{align}
+    \begin{proof}
+        1つ目は定義から，
+        \begin{equation}
+            \poch{a}{0}=\frac{\fun{\Gamma}{a+0}}{\fun{\Gamma}{a}}=\frac{\fun{\Gamma}{a}}{\fun{\Gamma}{a}}=1
+        \end{equation}
+        となる。
+
+        2つ目は，分子に対して$z\fun{\Gamma}{z}=\fun{\Gamma}{z+1}$を繰り返し用いれば，
+        \begin{align}
+            \poch{a}{n}&=\frac{\fun{\Gamma}{a+n}}{\fun{\Gamma}{a}}=\frac{\pare{a+n-1}\fun{\Gamma}{a+n-1}}{\fun{\Gamma}{a}}=\frac{\pare{a+n-1}\pare{a+n-2}\fun{\Gamma}{a+n-2}}{\fun{\Gamma}{a}}=\cdots
+            \\
+            &=\frac{\pare{a+n-1}\pare{a+n-2}\cdots\pare{a+1}a\fun{\Gamma}{a}}{\fun{\Gamma}{a}}=\pare{a+n-1}\pare{a+n-2}\cdots\pare{a+1}a
+            \\
+            &=\prod_{k=0}^{n-1}\pare{a+k}
+        \end{align}
+        となる。
+
+        3つ目は分母に対して同じように，
+        \begin{align}
+            \poch{a}{-n}&=\frac{\fun{\Gamma}{a-n}}{\fun{\Gamma}{a}}=\frac{\fun{\Gamma}{a-n}}{\pare{a-1}\fun{\Gamma}{a-1}}=\frac{\fun{\Gamma}{a-n}}{\pare{a-1}\pare{a-2}\fun{\Gamma}{a-2}}=\cdots
+            \\
+            &=\frac{\fun{\Gamma}{a-n}}{\pare{a-1}\pare{a-2}\cdots\pare{a-n}\fun{\Gamma}{a-n}}=\frac{1}{\pare{a-1}\pare{a-2}\cdots\pare{a-n}}
+            \\
+            &=\prod_{k=1}^n\frac{1}{a-k}
+        \end{align}
+    \end{proof}
+\end{prop}
+
+超幾何級数の定数項が必ず$1$であるという事実は，$\poch{a}{0}=1$から出てくる。
+
+\begin{prop}
+    \begin{align}
+        \poch{a}{n}&=\pare{-1}^n\poch{1-n-a}{n}
+        \\
+        \poch{a}{-n}&=\dfrac{\pare{-1}^n}{\poch{1-a}{n}} \label{eq:Poch-poch{a}{-n}}
+    \end{align}
+    \begin{proof}
+        Gamma関数の相反公式（定理\ref{thm:Gamma-相反公式}）：
+        \begin{equation}
+            \fun{\Gamma}{a}\fun{\Gamma}{1-a}=\frac{\pi}{\fun{\sin}{\pi a}}    
+        \end{equation}
+        を用いる。
+        三角関数の加法定理などから，$\fun{\sin}{\pi\pare{a+n}}=\pare{-1}^n\fun{\sin}{\pi a}$が成立することに注意して，
+        \begin{align}
+            \pare{-1}^n\poch{1-n-a}{n}
+            &=\pare{-1}^n\cdot\frac{\fun{\Gamma}{1-a}}{\fun{\Gamma}{1-n-a}}\cdot \frac{\fun{\Gamma}{a}}{\fun{\Gamma}{n+a}}\cdot\frac{\fun{\Gamma}{n+a}}{\fun{\Gamma}{a}}
+            \\
+            &=\frac{\fun{\Gamma}{n+a}}{\fun{\Gamma}{a}}\cdot \pare{-1}^n \cdot \fun{\Gamma}{a}\fun{\Gamma}{1-a}\cdot\frac{1}{\fun{\Gamma}{n+a}\fun{\Gamma}{1-\spare{n+a}}}
+            \\
+            &=\poch{a}{n}\cdot\pare{-1}^n\cdot \frac{\pi}{\fun{\sin}{\pi a}}\cdot\frac{\fun{\sin}{\pi\pare{n+a}}}{\pi}
+            \\
+            &=\poch{a}{n}\cdot\pare{-1}^n\cdot \frac{\pi}{\fun{\sin}{\pi a}}\cdot\frac{\pare{-1}^n\fun{\sin}{\pi a}}{\pi}
+            \\
+            &=\poch{a}{n}
+        \end{align}
+
+        2つ目も同様に，相反公式を用いれば，
+        \begin{align}
+            \poch{a}{-n}&=\frac{\fun{\Gamma}{a-n}}{\fun{\Gamma}{a}}\cdot\frac{\fun{\Gamma}{1-a+n}}{\fun{\Gamma}{1-a}}\cdot\frac{\fun{\Gamma}{1-a}}{\fun{\Gamma}{1-a+n}}
+            \\
+            &=\frac{\fun{\Gamma}{1-a}}{\fun{\Gamma}{1-a+n}}
+            \cdot \fun{\Gamma}{a-n}\fun{\Gamma}{1-\spare{a-n}}
+            \cdot\frac{1}{\fun{\Gamma}{a}\fun{\Gamma}{1-a}}
+            \\
+            &=\frac{1}{\poch{1-a}{n}}
+            \cdot \frac{\pi}{\fun{\sin}{\pi\pare{a-n}}}\cdot \frac{\fun{\sin}{\pi a}}{\pi}
+            \\
+            &=\frac{1}{\poch{1-a}{n}}\cdot \frac{\pi}{\pare{-1}^n\fun{\sin}{\pi a}}\cdot \frac{\fun{\sin}{\pi a}}{\pi}
+            \\
+            &=\frac{\pare{-1}^n}{\poch{1-a}{n}}
+        \end{align}
+    \end{proof}
+\end{prop}
+
+\begin{prop}\label{prop:poch-(a)_{n+k}}
+    \begin{align}
+        \poch{a}{n+k}&=\poch{a}{n}\poch{a+n}{k}
+        \\
+        \poch{a}{n-k}&=\dfrac{\pare{-1}^k\poch{a}{n}}{\poch{1-n-a}{k}}
+        \\
+        \poch{-n}{k}&=\dfrac{\pare{-1}^k n!}{\pare{n-k}!} \label{eq:Poch-poch(-n)_{-k}}
+    \end{align}
+    \begin{proof}
+        1つ目は，
+        \begin{equation}
+            \poch{a}{n+k}=\Poch{a}{n+k}=\Poch{a}{n}\cdot\Poch{a+n}{k}=\poch{a}{n}\poch{a+n}{k}
+        \end{equation}
+
+        2つ目は直前に示した式と\eqref{eq:Poch-poch{a}{-n}}式から，
+        \begin{equation}
+            \poch{a}{n-k}=\poch{a}{n}\poch{a+n}{-k}=\poch{a}{n}\cdot\frac{\pare{-1}^k}{\poch{1-\spare{a+n}}{k}}=\dfrac{\pare{-1}^k\poch{a}{n}}{\poch{1-n-a}{k}}
+        \end{equation}
+
+        3つ目は\eqref{eq:Poch-poch{a}{-n}}式と，$\fun{\Gamma}{m+1}=m!$から，
+        \begin{equation}
+            \poch{-n}{k}=\frac{\pare{-1}^{-k}}{\poch{1+n}{-k}}=\pare{-1}^k\cdot \frac{\fun{\Gamma}{1+n}}{\fun{\Gamma}{1+n-k}}=\dfrac{\pare{-1}^k n!}{\pare{n-k}!}
+        \end{equation}
+    \end{proof}
+\end{prop}
+
+\begin{cor}\label{cor:poch-(a)_{n+1}}
+    \begin{equation}
+        \poch{a}{n+1}=\pare{a+n}\poch{a}{n}
+    \end{equation}
+    \begin{proof}
+        \begin{equation}
+            \poch{a}{n+1}=\poch{a}{n}\poch{a+n}{1}=\poch{a}{n}\Poch{a+n}{1}
+            =\poch{a}{n}\frac{\pare{a+n}\fun{\Gamma}{a+n}}{\fun{\Gamma}{a+n}}=\pare{a+n}\poch{a}{n}
+        \end{equation}
+    \end{proof}
+\end{cor}
+
+\begin{prop}
+    \begin{equation}
+        \binom{n}{k}=\pare{-1}^k\frac{\poch{-n}{k}}{k!}
+    \end{equation}
+    \begin{proof}
+        \eqref{eq:Poch-poch(-n)_{-k}}式から，
+        \begin{equation}
+            \poch{-n}{k}=\frac{\pare{-1}^k n!}{\pare{n-k}!}\cdot \frac{k!}{k!}=\pare{-1}^k k!\binom{n}{k}
+        \end{equation}
+        となるので，両辺に$\pare{-1}^k/k!$を掛けると，
+        \begin{equation}
+            \binom{n}{k}=\pare{-1}^k\frac{\poch{-n}{k}}{k!}
+        \end{equation}
+    \end{proof}
+\end{prop}
+
+\begin{prop}
+    \begin{equation}
+        \poch{a}{2n}=2^{2n}\poch{\frac{a}{2}}{n}\poch{\frac{a+1}{2}}{n}
+    \end{equation}
+    \begin{proof}
+        Gamma関数に関するLegendreの倍角公式（定理\ref{thm-Gamma-Legendreの倍角公式}）から得られる，
+        \begin{equation}
+            \fun{\Gamma}{a}=\fun{\Gamma}{2\cdot\frac{a}{2}}=\frac{2^{a-1}}{\sqrt{\pi}}\fun{\Gamma}{\frac{a}{2}}\fun{\Gamma}{\frac{a+1}{2}}
+        \end{equation}
+        \begin{equation}
+            \fun{\Gamma}{a+2n}=\fun{\Gamma}{2\pare{\frac{a}{2}+n}}=\frac{2^{a+2n-1}}{\sqrt{\pi}}\fun{\Gamma}{\frac{a}{2}+n}\fun{\Gamma}{\frac{a+1}{2}+n}
+        \end{equation}
+        を用いることで，
+        \begin{align}
+            \poch{a}{2n}&=\Poch{a+2n}{a}=\frac{\frac{2^{a+2n-1}}{\sqrt{\pi}}\fun{\Gamma}{\frac{a}{2}+n}\fun{\Gamma}{\frac{a+1}{2}+n}}{\frac{2^{a-1}}{\sqrt{\pi}}\fun{\Gamma}{\frac{a}{2}}\fun{\Gamma}{\frac{a+1}{2}}}
+            \\
+            &=2^{2n}\Poch{\frac{a}{2}}{n}\Poch{\frac{a+1}{2}}{n}=2^{2n}\poch{\frac{a}{2}}{n}\poch{\frac{a+1}{2}}{n}
+        \end{align}
+    \end{proof}
+\end{prop}
+
+\begin{prop}\label{prop:poch-(2n)!}
+    \begin{align}
+        \pare{2n}!&=2^{2n}\poch{1}{n}\poch{\frac{1}{2}}{n} \label{eq:poch-(2n)!}
+        \\
+        \poch{\frac{1}{2}}{n}&=\dfrac{\pare{2n}!}{2^{2n}n!} \label{eq:poch-(1/2)_{n}}
+    \end{align}
+    \begin{proof}
+        Gamma関数に関するLegendreの倍角公式（定理\ref{thm-Gamma-Legendreの倍角公式}），$\fun{\Gamma}{\frac{1}{2}}=\sqrt{\pi}$，$\poch{1}{n}=n!$から，
+        \begin{align}
+            \pare{2n}!&=\fun{\Gamma}{2n+1}=2n\fun{\Gamma}{2n}=2n\cdot \frac{2^{2n-1}}{\sqrt{\pi}}\fun{\Gamma}{n}\fun{\Gamma}{n+\frac{1}{2}}
+            \\
+            &=2^{2n}\cdot n\fun{\Gamma}{n}\cdot \frac{\fun{\Gamma}{n+\frac{1}{2}}}{\fun{\Gamma}{\frac{1}{2}}}=2^{2n}\cdot n!\cdot \frac{\fun{\Gamma}{n+\frac{1}{2}}}{\fun{\Gamma}{\frac{1}{2}}}
+            \\
+            &=2^{2n}\poch{1}{n}\poch{\frac{1}{2}}{n}
+        \end{align}
+
+        後者は今得られた式を書き換えて，
+        \begin{equation}
+            \poch{\frac{1}{2}}{n}=\frac{\pare{2n}!}{2^{2n}\poch{1}{n}}=\frac{\pare{2n}!}{2^{2n}n!}
+        \end{equation}
+    \end{proof}
+\end{prop}
+
+
+
+
+\begin{prop}\label{prop:poch-二重階乗}
+    \begin{equation}
+        \frac{1}{n!}\poch{\frac{1}{2}}{n}=\frac{1}{2^{2n}}\binom{2n}{n}=\frac{\pare{2n-1}!!}{\pare{2n}!!} \label{eq:poch-(2n-1)!!/(2n)!!}
+    \end{equation}
+    \begin{proof}
+        最初の等号は，\eqref{eq:poch-(1/2)_{n}}式に帰着させて，
+        \begin{equation}
+            \frac{1}{2^{2n}}\binom{2n}{n}=\frac{1}{2^{2n}}\frac{\pare{2n}!}{n!^2}=\frac{1}{n!}\cdot\dfrac{\pare{2n}!}{2^{2n}n!}=\frac{1}{n!}\poch{\frac{1}{2}}{n}
+        \end{equation}
+        から成立。
+
+        次の等号を示す前に，二重階乗の定義を確認しておく。
+        偶数の二重階乗は，
+        \begin{align}
+            \pare{2n}!!&\coloneqq 2n\cdot \pare{2n-2}\cdot\pare{2n-4}\cdots 4\cdot 2
+            \\
+            &=2^n\cdot n\cdot \pare{n-1}\cdot \pare{n-2}\cdots 2\cdot 1=2^n n!
+        \end{align}
+        で定義されており，奇数の二重階乗は，
+        \begin{align}
+            \pare{2n-1}!!&\coloneqq \pare{2n-1}\pare{2n-3}\cdots 3\cdot 1
+            \\
+            &=\frac{2n\cdot \pare{2n-1}\cdot \pare{2n-2}\cdot\pare{2n-3}\cdots 3\cdot 2\cdot 1}{ 2n\cdot \pare{2n-2}\cdot\pare{2n-4}\cdots 4\cdot 2}
+            \\
+            &=\frac{\pare{2n}!}{\pare{2n}!!}=\frac{\pare{2n}!}{2^n n!}
+        \end{align}
+        である。
+
+        二重階乗を階乗で表した式を用いて最右辺を計算すると，
+        \begin{equation}
+            \frac{\pare{2n-1}!!}{\pare{2n}!!}=\frac{\pare{2n}!}{2^n n!}\cdot \frac{1}{2^n n!}=\frac{1}{2^{2n}}\frac{\pare{2n}!}{n!^2}=\frac{1}{2^{2n}}\binom{2n}{n}
+        \end{equation}
+        となる。
+        よって，
+        \begin{equation}
+            \frac{1}{n!}\poch{\frac{1}{2}}{n}=\frac{1}{2^{2n}}\binom{2n}{n}=\frac{\pare{2n-1}!!}{\pare{2n}!!}
+        \end{equation}
+        が成立する。
+    \end{proof}
+\end{prop}
+
+最後に示した\eqref{eq:poch-(2n-1)!!/(2n)!!}式は，冪級数展開の係数に二重階乗を含むような関数\footnote{完全楕円積分$\fun{K}{x}$，第二種完全楕円積分$\fun{E}{x}$，逆正弦関数$\fun{\arcsin}{x}$など}を超幾何級数表示に直す際に用いる。
+
+
+
+\end{document}

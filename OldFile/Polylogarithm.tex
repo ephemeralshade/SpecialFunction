@@ -1,0 +1,31 @@
+\documentclass[a4paper,draft]{ltjsarticle}
+\usepackage{preamble}
+\begin{document}
+\section{多重対数関数の公式}\label{sec:Polylog}
+\begin{defi}[Dirichlet級数]
+    複素数列$\seq{c_n}{n}$と複素数$s$を用いて，
+    \begin{equation}
+        \sum_{n=1}^\infty \frac{c_n}{n^s}
+    \end{equation}
+    で表される級数をDirichlet級数という。
+\end{defi}
+
+\begin{defi}[多重対数関数]
+    $s$, $z$を複素数とする。
+    多重対数関数$\Li{s}{z}$は以下で定義される：
+    \begin{equation}
+        \Li{s}{z} \coloneqq \sum_{n=1}^\infty \frac{z^n}{n^s}
+    \end{equation}
+    但し，収束性のため$\abs{z}<1$とする。
+    多重対数関数$\Li{s}{z}$はDirichlet級数において$c_n = z^n$と選んだものである。
+\end{defi}
+
+\begin{eg}[Riemann zeta関数]
+    $\Li{s}{z}$において$z=1$とすると，
+    \begin{equation}
+        \Li{s}{1}=\sum_{n=1}^\infty \frac{1}{n^s}=\fun{\zeta}{s}
+    \end{equation}
+    となる。
+\end{eg}
+
+\end{document}

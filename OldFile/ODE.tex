@@ -1,0 +1,535 @@
+\documentclass[a4paper,draft]{ltjsarticle}
+\usepackage{preamble}
+
+\begin{document}
+
+\section{線型常微分方程式論}
+\subsection{Lipschitz条件と解の存在・一意性}
+この節では，常微分方程式を扱う上で最も基本的・かつ重要な，解の存在性と一意性についての命題を扱う。
+詳しくは\cite[高野]{takano}を参照。
+
+実数$t$を独立変数，実数$x_j$を$t$の従属変数とする（但し，$1\leq j\leq n$）。
+縦ベクトル$\bm{x}$, $\bm{f}$を，$\bm{x}\coloneqq \trans{\pare{x_1,\dots,x_n}}$, $\fun{\bm{f}}{t,\bm{x}}\coloneqq \trans{\pare{\fun{f_1}{t,\bm{x}},\dots,\fun{f_n}{t,\bm{x}}}}$で定める。
+
+\begin{defi}[Lipschitz条件]
+    $\fun{\bm{f}}{t,\bm{x}}$が，$\R^{n+1}$内の有界領域：
+    \begin{equation}
+        E\coloneqq \set{\pare{t,\bm{x}}\in\R^{n+1}}{\abs{t-a}\leq r,\,\norm{\bm{x}-\bm{b}}\leq \rho}
+    \end{equation}
+    において連続であるとする。
+    このとき，$\bm{f}$がLipschitz条件を満たすとは，
+    \begin{equation}
+        \exists L>0,\ \norm{\fun{\bm{f}}{t,\bm{x}}-\fun{\bm{f}}{t,\bm{y}}}\leq L\cdot\norm{\bm{x}-\bm{y}},\quad\quad\pare{\pare{t,\bm{x}},\pare{t,\bm{y}}\in E}
+    \end{equation}
+    が成立することである。
+    但し，ここでのノルム$\norm{\cdot}$は，成分の絶対値のうち最大のもの，すなわち，
+    \begin{equation}
+        \norm{\bm{x}}\coloneqq \max\bra{\abs{x_1},\dots,\abs{x_n}}
+    \end{equation}
+    で定義されているものとする。
+    このときの$L$をLipschitz定数と呼ぶ。
+\end{defi}
+
+高階の常微分方程式は，未知関数を増やすことにより連立1階常微分方程式に帰着させることができる。
+その微分方程式を，
+\begin{equation}
+    \diff{x_j}{t}=\fun{f_j}{t,x_1,\cdots,x_n},\quad\quad\pare{1\leq j\leq n}
+\end{equation}
+と表すことにし，これをまとめて，
+\begin{equation}
+    \label{eq:principle ODE}
+    \diff{\bm{x}}{t}=\fun{\bm{f}}{t,\bm{x}}
+\end{equation}
+と表す。
+
+\begin{eg}
+    定数$m$, $k$を含む$x=\fun{x}{t}$に関する以下の常微分方程式：
+    \begin{equation}
+        m\diffn{x}{t}{2}+kx=0
+    \end{equation}
+    は，
+    \begin{equation}
+        p\coloneqq m\diff{x}{t}
+    \end{equation}
+    という新たな未知関数$p$を導入することにより，
+    \begin{align}
+        \diff{p}{t}&=-kx
+        \\
+        \diff{x}{t}&=\dfrac{p}{m}
+    \end{align}
+    のように連立1階常微分方程式に帰着される。
+    これをベクトルを用いて記述すると，
+    \begin{equation}
+        \diff{}{t}\vctr{p\\x}=\vctr{-kx\\\frac{p}{m}}
+    \end{equation}
+    である。
+
+    特に，今回の方程式は線型かつ定数係数であるため，行列を用いて，
+    \begin{equation}
+        \diff{}{t}\vctr{p\\x}=
+        \pare{\begin{array}{cc}
+            0 & -k
+            \\
+            \frac{1}{m} & 0
+        \end{array}}
+        \vctr{p\\x}
+    \end{equation}
+    と表すことができる。
+    右辺の行列を対角化することにより，容易に解くことができるようになる。
+\end{eg}
+
+線型常微分方程式とLipschitz条件には重要な関係がある。
+
+\begin{thm}
+    $\fun{\bm{f}}{t,\bm{x}}$が$\R^{n+1}$内の領域$D$において連続かつ局所的にLipschitz条件を満たすとする。
+    このとき，任意の$\pare{a,\bm{b}}\in D$に対して$\pare{a,\bm{b}}$を通る\eqref{eq:principle ODE}式の解が$\pare{a,\bm{b}}$の近傍でただひとつ存在する。
+\end{thm}
+
+\subsection{定数係数斉次二階常微分方程式}\label{subsec:ODE-定数係数}
+$a$, $b$を複素定数とする。
+未知関数$\fun{w}{z}$に関する定数係数斉次2階常微分方程式：
+\begin{equation}
+    \label{eq:ODE-定数係数}
+    w''+aw'+bw=0
+\end{equation}
+について考察する。
+指数関数型の解$\fun{w}{z}=e^{\lambda z}$を仮定して$\lambda$に関する特性方程式：
+\begin{equation}
+    \lambda^2+a\lambda+b=0
+\end{equation}
+を解くことによって独立な2解を得て，その線形結合により一般解を求めるのが最も基本的である。
+特性方程式が重解の場合は$e^{\lambda z}$, $ze^{\lambda z}$が独立な2解になるのであった。
+
+この節では，\eqref{eq:ODE-定数係数}式の微分方程式を冪級数解法を用いて解く。
+冪級数解法では，より一般的な微分方程式を解くことができる。
+
+複素係数$c_n$を用いて，$z=0$周りの冪級数展開を
+\begin{equation}
+    w\pare{z}=\sum_{n=0}^\infty c_n z^n
+\end{equation}
+と表す。
+項別微分可能性や，和の順序交換ができることを認めると，
+\begin{align}
+    w''\pare{z} & =\sum_{n=2}^\infty n\pare{n-1}c_nz^{n-2}=\sum_{n=0}^\infty \pare{n+2}\pare{n+1}c_{n+2}z^n,
+    \\
+    w'\pare{z}  & =\sum_{n=1}^\infty nc_n z^{n-1}=\sum_{n=0}^\infty \pare{n+1}c_{n+1}z^n
+\end{align}
+となるから，
+\begin{equation}
+    \sum_{n=0}^\infty\bsqu{\pare{n+2}\pare{n+1}c_{n+2}+a\cdot\pare{n+1}c_{n+1}+b\cdot c_n}z^n=0
+\end{equation}
+これが任意の$z$について成り立つためには，全ての$n$に対して$z^n$の係数が0でなければならない。
+よって，$c_n$についての漸化式，
+\begin{equation}
+    \pare{n+2}\pare{n+1}c_{n+2}+a\cdot\pare{n+1}c_{n+1}+b\cdot c_n=0
+\end{equation}
+を得る。
+$d_n\coloneqq n!c_n$と置けば，
+\begin{equation}
+    d_{n+2}+ad_{n+1}+bd_n=0
+\end{equation}
+となる。
+
+\begin{enumerate}[label=(\roman*)]
+    \item 定数係数斉次三項間漸化式の特性方程式：
+    \begin{equation}
+        \lambda^2+a\lambda+b=0
+    \end{equation}
+    が重解を持たないとき
+\end{enumerate}
+
+
+    異なる2解を$\lambda_1$, $\lambda_2$とすれば，
+    \begin{equation}
+        \case{
+            d_{n+2}-\lambda_1d_{n+1}=\lambda_2\pare{d_{n+1}-\lambda_1d_n}
+            \\
+            d_{n+2}-\lambda_2d_{n+1}=\lambda_1\pare{d_{n+1}-\lambda_2d_n}
+        }
+    \end{equation}
+    これより，
+    \begin{equation}
+        \case{
+            d_{n+1}-\lambda_1d_n={\lambda_2^n}\pare{d_1-\lambda_1d_0}
+            \\
+            d_{n+1}-\lambda_2d_n={\lambda_1^n}\pare{d_1-\lambda_2d_0}
+        }
+    \end{equation}
+    となり，
+    \begin{equation}
+        d_n=\dfrac{1}{\lambda_2-\lambda_1}\bsqu{\pare{\lambda^n_2-\lambda^n_1}d_1-\lambda_1\lambda_2\pare{\lambda^{n-1}_2-\lambda^{n-1}_1}d_0}
+    \end{equation}
+    となる。
+    また，特性方程式の解は，二次方程式の解の公式から，
+    \begin{equation}
+        \lambda_1  =\dfrac{-a-\sqrt{a^2-4b}}{2}
+        ,\quad
+        \lambda_2  =\dfrac{-a+\sqrt{a^2-4b}}{2}
+    \end{equation}
+    であるから，
+    \begin{equation}
+        \lambda_2-\lambda_1=\sqrt{a^2-4b}
+    \end{equation}
+    と表せる。
+    更に，解と係数の関係から，$\lambda_1\lambda_2=b$であり，
+    また，$c_n=d_n/n!$であるから，$c_1=d_1/1!=d_1$, $c_0=d_0/0!=d_0$より，
+    \begin{equation}
+        c_n=\dfrac{1}{n!\sqrt{a^2-4b}}\bsqu{\pare{\lambda^n_2-\lambda^n_1}c_1-b\pare{\lambda^{n-1}_2-\lambda^{n-1}_1}c_0}
+    \end{equation}
+    よって，解$w\pare{z}$は，
+    \begin{align}
+        w\pare{z} & =\sum_{n=0}^\infty \dfrac{1}{n!\sqrt{a^2-4b}}\bsqu{\pare{\lambda^n_2-\lambda^n_1}c_1-b\pare{\lambda^{n-1}_2-\lambda^{n-1}_1}c_0}z^n
+        \\
+                    & =\dfrac{1}{\sqrt{a^2-4b}}\squ{
+            c_1\sum_{n=0}^\infty \dfrac{\lambda^n_2 z^n -\lambda^n_1 z^n}{n!}
+            -bc_0\sum_{n=0}^\infty \pare{\dfrac{1}{\lambda_2}\dfrac{\lambda^n_2z^n}{n!}-\dfrac{1}{\lambda_1}\dfrac{\lambda^n_1z^n}{n!}}
+        }
+        \\
+                    & =\dfrac{1}{\sqrt{a^2-4b}}\squ{\pare{\dfrac{bc_0}{\lambda_1}-c_1}e^{\lambda_1 z}-\pare{\dfrac{bc_0}{\lambda_2}-c_1}e^{\lambda_2 z}}
+    \end{align}
+    また，解と係数の関係を再び使えば，
+    \begin{equation}
+        w\pare{z}=\dfrac{1}{\sqrt{a^2-4b}}\squ{\pare{\lambda_2c_0-c_1}e^{\lambda_1 z}-\pare{\lambda_1 c_0-c_1}e^{\lambda_2 z}}
+    \end{equation}
+    を得る。
+    但し，
+    \begin{equation}
+        \lambda_1  =\dfrac{-a-\sqrt{a^2-4b}}{2}
+        ,\quad
+        \lambda_2  =\dfrac{-a+\sqrt{a^2-4b}}{2}
+    \end{equation}
+    である。
+
+\begin{enumerate}[resume,label=(\roman*)]
+    \item 定数係数斉次三項間漸化式の特性方程式：
+    \begin{equation}
+        \lambda^2+a\lambda+b=0
+    \end{equation}
+    が重解を持つとき。
+\end{enumerate}
+
+
+    重解を$\lambda_0$とすれば，
+    \begin{equation}
+        \lambda_0=-\dfrac{1}{2}a
+    \end{equation}
+    である。
+
+    ここで，更に場合分けをする。
+
+    $a=b=0$のとき，重解は$\lambda_0=0$であり，$w''\pare{z}=0$であり，
+    \begin{equation}
+        \sum_{n=0}^\infty \pare{n+2}\pare{n+1}c_{n+2}z^n=0
+    \end{equation}
+    $n=0,\,1,\,\dots$において$c_{n+2}=0$でなければならず，
+    \begin{equation}
+        w\pare{z}=c_0+c_1z
+    \end{equation}
+    となる。
+
+    このとき，
+    \begin{equation}
+        d_{n+2}-\lambda_0d_{n+1}=\lambda_0\pare{d_{n+1}-\lambda_0 d_n}
+    \end{equation}
+    と書けるから，
+    \begin{equation}
+        d_{n+1}-\lambda_0d_n=\lambda^n_0\pare{d_1-\lambda_0d_0}
+    \end{equation}
+    を得る。
+
+    $a\ne 0$のとき，$\lambda_0\ne 0$であるから，この式を$\lambda^{n+1}_0$で割ることで，
+    \begin{equation}
+        \dfrac{d_{n+1}}{\lambda^{n+1}_0}-\dfrac{d_n}{\lambda^n_0}=\dfrac{d_1}{\lambda_0}-d_0
+    \end{equation}
+    となる。
+    これより，
+    \begin{equation}
+        d_n=d_0\lambda^n_0+n\lambda^n_0\pare{\dfrac{d_1}{\lambda_0}-d_0}
+    \end{equation}
+    となるので，
+    \begin{equation}
+        c_n=\dfrac{d_n}{n!}=\dfrac{d_0\lambda^n_0}{n!}+\dfrac{\lambda^{n-1}_0}{\pare{n-1}!}\pare{d_1-\lambda_0d_0}=\dfrac{c_0\lambda^n_0}{n!}+\dfrac{\lambda^{n-1}_0}{\pare{n-1}!}\pare{c_1-\lambda_0c_0}
+    \end{equation}
+    であり，
+    \begin{align}
+        w\pare{z} & =c_0\sum_{n=0}\dfrac{\lambda^n_0}{n!}z^n+\pare{c_1-\lambda_0c_0}z\sum_{n=1}\dfrac{\lambda^{n-1}_0z^{n-1}}{\pare{n-1}!}
+        \\
+                    & =c_0e^{\lambda_0 z}+\pare{c_1-\lambda_0c_0}ze^{\lambda_0 z}
+    \end{align}
+    を得る。
+
+
+まとめると，
+\begin{align}
+    w\pare{z}=\case{
+        \begin{array}{cl}
+            \dfrac{1}{\sqrt{a^2-4b}}\squ{\pare{\lambda_2c_0-c_1}e^{\lambda_1 z}-\pare{\lambda_1 c_0-c_1}e^{\lambda_2 z}} & \quad\pare{a^2-4b\ne0}
+            \vspace{4pt}                                                                                                                          \\
+            c_0e^{\lambda_0 z}+\pare{c_1-\lambda_0c_0}ze^{\lambda_0 z}                                                   & \quad\pare{a^2-4b=0}
+        \end{array}
+    }
+\end{align}
+が解である。
+但し，級数の置き方から$c_0=w\pare{0}$, $c_1=w'\pare{0}$であって，
+\begin{align}
+    \lambda_1 & =\dfrac{-a-\sqrt{a^2-4b}}{2}
+    \\
+    \lambda_2 & =\dfrac{-a+\sqrt{a^2-4b}}{2}
+    \\
+    \lambda_0 & =-\dfrac{1}{2}a
+\end{align}
+である。
+
+
+
+
+
+
+\subsection{Eulerの微分方程式}
+Eulerの微分方程式と呼ばれる微分方程式を扱う。
+これは，確定特異点を持つ微分方程式のうち，最も単純なものである。
+
+定数係数$a$, $b\in\CC$を持つ$\fun{w}{z}$に関するEulerの微分方程式：
+\begin{equation}
+    \label{eq:ODE-9-2-1}
+    z^2w''+azw'+bw=0
+\end{equation}
+の一般解を求める。
+
+$t=\fun{\ln}{z}$，すなわち，$z=e^t$と置く。
+\begin{equation}
+    \diff{}{z}=\diff{t}{z}\diff{}{t}=\dfrac{1}{z}\diff{}{t}=e^{-t}\diff{}{t}
+\end{equation}
+となり，
+\begin{equation}
+    \diffn{}{z}{2}=\pare{e^{-t}\diff{}{t}}\pare{e^{-t}\diff{}{t}}
+    =e^{-t}\pare{-e^{-t}\diff{}{t}+e^{-t}\diffn{}{t}{2}}
+    =-e^{-2t}\diff{}{t}+e^{-2t}\diffn{}{t}{2}
+\end{equation}
+である。
+$w\pare{z}=w\pare{e^t}=f\pare{t}$と置き直すと，\eqref{eq:ODE-9-2-1}式は，
+\begin{equation}
+    e^{2t}\pare{-e^{-2t}\diff{}{t}+e^{-2t}\diffn{}{t}{2}}f\pare{t}
+    +ae^{t}\cdot e^{-t}\diff{}{t}f\pare{t}
+    +bf\pare{t}=0
+\end{equation}
+となり，整理することで，
+\begin{equation}
+    f''\pare{t}+\pare{a-1}f'\pare{t}+bf\pare{t}=0
+\end{equation}
+となる。
+これは\eqref{eq:ODE-定数係数}式において，$a\mapsto a-1$としたものに対応している。
+従って，$\pare{a-1}^2-4b\ne0$のときの解は，
+\begin{equation}
+    f\pare{t}=\dfrac{1}{\sqrt{\spare{a-1}^2-4b}}\squ{\pare{\lambda'_2c'_0-c'_1}e^{\lambda'_1 t}-\pare{\lambda'_1 c'_0-c'_1}e^{\lambda'_2 t}}
+\end{equation}
+となる。
+$w\pare{z}$は，$t=\fun{\ln}{z}$を代入し直せば，
+\begin{equation}
+    w\pare{z}=f\pare{\fun{\ln}{z}}=\dfrac{1}{\sqrt{\spare{a-1}^2-4b}}\squ{\pare{\lambda'_2c'_0-c'_1}z^{\lambda'_1}-\pare{\lambda'_1 c'_0-c'_1}z^{\lambda'_2}}
+\end{equation}
+となる。
+ここで,
+\begin{equation}
+    w\pare{z}=f\pare{t}=\sum_{n=0}^\infty c'_n t^n =\sum_{n=0}^\infty c'n\pare{\fun{\ln}{z}}^n
+\end{equation}
+であるから,
+\begin{equation}
+    c'_0=w\pare{1},\quad c'_1=w'\pare{1}
+\end{equation}
+となる。
+
+$\pare{a-1}^2-4b=0$のときの解は,
+\begin{equation}
+    f\pare{t}=c'_0e^{\lambda'_0 t}+\pare{c'_1-\lambda'_0c'_0}te^{\lambda'_0 t}
+\end{equation}
+であり，$t=\fun{\ln}{z}$を代入し直せば，$w\pare{z}$は,
+\begin{equation}
+    w\pare{z}=c'_0z^{\lambda'_0}+\pare{c'_1-\lambda'_0c'_0}z^{\lambda'_0}\fun{\ln}{z}
+\end{equation}
+と求まる。
+こちらも,
+\begin{equation}
+    c'_0=w\pare{1},\quad c'_1=w'\pare{1}
+\end{equation}
+である。
+
+これらのことから，元の微分方程式の解は,
+\begin{align}
+    w\pare{z}=\case{
+        \begin{array}{cl}
+            \dfrac{1}{\sqrt{\spare{a-1}^2-4b}}\squ{\pare{\lambda'_2c'_0-c'_1}z^{\lambda'_1}-\pare{\lambda'_1 c'_0-c'_1}z^{\lambda'_2}}, & \quad\pare{\pare{a-1}^2-4b\ne 0}
+            \\
+            c'_0z^{\lambda'_0}+\pare{c'_1-\lambda'_0c'_0}z^{\lambda'_0}\fun{\ln}{z},                                                         & \quad\pare{\pare{a-1}^2-4b=0}
+        \end{array}
+    }
+\end{align}
+である。
+但し，$c'_0=w\pare{1}$,  $c'_1=w'\pare{1}$であり,
+\begin{equation}
+    \lambda'_1  =\dfrac{-a+1-\sqrt{\spare{a-1}^2-4b}}{2},
+    \quad
+    \lambda'_2  =\dfrac{-a+1+\sqrt{\spare{a-1}^2-4b}}{2},
+    \quad
+    \lambda'_0  =\dfrac{1}{2}\pare{1-a}
+\end{equation}
+である。
+
+ここで注目すべきなのは，特性指数$\lambda$が重解を持つとき，基本解$e^{\lambda'_0 z}$に$\fun{\ln}{z}$を乗じた$e^{\lambda'_0 z}\fun{\ln}{z}$という解が存在していることである。
+このことは，Frobeniusの解法によって一般化される。
+
+
+\subsection{定数係数斉次常微分方程式}\label{subsec:ODE-定数係数斉次常微分方程式}
+\ref{subsec:ODE-定数係数}節では定数係数の二階常微分方程式を扱った。
+ここではそれを更に一般化した定数係数の常微分方程式について考える。
+
+$n$を正整数，数列$\seq{a_j}{0\leq j\leq n}$は複素数列であるとする。
+但し，$a_{n}\ne 0$とする\footnote{常微分方程式の最高次の係数が消えないための条件}。
+$X$に関する$n$次の多項式$\fun{L}{X}$を，
+\begin{equation}
+    \fun{L}{X}\coloneqq \sum_{k=0}^n a_k X^k
+\end{equation}
+で定める。
+このとき，実変数の関数$\fun{w}{t}$に関する常微分方程式：
+\begin{equation}
+    \fun{L}{\diff{}{t}}\fun{w}{t}=0
+    \label{eq:ODE-L(d/dt)w=0}
+\end{equation}
+について考察する。
+微分方程式を明示的に書き下せば，
+\begin{equation}
+    \sum_{k=0}^n a_k\diffn{}{t}{k}\fun{w}{t}=0,
+\end{equation}
+あるいは，
+\begin{equation}
+    \sum_{k=0}^n a_k\diffun{w}{k}{t}=0
+\end{equation}
+である。
+但し，$\diffun{w}{k}{t}$は$\fun{w}{t}$の$k$次導関数のことである。
+\eqref{eq:ODE-L(d/dt)w=0}式を満たす線型独立な解を$n$個見つけられれば一般解を構成できる。
+
+初期条件は，複素数列$\seq{b_k}{0\leq j\leq n-1}$を用いて
+\begin{equation}
+    \diffun{w}{k}{0}=b_k,\ \pare{0\leq k\leq n-1}
+    \label{eq:ODE-IC}
+\end{equation}
+とする。
+一般に，$t=0$ではなく$t=t_0$における条件であったとしても，後述するように少々手を加えれば同様の議論が成り立つ。
+
+ここで，$X$に関する特性方程式：
+\begin{equation}
+    \fun{L}{X}=0\ \Longleftrightarrow\ 
+    \sum_{k=0}^n a_k X^k=0
+\end{equation}
+は，代数学の基本定理により，複素数の範囲に重解の重複度も込めて丁度$n$個の解が存在するので，それを$\lambda_k$とする($0\leq k\leq n-1$)。
+このとき，$\fun{L}{\lambda_k}=0$である($0\leq k \leq n-1$)。
+
+\begin{enumerate}[label=(\roman*)]
+    \item $\fun{L}{X}=0$が重解を持たない場合
+\end{enumerate}
+$\fun{L}{\diff{}{t}}$を$e^{\lambda t}$に作用させてみると，
+\begin{equation}
+    \fun{L}{\diff{}{t}}e^{\lambda t}
+    =\sum_{k=0}^n a_k \diffn{}{t}{k} e^{\lambda t}
+    =\sum_{k=0}^n a_k \lambda^k e^{\lambda t}
+    =\fun{L}{\lambda}e^{\lambda t}
+\end{equation}
+であるから，各$k$に対して$\fun{w_k}{t}\coloneqq e^{\lambda_k t}$と定めると，
+\begin{equation}
+    \fun{L}{\diff{}{t}}\fun{w_k}{t}=\fun{L}{\lambda_k}\fun{w_k}{t}=0\cdot \fun{w_k}{t}=0
+\end{equation}
+となるので，$\fun{w_k}{t}=e^{\lambda_k t}$は\eqref{eq:ODE-L(d/dt)w=0}式の解である。
+仮定により，$\lambda_k$は全て相異なるので，$\seq{\fun{w_k}{t}}{k}$は線型独立である。
+これより，\eqref{eq:ODE-L(d/dt)w=0}式の一般解は，任意複素定数列$\seq{c_j}{0\leq j\leq n-1}$を用いて，
+\begin{equation}
+    \fun{w}{t}=\sum_{j=0}^{n-1} c_j \fun{w_j}{t}
+    \label{eq:ODE-1-GS}
+\end{equation}
+と表せる。
+
+次に，\eqref{eq:ODE-1-GS}式の一般解が\eqref{eq:ODE-IC}式の初期条件を満たすように定数$c_j$を決定する。
+各$j$に対して，$\diffun{w_j}{k}{t}=\lambda_j^k \fun{w_j}{t}$であるから，
+\begin{equation}
+    \diffun{w}{k}{t}=\sum_{j=0}^{n-1} \lambda_j^k c_j \diffun{w_j}{k}{t}
+\end{equation}
+であり，$\diffun{w_j}{k}{0}=\lambda_j^k$となることから，初期条件を満たすための方程式は，
+\begin{equation}
+    \diffun{w}{k}{0}=b_k = \sum_{j=0}^{n-1} \lambda_j^k c_j
+\end{equation}
+である。
+これをベクトル表示に直すために，
+$\bm{b}\coloneqq \trans{\pare{b_0,\dots,b_{n-1}}}$, $\bm{c}\coloneqq \trans{\pare{c_0,\dots,c_{n-1}}}$と定め，$\pare{j,k}$成分が$\Lambda_{jk}=\lambda_j^k$であるような行列$\Lambda$を定義しておくと，
+\begin{equation}
+    \Lambda \bm{c}=\bm{b}
+\end{equation}
+と書ける。
+ここで，$\Lambda$を具体的に書き下すと，
+\begin{equation}
+    \Lambda = \begin{pmatrix}
+        1 & 1 & \cdots & 1
+        \\
+        \lambda_0 & \lambda_1 & \cdots & \lambda_{n-1}
+        \\
+        \vdots & \vdots & \ddots & \vdots
+        \\
+        \lambda_0^{n-1} & \lambda_1^{n-1} & \cdots & \lambda_{n-1}^{n-1}
+    \end{pmatrix}
+\end{equation}
+となり，これはVandermonde行列として知られているものである。
+仮定により，$\lambda_k$は相異なるので，
+\begin{equation}
+    \fun{\det}{\Lambda}=\prod_{0\leq j < k<n} \pare{\lambda_k -\lambda_k}\ne0
+\end{equation}
+である。
+これより$\Lambda$には逆行列$\Lambda^{-1}$が存在するから，$\bm{c}=\Lambda^{-1}\bm{b}$となり，任意定数$c_j$は初期条件\eqref{eq:ODE-IC}式によって一意的に決定される。
+
+以上のことから，$\fun{L}{X}=0$が重解を持たないなら，\eqref{eq:ODE-L(d/dt)w=0}式の解全体は$n$次線型空間をなし，その基底は$\fun{L}{\lambda}=0$の解$\lambda_k$を用いて$\seq{e^{\lambda_k t}}{0\leq k\leq n-1}$と表せる。
+
+\begin{enumerate}[resume,label=(\roman*)]
+    \item $\fun{L}{X}=0$が重解を持つ場合
+\end{enumerate}
+上のように，単に$e^{\lambda_k t}$を$n$個並べただけでは重複度の分だけ基底が潰れてしまうから，一般解を構成することができない。
+そこで，以下の補題を援用する：
+
+\begin{lem}[因数定理]
+    多項式$\fun{L}{X}$が$X=\lambda_k$を$m$重解に持つことと以下が成立することは同値である：
+    \begin{equation}
+        \forall k \in\N,\ \bsqu{
+            0\leq k\leq m-1\ \Longrightarrow\ \diffun{L}{k}{\lambda_k}=0
+        }.
+    \end{equation}
+\end{lem}
+
+まずは$\lambda_k$が$\fun{L}{\lambda}=0$の二重解である場合について考えると，上の補題で$m=2$に相当するので，$\fun{L}{\lambda_k}=\diffun{L}{1}{\lambda_k}=0$である。
+このことを用いて，$\lambda$もパラメータと見て，
+\begin{equation}
+    \fun{L}{\pdiff{}{t}}e^{\lambda t}=\fun{L}{\lambda}e^{\lambda t}
+    \label{eq:ODE-L(d/dt)e^{lambda t}=L(lambda)e^{lambda t}}
+\end{equation}
+の両辺を$\lambda$で偏微分してみよう。
+%\footnote{$\fun{L}{\lambda}=0$の重解である定数$\lambda$と，連続変数$\lambda$に同じ文字を使っているので少々気持ち悪いが，定数$\lambda_j$が方程式$\fun{L}{\lambda}=0$の重解であるとして，\eqref{eq:ODE-L(d/dt)e^{lambda t}=L(lambda)e^{lambda t}}式の両辺を$\lambda$で偏微分した後，$\lambda$に$\lambda_j$を代入したと考えれば厳密に正当化される。}。
+$e^{\lambda t}$は$\lambda$, $t$に関して$C^\infty$級であるから，偏微分の順序は自由に行えるので，\eqref{eq:ODE-L(d/dt)e^{lambda t}=L(lambda)e^{lambda t}}式の左辺の$\lambda$微分は，
+\begin{equation}
+    \pdiff{}{\lambda} \fun{L}{\pdiff{}{t}}e^{\lambda t}=
+    \fun{L}{\pdiff{}{t}}\pdiff{}{\lambda}e^{\lambda t}
+    =\fun{L}{\pdiff{}{t}}\pare{te^{\lambda t}}
+\end{equation}
+と計算できる。
+
+\eqref{eq:ODE-L(d/dt)e^{lambda t}=L(lambda)e^{lambda t}}式の右辺の$\lambda$微分は，
+\begin{equation}
+    \pdiff{}{\lambda}\squ{\fun{L}{\lambda}e^{\lambda t}}
+    =\diffun{L}{1}{\lambda}e^{\lambda t}+\fun{L}{\lambda}te^{\lambda t}
+\end{equation}
+となる。
+得られた両辺に$\lambda = \lambda_k$を代入すると，
+\begin{equation}
+    \fun{L}{\pdiff{}{t}}\pare{te^{\lambda_k t}}
+    =\diffun{L}{1}{\lambda_k}e^{\lambda_k t}+\fun{L}{\lambda_k}te^{\lambda_k t}
+    =0\cdot e^{\lambda_k t}+0\cdot te^{\lambda_k t}
+    =0
+\end{equation}
+となるので，$\lambda_k$が$\fun{L}{\lambda}=0$の二重解である場合は，$te^{\lambda_k t}$も\eqref{eq:ODE-L(d/dt)w=0}式の解である\footnote{$\lambda_k$が二重解でない場合，$\diffun{L}{1}{\lambda_k}\ne0$であるから$te^{\lambda_k t}$は\eqref{eq:ODE-L(d/dt)w=0}式の解にはならないことに注意。}。
+
+同様にして，補題を用いることで$\lambda_k$が$\fun{L}{\lambda}=0$の$m$重解である場合，$e^{\lambda_k t}$, $te^{\lambda_k t}$, $\ldots$, $t^{m-1}e^{\lambda_k t}$は\eqref{eq:ODE-L(d/dt)w=0}式の解であることが分かる\footnote{得られた解の線型独立性と初期条件を満たす$c_j$の一意性（解空間の基底であることの必要十分条件）は追記予定。}。
+\end{document}

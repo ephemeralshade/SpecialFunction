@@ -1,0 +1,560 @@
+\documentclass[a4paper,draft]{ltjsarticle}
+\usepackage{preamble}
+\begin{document}
+\section{Riemann zeta関数}\label{sec:RiemannZeta}
+\subsection{無限級数表示}
+\begin{defi}[Riemann zeta関数（級数表示）]\label{def:RiemannZeta-def}
+    $\re{z}>1$であるような複素数$z$に対し，Riemann zeta関数$\fun{\zeta}{z}$を以下のように定める：
+    \begin{equation}
+        \fun{\zeta}{z} \coloneqq \sum_{n=1}^\infty \frac{1}{n^z}\label{eq:RiemannZeta-def}
+    \end{equation}
+\end{defi}
+
+\begin{prop}[絶対収束域]\label{prop:RiemannZeta-絶対収束}
+    \eqref{eq:RiemannZeta-def}式の級数は$\re{z}>1$でのみ絶対収束し，$\re{z}\leq 1$では発散する。
+    \begin{proof}
+        $z=\sigma+i\omega$とする（$\sigma$, $\omega$は実数）と，$n^z=e^{z\fun{\ln}{n}}$より，$\abs{n^z}=\abs{e^{z\fun{\ln}{n}}}=\abs{e^{\sigma\fun{\ln}{n}}}\abs{e^{i\omega\fun{\ln}{n}}}=n^\sigma$であるから，$\sum_{n=1}^\infty 1/n^\sigma$の収束性を調べればよい。
+
+        $n$が正整数のとき，$a<b$なら$1/n^b\leq1/n^a$であるから，$\re{z}=\sigma\leq 1$で発散することを示すには，$\re{z}=\sigma=1$で発散することを示せば十分である。
+
+        $\sigma>0$を用いて$\fun{f}{x}\coloneqq 1/x^\sigma$と定めると，$x>0$で$\fun{f}{x}$は下に凸な狭義単調減少関数であるから，区間$\cinterval{n}{n+1}$で面積比較することで，
+        \begin{equation}
+            \frac{1}{\pare{n+1}^\sigma} < \int_{n}^{n+1}\frac{dx}x < \frac{1}{n^\sigma}
+        \end{equation}
+        が得られる。
+        これを辺々$n=1$から$N$まで足し合わせると，
+        \begin{equation}
+            \sum_{n=1}^N\frac{1}{\pare{n+1}^\sigma}
+            <\sum_{n=1}^N \int_{n}^{n+1}\frac{dx}{x^\sigma} < \sum_{n=1}^N\frac{1}{n^\sigma}
+        \end{equation}
+        から，
+        \begin{equation}
+            \sum_{n=1}^N \frac{1}{n^\sigma} - 1 + \frac{1}{\pare{N+1}^\sigma} < \int_1^{N+1}\frac{dx}{x^{\sigma}} < \sum_{n=1}^N\frac{1}{n^{\sigma}}
+        \end{equation}
+        が得られる。
+        これを$\sum_{n=1}^N 1/n^\sigma$について解き直すと，
+        \begin{equation}
+            \int_1^{N+1}\frac{dx}{x^\sigma} <\sum_{n=1}^N\frac{1}{n^\sigma}<\int_{1}^{N+1}\frac{dx}{x^{\sigma}}+1-\frac{1}{\pare{N+1}^\sigma}
+        \end{equation}
+        となる。
+        ここで，
+        \begin{equation}
+            \int_1^{N+1}\frac{dx}{x^\sigma}=\case{
+                \begin{aligned}
+                    \begin{array}{rll}
+                        \squ{\frac{x^{1-\sigma}}{1-\sigma}}_1^{N+1}&=\frac{1}{\sigma-1}\bra{1-\frac{1}{\pare{N+1}^{\sigma-1}}} &\pare{\sigma \ne 1}
+                        \vspace{5pt}\\
+                        \bsqu{\fun{\ln}{x}}_1^{N+1} &= \fun{\ln}{N+1} &\pare{\sigma = 1}
+                    \end{array}
+                \end{aligned}          
+            }
+        \end{equation}
+        であるから，$\sigma>1$のとき，
+        \begin{equation}
+            \frac{1}{\sigma-1}\bra{1-\frac{1}{\pare{N+1}^{\sigma-1}}} < \sum_{n=1}^N \frac{1}{n^\sigma} < \frac{\sigma}{\sigma-1}-\frac{1}{\pare{\sigma-1}\pare{N+1}^{\sigma-1}}-\frac{1}{\pare{N+1}^\sigma}
+        \end{equation}
+        が成立する。
+        よって，$N\to\infty$の極限で，
+        \begin{equation}
+            \frac{1}{\sigma-1} < \sum_{n=1}^\infty \frac{1}{n^\sigma} < \frac{\sigma}{\sigma-1}
+        \end{equation}
+        であるから確かに絶対収束している。
+        また，$\sigma=1$のとき，
+        \begin{equation}
+            \fun{\ln}{N+1}<\sum_{n=1}^N \frac{1}{n}
+        \end{equation}
+        であるが，左辺は$N\to\infty$で発散するから，$\sigma<1$では絶対収束しない。
+    \end{proof}
+\end{prop}
+
+\subsection{無限積表示}
+\begin{defi}[無限積の収束]\label{def:RiemannZeta-infprod}
+    複素数列$\seq{c_n}{n}$の無限積$\prod_{n=1}^\infty c_n$が収束するとは，
+    \begin{equation}
+        P_N\coloneqq \prod_{n=1}^N c_n
+    \end{equation}
+    が$N\to\infty$において\underline{$0$でない}有限の値に収束することとする。
+    無限積$\prod_{n=1}^\infty \pare{1+c_n}$が絶対収束するとは，$\prod_{n=1}^\infty \pare{1+\abs{c_n}}$が収束することとする。
+\end{defi}
+
+\begin{rem}
+    有限積の極限が$0$に収束することを無限積の収束に含めないのは，$\seq{c_n}{n}$の中に1つでも$0$があるとそれ以外での振る舞いの情報が全て失われて$0$になってしまうからでもあり，
+    $P_N$の対数を取って，
+    \begin{equation}
+        \fun{\ln}{P_N} = \sum_{n=1}^N \fun{\ln}{c_n}
+    \end{equation}
+    とすると，$P_N\to0$のとき，無限和$\fun{\ln}{P_\infty}$が$-\infty$が発散するにも関わらず$P_N$は$0$に収束することになってしまうからである。
+    $P_N\to0$を無限積の収束の定義から外しておくことで，無限積（$P_N$の極限）が収束することと，無限和（$\fun{\ln}{P_N}$の極限）が収束することが一対一に対応するようになる。
+\end{rem}
+
+\begin{thm}[無限和と無限積の絶対収束]\label{thm:RiemannZeta-infsum-infprod-converge}
+    $\sum_{n=1}^\infty c_n$が絶対収束するなら，$\prod_{n=1}^\infty \pare{1+c_n}$は絶対収束する。
+    \begin{proof}
+        $\sum_{n=1}^\infty c_n$が絶対収束すると仮定し，$\prod_{n=1}^\infty \pare{1+c_n}$の絶対収束性を示す。
+
+        まず，$\seq{c_n}{n}$の無限和が絶対収束するとき，$\prod_{n=1}^\infty \pare{1+\abs{c_n}}$は有限値になることを示す。
+        その後，その有限値が$0$でないことを示せばよい。
+
+        $P_N\coloneqq \prod_{n=1}^N \pare{1+c_n}$とすると，$P_{N+1} = \pare{1+c_{N+1}}P_N$であるから，
+        \begin{equation}
+            P_{N+1}-P_N = c_{N+1}P_N
+        \end{equation}
+        である。
+        仮定から，
+        \begin{equation}
+            S\coloneqq \sum_{n=1}^\infty \abs{c_n} <\infty
+        \end{equation}
+        であって，三角不等式及び，指数関数のMaclaurin展開から得られる1次近似の不等式から，
+        \begin{equation}
+            \abs{1+c_N} \leq 1+ \abs{c_N} \leq e^{\abs{c_N}}
+        \end{equation}
+        であるから，任意の$N$について，
+        \begin{equation}
+            \abs{P_N} = \prod_{n=1}^N \abs{1+c_n} \leq \prod_{n=1}^N e^{\abs{c_n}}=\fun{\exp}{\sum_{n=1}^N \abs{c_n}}\leq \fun{\exp}{\sum_{n=1}^\infty \abs{c_n}}= e^{S}
+        \end{equation}
+        が成立する。
+
+        $P_{N+1}-P_N=c_{N+1}P_N$において各辺和を取ると，
+        \begin{equation}
+            P_{N+1}-P_1=\sum_{n=1}^\infty\pare{P_{n+1}-P_n}=\sum_{n=1}^\infty c_{n+1}P_n \leq\sum_{n=1}^\infty\abs{c_{n+1}P_n}\leq e^{S}\sum_{n=1}^\infty \abs{c_{n+1}}=e^{S}\pare{S-\abs{c_1}}<\infty
+        \end{equation}
+        となり，
+        \begin{equation}
+            \sum_{n=1}^\infty\abs{c_{n+1}P_n}\leq e^{S}\pare{S-\abs{c_1}}<\infty
+        \end{equation}
+        より，上に有界な単調列であるから，
+        \begin{equation}
+            \sum_{n=1}^\infty\pare{P_{n+1}-P_n}=\sum_{n=1}^\infty c_{n+1}P_n 
+        \end{equation}
+        は絶対収束する。
+        絶対収束する級数は収束するから，左辺は収束する。
+
+        これより，
+        \begin{equation}
+            \lim_{N\to\infty}\sum_{n=1}^N \pare{P_{n+1}-P_n}=\lim_{N\to\infty}\pare{P_{N+1}-P_1}
+        \end{equation}
+        が収束するので，
+        \begin{equation}
+            P_{\infty}\coloneqq \lim_{N\to\infty}P_N
+        \end{equation}
+        は存在する。
+        これにより，，$\seq{c_n}{n}$の無限和が絶対収束するとき，$P_\infty=\prod_{n=1}^\infty \pare{1+c_n}$は有限値になることが示された。
+
+        次に，$P_\infty\ne0$を示す。
+        そのために，
+        \begin{equation}
+            Q_N\coloneqq \prod_{n=1}^\infty \frac{1}{1+c_n}
+        \end{equation}
+        と定め，$Q_N$の収束性が示されれば，$P_NQ_N=1$であるから，$P_\infty$が$0$でないことが示せる。
+
+        まず，
+        \begin{equation}
+            a_n\coloneqq \frac{c_n}{1+c_n}
+        \end{equation}
+        と定めると，
+        \begin{equation}
+            1-a_n = \frac{1}{1+c_n}
+        \end{equation}
+        である。
+        $\sum_{n=1}^\infty c_n$が絶対収束するという仮定から，$c_n\to 0$ ($n\to\infty$)でなければならない。
+        このことから，十分大きな$n$に対して$\abs{c_n+1}>\frac{1}{2}$が成立する。
+        これより，
+        \begin{equation}
+            \frac{1}{\abs{c_n+1}}<2
+        \end{equation}
+        であるから，各辺に$\abs{c_n}\geq0$を掛けて，
+        \begin{equation}
+            \abs{a_n}=\abs{\frac{c_n}{c_n+1}}\leq 2\abs{c_n}
+        \end{equation}
+        である。
+        各辺の無限和を考えると，$\sum_{n=1}^\infty \abs{c_n}<\infty$より，$\sum_{n=1}^\infty \abs{a_n}<\infty$であるから，$\sum_{n=1}^\infty a_n$も絶対収束する。
+
+        上で，数列の無限和が絶対収束するとき，その無限積は有限の値に収束することを示したので，
+        \begin{equation}
+            Q_{\infty}\coloneqq \prod_{n=1}^\infty \pare{1-a_n}=\prod_{n=1}^\infty \frac{1}{1+c_n}
+        \end{equation}
+        も有限の値に収束する。
+        $a_n$の定め方から，$P_NQ_N=1$であり，極限の存在から$P_\infty Q_\infty=1$であるから$P_\infty\ne 0$である。
+
+        これより，$\sum_{n=1}^\infty c_n$が絶対収束するとき，$\prod_{n=1}^\infty \pare{1+c_n}$は絶対収束する。
+        すなわち，$\prod_{n=1}^N \pare{1+\abs{c_n}}$は$N\to\infty$において収束し，かつその極限値は$0$ではない。
+    \end{proof}
+\end{thm}
+
+\begin{thm}[$\fun{\zeta}{z}$のEuler積表示]
+    以下では$0\not\in \N$とする。
+    $\mathbb{P}$を素数全体の集合とする。
+    \eqref{eq:RiemannZeta-def}式は$\re{z}>1$において次のEuler積表示を持つ：
+    \begin{equation}
+        \fun{\zeta}{z} = \sum_{n=1}^\infty \frac{1}{n^z} = \prod_{p\in \mathbb{P}}\frac{1}{1-p^{-z}}
+    \end{equation}
+
+    \begin{proof}
+        $\re{z}>1$とする。
+        \begin{equation}
+            P_N\coloneqq \prod_{p\leq N,\, p\in\mathbb{P}} \frac{1}{1-p^{-z}}
+            \label{eq:RiemannZeta-EulerProd1}
+        \end{equation}
+        と定める。
+        \begin{equation}
+            \abs{\fun{\zeta}{z}-P_N}\to 0\quad\pare{N\to\infty}
+        \end{equation}
+        が示せればよい。
+
+        \eqref{eq:RiemannZeta-EulerProd1}式において，$0<\abs{p^{-z}}<1$であるから無限等比級数の式：
+        \begin{equation}
+            \sum_{n=0}^\infty r^n=\frac{1}{1-r}\quad\pare{\abs{r}<1}
+        \end{equation}
+        が適用できて，$S_N$を$N$以下の素因数のみを持つ自然数全体の集合としたとき，
+        \begin{equation}
+            P_N = \prod_{p\leq N,\, p\in\mathbb{P}}\pare{\sum_{m=0}^\infty p^{-mz}}=\sum_{n\in S_N} \frac{1}{n^z}
+        \end{equation}
+        と書ける。
+        ここで，素因数分解の一意性を用いた。
+
+        集合の包含を考えると，$\N_{\leq N}\subseteq S_N\subseteq \N$であるから，$S_N$を除くと，$\N\setminus S_N \subseteq \N\setminus \N_{\leq N}=\N_{>N}$である。
+        これにより，
+        \begin{equation}
+            \abs{\fun{\zeta}{z}-P_N}=\abs{\sum_{n=1}^\infty \frac{1}{n^z}-\sum_{n\in S_N}\frac{1}{n^z}}
+            =\abs{\sum_{n\not\in S_N}\frac{1}{n^z}}\leq \abs{\sum_{n>N}\frac{1}{n^z}}\to 0 \quad\pare{N\to\infty}
+        \end{equation}
+        である。
+        よって，
+        \begin{equation}
+            \lim_{N\to\infty}P_N = \prod_{p\in \mathbb{P}}\frac{1}{1-p^{-z}}=\fun{\zeta}{z}
+        \end{equation}
+        が成立する。
+    \end{proof}
+\end{thm}
+
+\begin{thm}[Riemann zeta関数の非零領域]
+    $\fun{\zeta}{z}$は$\re{z}>1$において零点を持たない。
+    \begin{proof}
+        定義\ref{def:RiemannZeta-infprod}から，無限積が収束することは，有限積が$0$でない値に収束することであるから，$\fun{\zeta}{z}$の無限積表示が（$0$でない値に）収束することを示せばよい。
+
+        $\re{z}>1$において，無限等比級数の公式から，
+        \begin{equation}
+            \fun{\zeta}{z}=\prod_{p\in\mathbb{P}}\frac{1}{1-p^{-z}}=\prod_{p\in\mathbb{P}}\pare{1+\sum_{m=1}^\infty \frac{1}{p^{mz}}}
+        \end{equation}
+        が成立する。
+
+        定理\ref{thm:RiemannZeta-infsum-infprod-converge}を用いることで，
+        \begin{equation}
+            \sum_{p\in\mathbb{P}}\abs{\sum_{m=1}^\infty \frac{1}{p^{mz}}}<\infty
+        \end{equation}
+        を示せばよいことが分かる。
+
+        三角不等式により，
+        \begin{equation}
+            \sum_{p\in\mathbb{P}}\abs{\sum_{m=1}^\infty \frac{1}{p^{mz}}}
+            \leq\sum_{p\in\mathbb{P}}\sum_{m=1}^\infty \abs{\frac{1}{p^{mz}}}
+        \end{equation}
+        である。
+        ここで，$\sset{p^m}{p\in\mathbb{P},\, m\in\N}$は素数の冪乗で表される自然数しか含まれていないから，命題\ref{prop:RiemannZeta-絶対収束}によって，
+        \begin{equation}
+            \sum_{p\in\mathbb{P}}\sum_{m=1}^\infty \abs{\frac{1}{p^{mz}}}<\sum_{n=1}^\infty \abs{\frac{1}{n^z}}<\infty
+        \end{equation}
+        である。
+
+        無限和$\sum_{p\in\mathbb{P}}\sum_{m=1}^\infty p^{-mz}$の絶対収束を示したので，定理\ref{thm:RiemannZeta-infsum-infprod-converge}により，無限積の絶対収束及び無限積の収束が示された。
+        従って$\fun{\zeta}{z}$は$\re{z}>1$において零点を持たない。
+    \end{proof}
+\end{thm}
+
+\subsection{偶数における特殊値}
+\begin{defi}[Bernoulli数]
+    Bernoulli数$B_n$の母関数を次のように与える：
+    \begin{equation}
+        \frac{z}{e^z-1}=\sum_{n=0}^\infty \frac{B_n}{n!}z^n
+        \label{eq:RiemannZeta-Bernoulli数}
+    \end{equation}
+\end{defi}
+
+\begin{eg}
+    具体的に数項計算してみると，
+    \begin{equation}
+        B_0 = 1,\ B_1 = -\frac{1}{2},\ B_2 = \frac{1}{6},\ B_3=0,\ B_4 = -\frac{1}{30}
+    \end{equation}
+    などが得られる。
+\end{eg}
+
+Bernoulli数を具体的に得る場合に\eqref{eq:RiemannZeta-Bernoulli数}式の左辺を直接Maclaurin展開するのはあまり得策とは言えない。
+実用的には漸化式や明示公式が存在するので，それらを用いて計算するのがよい\cite[小松]{komatsu}。
+
+（後に詳細を加筆予定であるが，）ここでは事実を引用するに留めておく：
+\begin{prop}\label{prop:RiemannZeta-Bernoulli数の性質}
+    \begin{itemize}
+        \item 漸化式：
+        \begin{equation}
+            B_0=1,\ B_n = -\frac{1}{n+1}\sum_{m=0}^{n-1}\binom{n+1}{m}B_m 
+        \end{equation}
+
+        \item 明示公式：
+        \begin{equation}
+            B_n = \sum_{m=0}^n \pare{-1}^m m^n \sum_{k=m}^n \frac{1}{k+1}\binom{k}{m}
+        \end{equation}
+
+        \item 奇数番目のBernoulli数は$B_1$を除き全て0であり，偶数番目は正負が交互に入れ替わる。
+        \item 漸化式や明示公式から分かるように，Bernoulli数は有理数である。
+    \end{itemize}
+\end{prop}
+
+\begin{thm}[正の偶数点$z=2n$における$\fun{\zeta}{z}$の特殊値]\label{thm:RiemannZeta-2n}
+    $n$を正の整数とするとき，以下が成立する：
+    \begin{equation}
+        \fun{\zeta}{2n}=\frac{\pare{-1}^{n+1}\pare{2\pi}^{2n}B_{2n}}{2\pare{2n}!}
+    \end{equation}
+    \begin{proof}
+        定理\ref{thm:Poisson-sin}の$\fun{\sin}{x}$の無限積展開：
+        \begin{equation}
+            \fun{\sin}{x}= x\prod_{n=1}^\infty \pare{1-\dfrac{x^2}{n^2\pi^2}}
+        \end{equation}
+        で$x=\frac{u}{2i}$とすると，左辺はEulerの公式から，
+        \begin{equation}
+            \fun{\sin}{\frac{u}{2i}}=\frac{1}{2i}\pare{e^{i\cdot \frac{u}{2i}-e^{-i\cdot \frac{u}{2i}}}}=\frac{e^{\frac{u}{2}}\pare{1-e^{-u}}}{2i}
+        \end{equation}
+        となり，右辺は，
+        \begin{equation}
+            \frac{u}{2i}\prod_{n=1}^\infty \bra{1-\frac{1}{n^2\pi^2}\pare{\frac{u}{2i}}^2}=\frac{u}{2i}\prod_{n=1}^\infty \frac{4n^2\pi^2+u^2}{4n^2\pi^2}
+        \end{equation}
+        であるから，
+        \begin{equation}
+            \frac{e^{\frac{u}{2}}\pare{1-e^{-u}}}{2i}=\frac{u}{2i}\prod_{n=1}^\infty \frac{4n^2\pi^2+u^2}{4n^2\pi^2}
+        \end{equation}
+        が成立する。
+        両辺の対数微分を取ると，
+        \begin{equation}
+            \frac{1}{2}+\frac{1}{e^u-1}=\frac{1}{u}+\sum_{n=1}^\infty \frac{2u}{4n^2\pi^2+u^2}
+        \end{equation}
+        となる。
+        両辺に$u$を掛け，Bernoulli数の母関数の定義を適用して$B_0=1$, $B_1=-\frac{1}{2}$を使えば，
+        \begin{equation}
+            \sum_{k=1}\frac{B_n}{n!}u^n=2u^2\sum_{n=1}^\infty \frac{1}{4n^2\pi^2+u^2}
+        \end{equation}
+        となる。
+        右辺に無限等比級数の公式を使えば，
+        \begin{equation}
+            2u^2\sum_{n=1}^\infty \frac{1}{4n^2\pi^2+u^2}
+            =2\sum_{n=1}^\infty \pare{\frac{u}{2n\pi}}^2\frac{1}{1+\pare{\frac{u}{2n\pi}}^2}
+            =2\sum_{n=1}^\infty \pare{\frac{u}{2n\pi}}^2\sum_{k=0}^\infty \pare{-1}^k\pare{\frac{u}{2n\pi}}^{2k}
+        \end{equation}
+        となる。
+        和の順序を入れ替えると，
+        \begin{equation}
+            2\sum_{n=1}^\infty \pare{\frac{u}{2n\pi}}^2\sum_{k=0}^\infty \pare{-1}^k\pare{\frac{u}{2n\pi}}^{2k}
+            =2\sum_{k=1}^\infty \pare{-1}^{k+1}\sum_{n=1}^\infty \pare{\frac{u}{2n\pi}}^{2k}=2\sum_{k=1}^\infty \frac{\pare{-1}^{k+1}u^{2k}}{\pare{2\pi}^{2k}}\sum_{n=1}^\infty \frac{1}{n^{2k}}
+        \end{equation}
+        となる。
+        Riemann zeta関数の定義を適用すれば，
+        \begin{equation}
+            2\sum_{k=1}^\infty \frac{\pare{-1}^{k+1}u^{2k}}{\pare{2\pi}^{2k}}\sum_{n=1}^\infty \frac{1}{n^{2k}}=\sum_{k=1}^\infty \frac{\pare{-1}^{k+1}2\fun{\zeta}{2k}}{\pare{2\pi}^{2k}}u^{2k}
+        \end{equation}
+        であるから，
+        \begin{equation}
+            \sum_{k=1}^\infty\frac{B_n}{n!}u^n=2\sum_{k=1}^\infty \frac{\pare{-1}^{k+1}\fun{\zeta}{2k}}{\pare{2\pi}^{2k}}u^{2k}
+        \end{equation}
+        である。
+        $k\geq 1$に対して$u^{2k}$の係数を比較することで，
+        \begin{equation}
+            \frac{B_{2k}}{\pare{2k}!}=2\frac{\pare{-1}^{k+1}}{\pare{2\pi}^{2k}}\fun{\zeta}{2k}
+        \end{equation}
+        が得られるので，$n$を正整数とするとき，確かに
+        \begin{equation}
+            \fun{\zeta}{2n}=\frac{\pare{-1}^{n+1}\pare{2\pi}^{2n}B_{2n}}{2\pare{2n}!}
+        \end{equation}
+        が成立する。
+    \end{proof}
+\end{thm}
+
+\begin{eg}[Riemann zeta関数の偶数点における特殊値の例]
+    命題\ref{prop:RiemannZeta-Bernoulli数の性質}と定理\ref{thm:RiemannZeta-2n}から分かるように，$\fun{\zeta}{2n}=$(有理数)$\cdot \pi^{2n}$の形をしていることが分かる。
+    実際，具体的に定理\ref{thm:RiemannZeta-2n}を用いていくつか計算してみると，
+    \begin{gather}
+        \fun{\zeta}{2}=\frac{\pi^2}{6},\
+        \fun{\zeta}{4}=\frac{\pi^4}{90},\
+        \fun{\zeta}{6}=\frac{\pi^6}{945},\
+        \fun{\zeta}{8}=\frac{\pi^8}{9450},\
+        \fun{\zeta}{10}=\frac{\pi^{10}}{93555},\
+        \\
+        \fun{\zeta}{12}=\frac{691}{638512875}\pi^{12},\
+        \fun{\zeta}{14}=\frac{2}{18243225}\pi^{14},\
+        \fun{\zeta}{16}=\frac{3617}{325641566250}\pi^{16},\
+        \fun{\zeta}{18}=\frac{43867}{38979295480125}\pi^{18}
+    \end{gather}
+    のようになる。
+    ここで，$\fun{\zeta}{12}$の分子に現れた691は素数であり，これ以外にも数論において様々な場面で登場する不思議な数である\footnote{詳しくはtsujimotterのノートブック：「691に心惹かれる理由」(\url{https://tsujimotter.hatenablog.com/entry/691})}。
+    因みに，$\fun{\zeta}{16}$, $\fun{\zeta}{18}$の分子に登場した3617, 43867も素数である。
+\end{eg}
+
+\subsection{解析接続}
+
+\begin{thm}[Riemann zeta関数の第一積分]
+    $\re{z}>1$に対してRiemann zeta関数$\fun{\zeta}{z}$は以下の積分表示を持つ：
+    \begin{equation}
+        \fun{\zeta}{z}=\frac{1}{\fun{\Gamma}{z}}\int_0^\infty dx\ \frac{x^{z-1}}{e^x-1}
+    \end{equation}
+
+    \begin{proof}
+        定理\ref{thm:Gamma-積分表示}から，$\re{z}>0$であるような複素数$z$について，
+        \begin{equation}
+            \fun{\Gamma}{z}=\int_0^\infty dt\ t^{z-1}e^{-t}
+        \end{equation}
+        が成立するので，正整数$n$に対して$t=nx$とすると，$dt=ndx$であって，
+        \begin{equation}
+            n^{-z}\fun{\Gamma}{z}=n^{-z}\int_0^\infty n\, dx\ e^{-nx}\pare{nx}^{z-1}=\int_{0}^\infty dx\ e^{-nx}x^{z-1}
+        \end{equation}
+        である。
+        両辺$n$について和を取ると，左辺は，
+        \begin{equation}
+            \fun{\Gamma}{z}\sum_{n=1}^\infty n^{-z}=\fun{\Gamma}{z}\fun{\zeta}{z}
+        \end{equation}
+        となり，右辺は積分と無限和の順序交換をすれば，
+        \begin{equation}
+            \sum_{n=1}^\infty \int_0^\infty dx\ e^{-nx}x^{z-1}=\int_0^\infty dx\ x^{z-1}\sum_{n=1}^\infty e^{-nx}
+            =\int_0^\infty dx\ x^{z-1}\frac{e^{-x}}{1-e^{-x}}
+            =\int_0^\infty dx\ \frac{x^{z-1}}{e^x-1}
+        \end{equation}
+        である。
+        よって，$\re{z}>1$のとき，
+        \begin{equation}
+            \fun{\zeta}{z}=\frac{1}{\fun{\Gamma}{z}}\int_0^\infty dx\ \frac{x^{z-1}}{e^x-1}
+        \end{equation}
+        である。
+    \end{proof}
+\end{thm}
+
+\begin{thm}[Riemann zeta関数の第二積分]\label{thm:RiemannZeta-第二積分}
+    $\fun{\vartheta}{z}$を\eqref{eq:Poisson-Theta関数}で定義されたTheta関数：
+    \begin{equation}
+        \vartheta{z}=\sum_{n=1}^\infty e^{-\pi n^2 z}
+    \end{equation}
+    とすると，以下が成立する：
+    \begin{equation}
+        \fun{\zeta}{z}=\frac{\pi^{\frac{z}{2}}}{\fun{\Gamma}{\frac{z}{2}}}\int_0^\infty dx\ \fun{\vartheta}{x}x^{\frac{z}{2}-1}
+    \end{equation}
+
+    \begin{proof}
+        定理\ref{thm:Gamma-積分表示}から，$\re{z}>0$であるような複素数$z$について，
+        \begin{equation}
+            \fun{\Gamma}{\frac{z}{2}}=\int_0^\infty dt\ t^{\frac{z}{2}-1}e^{-t}
+        \end{equation}
+        が成立するので，正整数$n$に対して$t=\pi n^2 x$とすると，$dt=\pi n^2dx$であって，
+        \begin{equation}
+            n^{-z}\fun{\Gamma}{\frac{z}{2}}=n^{-z}\int_0^\infty \pi n^2\, dx\ e^{-\pi n^2 x}\pare{\pi n^2 x}^{\frac{z}{2}-1}=\pi^{\frac{z}{2}}\int_0^\infty dx\ e^{-\pi n^2 x}x^{\frac{z}{2}-1}
+        \end{equation}
+        となる。
+        両辺$n$について和を取り，無限和と積分の順序交換をすれば，
+        \begin{equation}
+            \fun{\zeta}{z}\fun{\Gamma}{\frac{z}{2}}=\pi^{\frac{z}{2}}\int_0^\infty x^{-\frac{z}{2}-1}\sum_{n=1}^\infty e^{-\pi n^2 x}=\pi^{\frac{z}{2}}\int_0^\infty \fun{\vartheta}{x}x^{-\frac{z}{2}-1}
+        \end{equation}
+        であるから
+        \begin{equation}
+            \fun{\zeta}{z}=\frac{\pi^{\frac{z}{2}}}{\fun{\Gamma}{\frac{z}{2}}}\int_0^\infty dx\ \fun{\vartheta}{x}x^{\frac{z}{2}-1}
+        \end{equation}
+        が成立する。
+    \end{proof}
+\end{thm}
+
+
+\begin{defi}[完備Riemann zeta関数]
+    完備Riemann zeta関数を，
+    \begin{equation}
+        \fun{\hat{\zeta}}{z}\coloneqq \pi^{-\frac{z}{2}}\fun{\Gamma}{\frac{z}{2}}\fun{\zeta}{z}
+        \label{eq:RiemannZeta-完備RiemannZetaの定義}
+    \end{equation}
+    と定義する。
+\end{defi}
+
+\begin{thm}[完備Riemann zeta関数の関数等式]
+    \begin{equation}
+        \fun{\hat{\zeta}}{z}=\fun{\hat{\zeta}}{1-z}
+        \label{eq:RiemannZeta-完備RiemannZetaの関数等式}
+    \end{equation}
+    が成立する。
+    \begin{proof}
+        定理\ref{thm:RiemannZeta-第二積分}から，
+        \begin{equation}
+            \fun{\hat{\zeta}}{z}=\pi^{-\frac{z}{2}}\fun{\Gamma}{\frac{z}{2}}\fun{\zeta}{z}=\int_0^\infty dx\ \fun{\vartheta}{x}x^{\frac{z}{2}-1}
+        \end{equation}
+        である。
+        積分区間を分割して，
+        \begin{equation}
+            \fun{\hat{\zeta}}{z}=\int_0^1 dx\ \fun{\vartheta}{x}x^{\frac{z}{2}-1}+\int_1^\infty dx\ \fun{\vartheta}{x}x^{\frac{z}{2}-1}
+        \end{equation}
+        としておき，右辺第1項の積分で$x\mapsto x^{-1}$と置換すると，
+        \begin{equation}
+            \int_0^1 dx\ \fun{\vartheta}{x}x^{\frac{z}{2}-1}=\int_1^\infty dx\ \fun{\vartheta}{\frac{1}{x}}x^{-\frac{z}{2}-1}
+        \end{equation}
+        である。
+        
+        ここで，系\ref{cor:Poisson-Theta変換公式}のTheta変換公式から，
+        \begin{equation}
+            \fun{\vartheta}{\frac{1}{x}}=\frac{1}{2}\bra{x^{\frac{1}{2}}\pare{2\fun{\vartheta}{x}+1}-1}
+        \end{equation}
+        を用いると，
+        \begin{align}
+            \int_1^\infty dx\ \fun{\vartheta}{\frac{1}{x}}x^{-\frac{z}{2}-1}
+            &=\int_1^\infty dx\ \frac{1}{2}\bra{x^{\frac{1}{2}}\pare{2\fun{\vartheta}{x}+1}-1} x^{-\frac{z}{2}-1}
+            \\
+            &=\int_1^\infty dx\ \fun{\vartheta}{x}x^{\frac{1-z}{2}-1}+\frac{1}{2}\int_1^\infty dx\ x^{-\frac{z}{2}-1}\pare{x^{\frac{1}{2}}-1}
+        \end{align}
+        となる。
+        ここで，$\re{z}>1$であることに注意すると，
+        \begin{align}
+            \frac{1}{2}\int_1^\infty dx\ x^{-\frac{z}{2}-1}\pare{x^{\frac{1}{2}}-1}&=\frac{1}{2}\int_0^\infty dx\ \pare{x^{-\frac{z}{2}-\frac{1}{2}}-x^{-\frac{z}{2}-1}}
+            \\
+            &=\frac{1}{2}\squ{\frac{x^{-\frac{z}{2}+\frac{1}{2}}}-\frac{x^{-\frac{z}{2}}}{-\frac{z}{2}}}_1^\infty
+            \\
+            &=-\frac{1}{2}\pare{\frac{1}{-\frac{z}{2}+\frac{1}{2}}+\frac{1}{\frac{z}{2}}}=-\frac{1}{z}+\frac{1}{z-1}
+            \\
+            &=-\frac{1}{z\pare{1-z}}
+        \end{align}
+        が得られるので，
+        \begin{equation}
+            \fun{\hat{\zeta}}{z}=\int_1^\infty \frac{dx}{x}\ \fun{\vartheta}{x}\pare{x^{\frac{z}{2}}+x^{\frac{1-z}{2}}}-\frac{1}{z\pare{1-z}}
+        \end{equation}
+        となるが，これは$z\mapsto 1-z$の変換に関して不変であるから確かに
+        \begin{equation}
+            \fun{\hat{\zeta}}{z}=\fun{\hat{\zeta}}{1-z}
+        \end{equation}
+        である。
+    \end{proof}
+\end{thm}
+
+\begin{thm}[Riemann zeta関数の関数等式]
+    以下が成立する：
+    \begin{equation}
+        \fun{\zeta}{1-z}=\frac{2\fun{\Gamma}{z}\fun{\cos}{\frac{\pi z}{2}}}{\pare{2\pi}^z}\fun{\zeta}{z}
+        \label{eq:RiemannZeta-解析接続}
+    \end{equation}
+    \begin{proof}
+        完備Riemann zeta関数$\fun{\hat{\zeta}}{z}$の定義\eqref{eq:RiemannZeta-完備RiemannZetaの定義}式を用いて完備Riemann zeta関数の関数等式\eqref{eq:RiemannZeta-完備RiemannZetaの関数等式}式をRiemann zeta関数$\fun{\zeta}{z}$で書き直すと，
+        \begin{equation}
+            \fun{\zeta}{1-z}=\pi^{\frac{1}{2}-z}\frac{\fun{\Gamma}{\frac{z}{2}}}{\fun{\Gamma}{\frac{1-z}{2}}}\fun{\zeta}{z}
+        \end{equation}
+        である。
+        右辺の分母分子に$\fun{\Gamma}{\frac{z+1}{2}}$を掛け，Gamma関数の相反公式（定理\ref{thm:Gamma-相反公式}）と倍角公式（定理\ref{thm-Gamma-Legendreの倍角公式}）を適用すると，
+        \begin{equation}
+            \frac{\fun{\Gamma}{\frac{z}{2}}}{\fun{\Gamma}{\frac{1-z}{2}}}
+            =2^{1-z}\pi^{\frac{1}{2}}\fun{\Gamma}{z}\cdot \frac{\fun{\sin}{\pi\pare{\frac{z+1}{2}}}}{\pi}
+            =\pi^{-\frac{1}{2}}\cdot \frac{2\fun{\Gamma}{z}\fun{\cos}{\frac{\pi z}{2}}}{2^z}
+        \end{equation}
+        であるから，
+        \begin{equation}
+            \fun{\zeta}{1-z}=\pi^{\frac{1}{2}-z}\frac{\fun{\Gamma}{\frac{z}{2}}}{\fun{\Gamma}{\frac{1-z}{2}}}\fun{\zeta}{z}
+            =\pi^{\frac{1}{2}-z}\cdot \pi^{-\frac{1}{2}}\cdot \frac{2\fun{\Gamma}{z}\fun{\cos}{\frac{\pi z}{2}}}{2^z}\cdot \fun{\zeta}{z}
+            =\frac{2\fun{\Gamma}{z}\fun{\cos}{\frac{\pi z}{2}}}{\pare{2\pi}^z}\fun{\zeta}{z}
+        \end{equation}
+        が成立する。
+    \end{proof}
+\end{thm}
+
+\if0
+\begin{thm}[Riemann zeta関数の解析接続]
+    \eqref{def:RiemannZeta-def}式で定義された$\fun{\zeta}{z}$は$z=1$を除く任意の複素数に対して解析接続可能である。
+    \begin{proof}
+        \eqref{eq:RiemannZeta-解析接続}式の右辺はは$z=1$を除く複素平面全体における$\fun{\zeta}{z}$の解析接続を与える式にもなっている。
+    \end{proof}
+\end{thm}
+\fi
+\end{document}

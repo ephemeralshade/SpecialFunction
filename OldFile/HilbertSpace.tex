@@ -1,0 +1,617 @@
+\documentclass[a4paper,draft]{ltjsarticle}
+\usepackage{preamble}
+\begin{document}
+\section{Hilbert空間とHermite関数系の完全性}\label{sec:Hilbert}
+
+\subsection{線型空間}
+\if0
+\begin{defi}[線型空間]
+    $V$が$\CC$上の線型空間であるとは，以下の条件を全て満たすことである。
+    \begin{enumerate}[label=(\arabic*)]
+        \item 以下の性質を満たす和$f:V\times V\to V;\, \pare{\bm{x},\bm{y}}\mapsto \bm{x}+\bm{y}$が定義されている：
+        \begin{enumerate}[label = (\roman*)]
+            \item $\forall \bm{x},\, \forall \bm{y},\, \forall \bm{z} \in V, \
+            \pare{\bm{x} + \bm{y}} + \bm{z} = \bm{x} + \pare{\bm{y} + \bm{z}}$
+            \item $\forall \bm{x},\, \forall \bm{y} \in V, \ \bm{x} + \bm{y} = \bm{y} + \bm{x}$
+            \item $\exists \bm{0} \in V;\ \forall \bm{x} \in V, \ \bm{0} + \bm{x} = \bm{x}$
+            \item $\forall \bm{x}\in V,\, \exists \bm{y}\in V;\ \bm{x}+\bm{y}=\bm{0}$
+        \end{enumerate}
+
+        \item 以下の性質を満たすスカラー倍$g\colon \CC \times V;\, \pare{k, \bm{x}} \mapsto k\bm{x}$が定義されている：
+        \begin{enumerate}[resume,label = (\roman*)]
+            \item $\forall k,\, \forall \ell \in \CC, \ \forall \bm{x} \in V, \ \pare{k + \ell} \bm{x} = k\bm{x} + \ell\bm{x}$
+            \item $\forall k \in \CC, \ \forall \bm{x},\, \forall \bm{y}\in V, \ k\pare{\bm{x} + \bm{y}} = k\bm{x} + k\bm{y}$
+            \item $\forall k,\, \forall \ell\in\CC, \ \forall \bm{x}\in V, \ \pare{k\ell}\bm{x} = k\pare{\ell\bm{x}}$
+            \item $\forall \bm{x} \in V, \ 1\bm{x} = \bm{x}$
+        \end{enumerate}
+    \end{enumerate}
+
+    上の条件を満たす$V$の元$\bm{0}$を零元や零ベクトルと呼び，$\bm{x}+\bm{y}=\bm{0}$を満たす$\bm{y}$を$\bm{x}$の逆元と呼ぶ。
+\end{defi}
+\begin{prop}[零元・逆元の一意性]
+    線型空間$V$の零元と逆元は一意的である。
+    \begin{proof}
+        零元の一意性から示す。
+        $V$の元$\bm{0}$, $\bm{0}'$が共に零元の性質を持つとすると，
+        \begin{equation}
+            \bm{0}=\bm{0}'+\bm{0}=\bm{0}+\bm{0}'=\bm{0}'
+        \end{equation}
+        であり，$\bm{0}=\bm{0}'$となるから零元は一意的である。
+
+        次に，$V$の元$\bm{x}$に対し，$V$の元$\bm{y}$, $\bm{z}$が共に逆元の性質を持つとすると，
+        \begin{equation}
+            \bm{y}=\bm{0}+\bm{y}=\pare{\bm{x}+\bm{z}}+\bm{y}
+            =\bm{y}+\pare{\bm{x}+\bm{z}}=\pare{\bm{y}+\bm{x}}+\bm{z}
+            =\pare{\bm{x}+\bm{y}}+\bm{z}=\bm{0}+\bm{z}=\bm{z}
+        \end{equation}
+        となり，$\bm{y}=\bm{z}$であるから逆元は一意的である。
+    \end{proof}
+\end{prop}
+\fi
+
+\begin{defi}[線型空間]
+    $V$が$\CC$上の線型空間であるとは，以下の条件を全て満たすことである。
+    \begin{enumerate}[label=(\arabic*)]
+        \item 以下の性質を満たす和$+:V\times V\to V;\, \pare{{x},{y}}\mapsto {x}+{y}$が定義されている：
+        \begin{enumerate}[label = (\roman*)]
+            \item （結合則） $\forall {x},\, \forall {y},\, \forall {z} \in V, \
+            \pare{{x} + {y}} + {z} = {x} + \pare{{y} + {z}}$
+            \item （交換則） $\forall {x},\, \forall {y} \in V, \ {x} + {y} = {y} + {x}$
+            \item （零元の存在） $\exists {o} \in V;\ \forall {x} \in V, \ {o} + {x} = {x}$
+            \item （逆元の存在） $\forall {x}\in V,\, \exists {y}\in V;\ {y} + {x} = {o}$
+        \end{enumerate}
+
+        \item 以下の性質を満たすスカラー倍$\cdot\colon \CC \times V;\, \pare{k, {x}} \mapsto k{x}$が定義されている：
+        \begin{enumerate}[resume,label = (\roman*)]
+            \item （第一分配則） $\forall k,\, \forall \ell \in \CC, \ \forall {x} \in V, \ \pare{k + \ell} {x} = k{x} + \ell{x}$
+            \item （第二分配則） $\forall k \in \CC, \ \forall {x},\, \forall {y}\in V, \ k\pare{{x} + {y}} = k{x} + k{y}$
+            \item （スカラー倍の結合則） $\forall k,\, \forall \ell\in\CC, \ \forall {x}\in V, \ \pare{k\ell}{x} = k\pare{\ell{x}}$
+            \item （スカラー倍の単位元）$\forall {x} \in V, \ 1{x} = {x}$
+        \end{enumerate}
+    \end{enumerate}
+
+    上の条件を満たす$V$の元${o}$を零元や零ベクトルと呼び，${x}+{y}={o}$を満たす${y}$を${x}$の逆元と呼ぶ。
+\end{defi}
+
+\begin{rem}
+    線型空間のことをベクトル空間と呼ぶこともある。
+    スカラー倍を考える集合を$\CC$から体$K$に取り替えれば，$V$は$K$上の線型空間と呼ばれる。
+    尚，本来は集合$V$，体$K$，和$+$，スカラー倍$\cdot $の組$\pare{V,K,+,\cdot}$を線型空間と呼ぶべきであるが，考えている体や和，スカラー倍の定義が明らかである場合には単に$V$を線型空間と呼ぶ。
+    また，線型空間$V$の元を$\bm{x}$, $\bm{y}$のように太字で表すこともあるが，線型空間の元であることが明らかな場合は太字にしないことも多い。
+\end{rem}
+
+以下，$V$を$\CC$上の線型空間とする。
+
+\begin{prop}
+    $V$の任意の元は$0$倍すると零元$o$になる。
+    すなわち：
+    \begin{equation}
+        \forall x\in V,\ 0x=o.
+    \end{equation}
+    \begin{proof}
+        $x$の逆元の一つを$y$とすると，零元の性質，スカラー倍の単位元の性質，分配則から，
+        \begin{equation}
+            o=y+x=y+1x=y+\pare{1+0}x=y+\pare{1x+0x}=\pare{y+1x}+0x=\pare{y+x}+0x=o+0x=0x
+        \end{equation}
+        となるので確かに成立している。
+    \end{proof}
+\end{prop}
+
+以降，$V$の零元も単に$0$と記すことにするが，一般には複素数の$0$とは異なるので注意。
+
+
+\begin{prop}[零元・逆元の一意性]
+    線型空間$V$の零元と逆元は一意的である。
+    \begin{proof}
+        零元の一意性から示す。
+        $V$の元${0}$, ${0}'$が共に零元の性質を持つとすると，
+        \begin{equation}
+            {0}={0}'+{0}={0}+{0}'={0}'
+        \end{equation}
+        となるから零元は一意的である。
+
+        次に，$V$の元${x}$に対し，$V$の元${y}$, ${z}$が共に逆元の性質を持つとすると，
+        \begin{equation}
+            {y}={0}+{y}=\pare{z+x}+y=z+\pare{x+y}=z+\pare{y+x}=z+0=0+z={z}
+        \end{equation}
+        となるから逆元は一意的である。
+    \end{proof}
+\end{prop}
+
+$x$の逆元は一意的であるから，以下ではそれを$-x$と記すことにする。
+
+\begin{prop}
+    任意の$V$の元に対し，それを$-1$倍したものは逆元となる：
+    \begin{equation}
+        \forall x\in V,\ \pare{-1}x+x=0.
+    \end{equation}
+    \begin{proof}
+        \begin{equation}
+            \pare{-1}x+x=\pare{\pare{-1}+1}x=0x=0
+        \end{equation}
+    \end{proof}
+\end{prop}
+
+
+\subsection{ノルム空間と内積空間}
+以降でも，$V$を$\CC$上の線型空間とする。
+
+\begin{defi}[ノルム]
+    関数$\norm{\cdot}:V\to\R;\ x\mapsto \norm{x}$が以下の条件を満たすとき，$\norm{x}$を$x$のノルムと呼ぶ：
+    \begin{enumerate}[label=(\roman*)]
+        \item （正値性） $\forall x\in V,\ \norm{x}\geq 0$
+        \item （一意性） $\forall x\in V,\ \bsqu{\norm{x}=0\ \Longleftrightarrow\ x=0}$
+        \item （同次性） $\forall k\in \CC,\ \forall x\in V,\ \norm{kx}=\abs{k}\norm{x}$
+        \item （三角不等式） $\forall x,\, \forall y\in V,\ \norm{x+y}\leq \norm{x}+\norm{y}$
+    \end{enumerate}
+\end{defi}
+
+\begin{prop}[三角不等式]\label{prop:hermite-三角不等式}
+    ノルムは次の性質も満たす：
+    \begin{equation}
+        \forall x,\, \forall y\in V,\ \abs{\norm{x}-\norm{y}}\leq \norm{x-y}.
+    \end{equation}
+    \begin{proof}
+        \begin{equation}
+            \norm{x}=\norm{\pare{x-y}+y}\leq \norm{x-y}+\norm{y}
+        \end{equation}
+        から
+        \begin{equation}
+            \norm{x}-\norm{y}\leq \norm{x-y}
+        \end{equation}
+        が従い，
+        \begin{equation}
+            \norm{y}=\norm{\pare{y-x}+x}\leq \norm{\pare{-1}\pare{x-y}}+\norm{x}=\abs{-1}\norm{x-y}+\norm{x}=\norm{x-y}+\norm{x}
+        \end{equation}
+        から
+        \begin{equation}
+            \norm{y}-\norm{x}\leq \norm{x-y}
+        \end{equation}
+        である。
+        ここで，絶対値の特徴付け：
+        \begin{equation}
+            \abs{a}= \max\bra{a,-a}
+        \end{equation}
+        を用いると，
+        \begin{equation}
+            \abs{\norm{x}-\norm{y}}= \max\bra{\norm{x}-\norm{y},\norm{y}-\norm{x}}\leq \norm{x-y}
+        \end{equation}
+        より，
+        \begin{equation}
+            \abs{\norm{x}-\norm{y}}\leq \norm{x-y}
+        \end{equation}
+        が成立する。
+    \end{proof}
+\end{prop}
+
+\begin{cor}
+    命題\ref{prop:hermite-三角不等式}において，$y\mapsto -y$として，元の三角不等式と併せれば，
+    \begin{equation}
+        \abs{\norm{x}-\norm{y}}\leq \norm{x+y}\leq \norm{x}+\norm{y}
+    \end{equation}
+    が従う。
+\end{cor}
+
+\begin{cor}[ノルムの連続性]
+    ノルムは連続関数である。
+    \begin{proof}
+        示すべきことは以下の通り：
+        \begin{equation}
+            \forall x,\,\forall y\in V,\ \forall \varepsilon\in\R,\, \squ{
+                \varepsilon>0 \, \Longrightarrow\, \pare{
+                    \exists \delta\in \R,\ \bsqu{
+                        \delta>0\, \land\, \pare{
+                            \norm{x-y}<\delta\, \Longrightarrow\, \abs{\norm{x}-\norm{y}}<\varepsilon
+                        }
+                    }
+                }
+            }.
+        \end{equation}
+
+        実際，$\delta=\varepsilon$と取れば，命題\ref{prop:hermite-三角不等式}により，
+        \begin{equation}
+            \abs{\norm{x}-\norm{y}}\leq \norm{x-y}<\delta =\varepsilon
+        \end{equation}
+        である。
+        よってノルムは連続関数である。
+    \end{proof}
+\end{cor}
+
+
+\begin{defi}[Hermite内積]
+    複素数値関数$\inner{\cdot}{\cdot}:V\times V\to \CC;\, \pare{x,y}\mapsto \inner{x}{y}$が$V$上のHermite内積であるとは，以下の条件を満たすことである：
+    \begin{enumerate}[label=(\roman*)]
+        \item （線型性） $\forall k,\,\forall \ell\in\CC,\ \forall x,\,\forall y,\, \forall z\in V,\ \inner{x}{ky+\ell z}=k\inner{x}{y}+\ell\inner{x}{z}$
+        \item （共役対称性）$\forall x,\,\forall y\in V,\ \inner{x}{y}=\inner{y}{x}^*$
+        \item （正値正） $\forall x\in V,\ \inner{x}{x}\geq 0$
+        \item （一意性） $\forall x\in V,\ \bsqu{\inner{x}{x}=0 \ \Longleftrightarrow\ x=0}$
+    \end{enumerate}
+\end{defi}
+
+\begin{rem}
+    上では第二引数についての線型性を要請したが，数学系の本では第一引数に関する線型性：
+    \begin{equation}
+        \forall k,\,\forall \ell\in\CC,\ \forall x,\,\forall y,\, \forall z\in V,\ \inner{kx+\ell y}{z}=k\inner{x}{z}+\ell\inner{y}{z}
+    \end{equation}
+    が課されていることも多いので注意。
+    ここでは物理系の本でよく見られる定義（第二引数に関する線型性）を採用した。
+\end{rem}
+
+\subsection{Hilbert空間の定義}
+以下では\cite[野村]{nomura}を参考に，Hilbert空間の完全性に関する命題について述べ，最後にHermite関数系の完全性について述べる。
+
+\begin{defi}[Hilbert空間]
+    $X$は複素線型空間であって，任意の$x$, $y\in X$に対してHermite内積$\inner{x}{y}$が定義されているものとする。
+    更に，ノルム$\norm{x}\coloneqq \sqrt{\inner{x}{x}}$によって$X$をノルム空間とするとき，$X$は完備，すなわち\underline{絶対収束する任意の級数が収束する}ものとする。
+    このような$X$を\textbf{Hilbert空間}という。
+\end{defi}
+
+以下，$X$をHilbert空間とし，$\seq{u_n}{n\in\N}$を$X$上の正規直交系とする。
+すなわち，
+\begin{equation}
+    \forall m,\,\forall n\in\N,\quad \inner{u_m}{u_n}=\delta_{mn}
+\end{equation}
+を満たすものとする。
+
+\begin{lem}[Besselの不等式]\label{lem:Hilbert-lem1}
+    任意の$x\in X$に対し，
+    \begin{equation}
+        \label{eq:Hilbert-lem}
+        \forall N\in \N,\quad \sum_{n=0}^N \abs{\inner{u_n}{x}}^2\leq \norm{x}^2
+    \end{equation}
+    が成立する。
+    特に，正項級数$\sum_{n=0}^\infty \abs{\inner{u_n}{x}}^2$は収束する。
+    \begin{proof}
+        Hermite内積の正値性：
+        \begin{equation}
+            \forall x\in X,\ 0\leq \inner{x}{x}=\norm{x}^2
+        \end{equation}
+        を用いると，
+        \begin{align}
+            0&\leq \norm{x - \sum_{n=0}^N \inner{u_n}{x}u_n}^2
+            \\
+            &=\inner{
+                x - \sum_{m=1}^N \inner{u_m}{x}u_m
+            }{
+                x - \sum_{n=0}^N \inner{u_n}{x}u_n
+            }
+            \\
+            &=\inner{x}{x}
+            -\sum_{n=0}^N \inner{u_n}{x}\inner{x}{u_n}
+            -\sum_{m=1}^N \inner{u_m}{x}^*\inner{u_m}{x}
+            +\sum_{m,n=0}^N\inner{u_m}{x}^*\inner{u_n}{x}\inner{u_m}{u_n}
+            \\
+            &=\norm{x}^2-\sum_{n=0}^N \inner{u_n}{x}\inner{u_n}{x}^*
+            -\sum_{m=1}^N\abs{\inner{u_m}{x}}^2
+            +\sum_{m,n=0}^N \inner{u_m}{x}^*\inner{u_n}{x}\delta_{mn}
+            \\
+            &=\norm{x}^2-\sum_{n=0}^N \abs{\inner{u_n}{x}}^2
+        \end{align}
+        となる。
+        よって確かに\eqref{eq:Hilbert-lem}式が成立する。
+
+        特に，\eqref{eq:Hilbert-lem}式の左辺は$\norm{x}^2$で抑えられる上に有界な単調増加実数列だから，$ \lim_{N\to\infty}\sum_{n=0}^N\abs{\inner{u_n}{x}}^2$は収束する。
+    \end{proof}
+\end{lem}
+
+\subsection{直交関数系の完全性}
+引き続き，$X$をHilbert空間とし，$\seq{u_n}{n\in\N}$を$X$上の正規直交系とする。
+\begin{prop}[完全性と同値な命題]\label{命題：完全性}
+    以下の\ref{unique}-\ref{Parseval}は同値である。
+    \begin{enumerate}[label=(\roman*)]
+        \item （一意性）\label{unique}
+        \begin{equation}
+            \forall x\in X,\ \bsqu{\,
+                \forall n\in \N,\ \inner{u_n}{x}=0\ \Longrightarrow\ x=0\,
+            }
+        \end{equation}
+        \item （完全性）\footnote{右辺はノルム収束する無限級数} \label{completeness}
+        \begin{equation}
+            \forall x\in X,\ x=\sum_{n=0}^\infty \inner{u_n}{x}u_n
+        \end{equation}
+        \item （Parsevalの等式）\label{Parseval}
+        \begin{equation}
+            \forall x\in X,\ \norm{x}^2=\sum_{n=0}^\infty \abs{\inner{u_n}{x}}^2
+        \end{equation}
+    \end{enumerate}
+    \begin{proof}
+        \ref{unique}$\Rightarrow$\ref{completeness}$\Rightarrow$\ref{Parseval}$\Rightarrow$\ref{unique}の順で示す。
+        \begin{itemize}
+            \item \ref{unique}$\Rightarrow$\ref{completeness}
+
+            $\sum_{n=0}^N\inner{u_n}{x}u_n$がCauchy列であることを示す。
+            任意の自然数$M$, $N$に対し，$M<N$のとき，$\seq{u_n}{n\in\N}$の正規直交性から，
+            \begin{equation}
+                \norm{\sum_{n=0}^N \inner{u_n}{x}u_n-\sum_{n=0}^M \inner{u_n}{x}u_n}^2
+                =\norm{\sum_{n=M+1}^N \inner{u_n}{x}u_n}^2=\sum_{n=M+1}^N \abs{\inner{u_n}{x}}^2\label{1to2}
+            \end{equation}
+            が成立する。
+            補題\ref{lem:Hilbert-lem1}から，$M\to \infty$で\eqref{1to2}の右辺$\to 0$となる。
+            よって，\eqref{1to2}の左辺$\to0$となり，Cauchy列である。
+            $X$の完備性から級数$\sum_{n=0}^N\inner{u_n}{x}u_n$は$N\to\infty$のときノルム収束する。
+            \begin{equation}
+                y\coloneqq x - \sum_{n=0}^\infty \inner{u_n}{x}u_n
+            \end{equation}
+            とおけば，
+            \begin{equation}
+                \forall n\in \N,\ \inner{u_n}{y}=\inner{u_n}{x}-\inner{u_n}{x}=0
+            \end{equation}
+            が従うが，\ref{unique}を仮定しているから$y=0$となる。
+            よって，$x=\sum_{n=0}^\infty \inner{u_n}{x}u_n$である。
+
+            \item \ref{completeness}$\Rightarrow$\ref{Parseval}
+
+            補題\ref{lem:Hilbert-lem1}の式変形と\ref{completeness}の仮定を用いて，
+            \begin{equation}
+                \norm{x-\sum_{n=0}^N\inner{u_n}{x}u_n}^2
+                =\norm{x}^2-\sum_{n=0}^N\abs{\inner{u_n}{x}}^2\longrightarrow 0 \quad \pare{N\to\infty}
+            \end{equation}
+            が言えるから，確かに
+            \begin{equation}
+                \norm{x}^2=\sum_{n=0}^\infty \abs{\inner{u_n}{x}}^2
+            \end{equation}
+            が従う。
+
+            \item \ref{Parseval}$\Rightarrow$\ref{unique}
+            
+            一般に，任意の自然数$n$に対して，$\abs{\inner{u_n}{x}}^2\geq0$であるが，\ref{unique}の条件：任意の自然数$n$に対して$\inner{u_n}{x}=0$，の下では，
+            \begin{equation}
+                0=\sum_{n=0}^\infty \, 0 = \sum_{n=0}^\infty \abs{\inner{u_n}{x}}^2=\norm{x}^2
+            \end{equation}
+            となり，$\norm{x}=0$が言える。
+            Hermite内積の定義から，$\norm{x}=0$が成立するのは$x=0$に限るので，確かに$x=0$である。
+        \end{itemize}
+
+        以上にて，\ref{unique}$\Rightarrow$\ref{completeness}$\Rightarrow$\ref{Parseval}$\Rightarrow$\ref{unique}が言えたので，確かに\ref{unique}-\ref{Parseval}は同値である。
+    \end{proof}
+\end{prop}
+
+与えられた作用素に対する固有関数系が完全性\ref{completeness}を持つかどうかは，一意性\ref{unique}が成立するかどうかを調べると楽な場合が多い。
+この章の最後に，後述するFourier変換の一意性と併せることでHermite関数系の完全性を証明する。
+
+\begin{defi}[Lebesgue空間]
+    $1\leq p<\infty$とする。
+    \begin{equation}
+        \fun{L^p}{\R^n}\coloneqq\set{
+            f:\R^n\to\R
+        }{
+            \pare{\int_{\R^n} d^nx\ \abs{\fun{f}{x}}^p}^{1/p}<\infty
+        }
+    \end{equation}
+    と定め，これを$\R^n$上のLebesgue測度$d\mu=d^n x$に対するLebesgue空間という。\footnote{一般的なLebesgue空間よりも形が制限されている。
+    後にHermite多項式$\fun{H_n}{t}$に$e^{-t^2/2}\pare{2^n n!\sqrt{\pi}}^{-1/2}$を掛けることでHermite関数系の内積を考えるが，測度$d\mu$を取り替えればHermite多項式の内積として考えることもできる。}
+\end{defi}
+
+\begin{defi}[$n$次元Fourier変換]
+    $f\in\fun{L^1}{\R^n}$に対し，$\tilde{f}:\R^n\to \R$を，
+    \begin{align}
+        \fun{\tilde{f}}{\xi} \coloneqq \int_{\R^n} d^nx\ \fun{f}{x}e^{-i\inner{\xi}{x}}\quad\pare{\xi\in\R^n}
+    \end{align}
+    と定め，$\tilde{f}$を$f$のFourier変換と呼ぶ。
+\end{defi}
+
+\begin{lem}[$n$次元Fourier変換の一意性]\label{補題：一意性}
+    $f\in\fun{L^1}{\R^n}$かつ$\tilde{f}\in\fun{L^1}{\R^n}$なら，
+    \begin{equation}
+        \fun{f}{x}
+        =\dfrac{1}{\pare{2\pi}^n}\int_{\R^n}d^n\xi\ \fun{\tilde{f}}{\xi}e^{i\inner{\xi}{x}}\quad \pare{\mathrm{a.e.}\, x\in\R^n}
+    \end{equation}
+    が成立し，特に$\tilde{f}\equiv0$なら$f\equiv0$ (a.e. $x\in\R^n$)である。
+    \begin{proof}
+        略。（\cite[野村]{nomura} 附章E, 定理E.2.4）
+    \end{proof}
+\end{lem}
+
+\subsection{Hermite関数系}
+\begin{defi}[Hermite多項式]
+    Hermite多項式$\fun{H_n}{t}$は，
+    \begin{equation}
+        \label{hermite}
+        \fun{H_n}{t}\coloneqq \pare{-1}^n e^{t^2}\diffn{}{t}{n}e^{-t^2},\quad\pare{n\in\N}
+    \end{equation}
+    によって定義される多項式である。
+\end{defi}
+
+\begin{supple}\label{多項式}
+    $\fun{H_n}{t}$は実係数$n$次多項式である。
+    また，最高次$t^n$の係数は$2^n$である。
+\end{supple}
+
+\begin{supple}
+    任意の自然数$n$について，$n$次以下の多項式のなす線型空間として，
+    \begin{equation}
+        \mathrm{Span}\bra{1,t,\dots,t^n}=\mathrm{Span}\bra{H_0,H_1\dots,H_n}
+    \end{equation}
+    である。
+    \begin{proof}
+        補足\ref{多項式}を用い，線型空間としての次元と$t$の次数（線型空間としての基底）を見れば分かる。        
+    \end{proof}
+\end{supple}
+
+\begin{prop}[Hermite多項式の母関数]\label{mother}
+    $z\in\CC$, $t\in\R$とすると，
+    \begin{equation}
+        \label{hermite-mother}
+        e^{-z^2+2zt}=\sum_{n=0}^\infty \dfrac{\fun{H_n}{t}}{n!}z^n
+    \end{equation}
+    が成立する。
+
+    \begin{proof}
+        $\fun{f}{z}\coloneqq e^{-z^2}$は$\CC$上の正則関数であるから，原点周りのTaylor展開：
+        \begin{equation}
+            e^{-z^2}=\sum_{n=0}^\infty \dfrac{\fun{f^{\pare{n}}}{0}}{n!}z^n
+        \end{equation}
+        が成立する。
+        実数$t$に対し，$\fun{f_t}{z}\coloneqq \fun{f}{z-t}$と定め，これを冪級数表示すると，$\fun{f}{z}$が偶関数であることより$\fun{f_t^{\pare{n}}}{0}=\fun{f^{\pare{n}}}{-t}=\pare{-1}^n\fun{f^{\pare{n}}}{t}$であることに注意して，
+        \begin{equation}
+            e^{-\pare{z-t}^2}=\sum_{n=0}^\infty \dfrac{\fun{f_t^{\pare{n}}}{0}}{n!}z^n=\sum_{n=0}^\infty \pare{-1}^n \dfrac{\fun{f^{\pare{n}}}{t}}{n!}z^n
+        \end{equation}
+        となる。
+        Hermite多項式の定義\eqref{hermite}式から，$\fun{f^{\pare{n}}}{t}=\pare{-1}^ne^{-t^2}\fun{H_n}{t}$であり，これを代入すると，
+        \begin{equation}
+            e^{-\pare{z-t}^2}=e^{-z^2+2zt-t^2}=\sum_{n=0}^\infty \pare{-1}^n\dfrac{\pare{-1}^ne^{-t^2}\fun{H_n}{t}}{n!}z^n
+            =e^{-t^2}\sum_{n=0}^\infty \dfrac{\fun{H_n}{t}}{n!}z^n
+        \end{equation}
+        となり，両辺$e^{-t^2}$で割れば確かに\eqref{hermite-mother}式が成立する。
+    \end{proof}
+\end{prop}
+
+\subsection{Hermite関数系の直交性}
+\begin{prop}\label{命題：直交性}
+    Hermite多項式系$\seq{\fun{H_n}{t}}{n\in\N}$について，
+    \begin{equation}
+        \label{直交性}
+        \forall m,\, \forall n\in \N,\quad
+        \int_{-\infty}^\infty dt\ \fun{H_m}{t}\fun{H_n}{t}e^{-t^2}=2^n n! \sqrt{\pi} \delta_{mn}
+    \end{equation}
+    が成立する。
+
+    \begin{proof}
+        命題\ref{mother}で確かめた母関数表示を利用し，以下の積分：
+        \begin{equation}
+            \int_{-\infty}^\infty dt\ e^{-z^2+2zt}\cdot e^{-w^2+2wt}\cdot e^{-t^2}
+            = \int_{-\infty}^\infty dt\ \pare{\sum_{n=0}^\infty \dfrac{\fun{H_n}{t}}{n!}z^n}\pare{\sum_{k=0}^\infty \dfrac{\fun{H_k}{t}}{k!}w^k} e^{-t^2}
+        \end{equation}
+        をそれぞれ計算し，$z$, $w$の係数比較を行う。
+
+        左辺の被積分関数の指数を$-z^2+2zt-w^2+2wt-t^2=\pare{t-z-w}^2+2zw$と書き換えておけば，
+        \begin{align}
+            \int_{-\infty}^\infty dt\ e^{-z^2+2zt}\cdot e^{-w^2+2wt}\cdot e^{-t^2}
+            &= e^{2zw}\int_{-\infty}^\infty dt\ e^{-\pare{t-z-w}^2} 
+            \\
+            &=e^{2zw}\sqrt{\pi}=\sqrt{\pi}\sum_{n=0}^\infty \dfrac{2^nz^nw^n}{n!}
+        \end{align}
+        となる。
+        特に，$z$と$w$の次数が等しいものしか残らないことが分かる。
+
+        次に右辺の積分を計算すると，
+        \begin{equation}
+            \int_{-\infty}^\infty dt\ \pare{\sum_{m=0}^\infty \dfrac{\fun{H_m}{t}}{m!}z^m}\pare{\sum_{n=0}^\infty \dfrac{\fun{H_n}{t}}{n!}w^n} e^{-t^2}
+            =\sum_{m=0}^\infty\sum_{n=0}^\infty \dfrac{z^mw^n}{m!n!}\int_{-\infty}^\infty dt\ \fun{H_m}{t}\fun{H_n}{t}e^{-t^2}
+        \end{equation}
+        となるが，$m=n$の項しか残らないので，
+        \begin{align}
+            \sum_{n=0}^\infty \dfrac{2^nz^nw^n}{n!}\cdot \dfrac{1}{2^n n!}\int_{-\infty}^\infty dt\ \fun{H_n}{t}^2e^{-t^2}
+        \end{align}
+        となるので，$z^mw^n$の係数比較をすることで，
+        \begin{align}
+            \int_{-\infty}^\infty dt\ \fun{H_n}{t}^2e^{-t^2}
+            =2^n n!\sqrt{\pi}
+        \end{align}
+        を得る。
+        上で述べたように，$z^mw^n$について，$m\ne n$の係数は残らないので，
+        \begin{align}
+            \forall m, \forall n\in\N,\ \squ{\,m\ne n\ \Longrightarrow\ \int_{-\infty}^\infty dt\ \fun{H_m}{t}\fun{H_n}{t}e^{-t^2}=0\,}
+        \end{align}
+        が従う。
+        これらをまとめて表せば\eqref{直交性}式が成立する。
+    \end{proof}
+\end{prop}
+
+\subsection{Hermite関数系の完全性}
+\begin{defi}[Hermite関数]
+    非負整数$n$に対して
+    \begin{equation}
+        \fun{\phi_n}{t}\coloneqq \dfrac{1}{\pare{2^n n! \sqrt{\pi}}^{1/2}}e^{-t^2/2}\fun{H_n}{t}
+    \end{equation}
+    と定める。
+    各$\phi_n$をHermite関数と呼ぶ。
+\end{defi}
+
+
+\begin{prop}
+    Hermite関数系$\seq{\phi_n}{n\in\N}$は$\fun{L^2}{\R}$の正規直交系である。
+
+    \begin{proof}
+        命題\ref{命題：直交性}から従う。
+    \end{proof}
+\end{prop}
+
+\begin{thm}[Hermite関数系の完全性]
+    Hermite関数系$\seq{\phi_n}{n\in\N}$は完全性を満たす。
+    すなわち$\fun{L^2}{\R}$の正規直交基底をなす。
+
+    \begin{proof}
+        命題\ref{命題：完全性}の\ref{unique}を示す。
+        任意の$f\in\fun{L^2}{\R}$が，
+        \begin{equation}
+            \forall n\in\N,\ \inner{\phi_n}{f}=0
+        \end{equation}
+        を満たすと仮定する。
+        この仮定の下で$f=0$が言えれば命題\ref{命題：完全性}から$\seq{\phi_n}{n\in\N}$が完全系であることが言える。
+
+        まずは仮定を具体的に書き下す。
+        \begin{equation}
+            0
+            =\inner{\phi_n}{f}
+            =\int_{-\infty}^\infty dt\ \dfrac{e^{-t^2/2}\fun{H_n}{t}}{\pare{2^n n! \sqrt{\pi}}^{1/2}}\fun{f}{t}
+            =\dfrac{1}{\pare{2^n n! \sqrt{\pi}}}\int_{-\infty}^\infty dt\, \fun{f}{t} e^{-t^2/2} \fun{H_n}{t}
+        \end{equation}
+        となるので，仮定は
+        \begin{equation}
+            \forall n\in\N,\quad \int_{-\infty}^\infty dt\, \fun{f}{t} e^{-t^2/2} \fun{H_n}{t}=0
+            \label{定理：仮定}
+        \end{equation}
+        と等価である。
+
+        次に，$\xi$の関数として，
+        \begin{equation}
+            \fun{F}{\xi}\coloneqq e^{\xi^2/4}\Fourier{\fun{f}{t}e^{-t^2/2}}=e^{\xi^2/4}\int_{-\infty}^\infty dt\ \fun{f}{t}e^{-t^2/2}e^{-i\xi t}
+        \end{equation}
+        を定める。
+        
+        これを変形し，命題\ref{mother}のHermite多項式の母関数を用いると，
+        \begin{align}
+            \fun{F}{\xi}
+            &=\int_{-\infty}^\infty dt\ \fun{f}{t}e^{-t^2/2}\fun{\exp}{\dfrac{1}{4}\xi^2-i\xi t}
+            \\
+            &=\int_{-\infty}^\infty dt\ \fun{f}{t}e^{-t^2/2}\fun{\exp}{-\pare{-\dfrac{1}{2}i\xi}^2+2\pare{-\dfrac{1}{2}i\xi}t}
+            \\
+            &=\int_{-\infty}^\infty dt\ \fun{f}{t}e^{-t^2/2}
+            \sum_{n=0}^\infty \dfrac{\fun{H_n}{t}}{n!}\pare{-\dfrac{1}{2}i\xi}^n
+            \\
+            &=\sum_{n=0}^\infty \squ{\dfrac{1}{n!}\pare{-\dfrac{1}{2}i\xi}^n\int_{-\infty}^\infty dt\ \fun{f}{t}e^{-t^2/2}\fun{H_n}{t}}
+            \\
+            &=0\quad \quad \pare{\because\eqref{定理：仮定}}
+        \end{align}
+        が従う。
+        これより，
+        \begin{equation}
+            \fun{F}{\xi}=e^{\xi^2/4}\Fourier{\fun{f}{t}e^{-t^2/2}}=0
+        \end{equation}
+        なので，$\Fourier{\fun{f}{t}e^{-t^2/2}}=0$である。
+        補題\ref{補題：一意性}から，$\fun{f}{t}e^{-t^2/2}=0$ (a.e. $t\in\R$)であって，$e^{-t^2/2}$で払うことで$f=0$ (a.e.)が従う。
+
+        よって，Hermite関数系は完全性を満たし，$\fun{L^2}{\R}$の正規直交基底である。
+    \end{proof}
+\end{thm}
+
+\begin{supple}[Hermite関数のFourier変換]\label{Hermite:Fourier}
+    Hermite関数系$\seq{\phi_n}{n\in\N}$は，
+    \begin{equation}
+        \forall n\in\N,\quad \dfrac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty dt\ \fun{\phi_n}{t}e^{-i\xi t}=\pare{-i}^n \fun{\phi_n}{\xi}
+    \end{equation}
+    を満たす。
+    特に，Hermite関数系はFourier変換作用素に対する固有値$\pare{-1}^n$の固有関数である。
+    また，$\seq{\phi_n}{n\in\N}$は$\fun{L^2}{\R}$の正規直交基底であるから，Fourier変換作用素は，$\fun{L^2}{\R}$上のユニタリ作用素に拡張できる。
+    この性質はFourier変換に関するParsevalの等式：
+    \begin{equation}
+        \int_{-\infty}^\infty d\xi\ \abs{\fun{\tilde{f}}{\xi}}^2
+        = \int_{-\infty}^\infty dx\ \abs{\fun{f}{x}}^2
+    \end{equation}
+    に現れている。
+\end{supple}
+
+\begin{supple}[Hermite関数の満たす微分方程式]
+    $n$を非負整数とするとき，各$n$に対応するHermite関数$\phi_n$は，微分作用素$-\diffn{}{t}{2}+t^2$に対する固有値$2n+1$の固有関数である。
+    すなわち，
+    \begin{equation}
+        \pare{-\diffn{}{t}{2}+t^2}\fun{\phi_n}{t}=\pare{2n+1}\fun{\phi_n}{t}
+    \end{equation}
+    が成立する。
+    特に，$\spare{\hat{A}+\hat{B}}^\dagger=\hat{A}^\dagger+\hat{B}^\dagger$, $\spare{\hat{A}\hat{B}}^\dagger=\hat{B}^\dagger\hat{A}^\dagger$及び，$\pare{\diff{}{t}}^\dagger=-\diff{}{t}$が成立することから，微分作用素$-\diffn{}{t}{2}+t^2$はHermite作用素である。
+    これはHermite関数系が直交関数系をなすことに対応している。
+\end{supple}
+
+
+\end{document}

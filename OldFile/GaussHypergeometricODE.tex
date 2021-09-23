@@ -1,0 +1,440 @@
+\documentclass[a4paper,draft]{ltjsarticle}
+\usepackage{preamble}
+\begin{document}
+\section{Gaussの超幾何微分方程式}
+Gaussの超幾何級数が満たす微分方程式を導くことで，級数表示では見えてこなかった特異点の位置やその性質を明らかにする。
+
+\subsection{線型作用素}
+厳密には関数空間を明示して考察しなければならない\footnote{Hilbert空間についての記述を付録\ref{sec:Hilbert}に随時追記予定。}が，ここではもう少しラフに考えよう。
+
+\begin{defi}[線型作用素]
+    $T$は関数を関数に写す写像であるとする。
+    $T$が線型作用素であるとは，
+    任意の関数$f$, $g$，任意の定数$a$, $b$に対して，
+    \begin{equation}
+        T\squ{af+bg}=aT\squ{f}+bT\squ{g}
+    \end{equation}
+    を満たすことである。
+    $T\squ{f}$のことを単に$Tf$と書くこともある。
+\end{defi}
+
+基底に対して線型であれば，その線形結合で表される一般的な関数についても線型に振る舞うので，基底に対する作用だけを見れば十分である。
+
+\begin{eg}
+    微分作用素は線型である。
+    実際，$a$, $b$を定数とするとき，
+    \begin{equation}
+        \diff{}{x}\pare{af+bg}=a\diff{}{x}f+b\diff{}{x}g
+    \end{equation}
+    を満たす。
+\end{eg}
+
+\begin{eg}
+    Laplace変換作用素：
+    \begin{equation}
+        \mathcal{L}\coloneqq \int_0^\infty dx\ e^{-px}
+    \end{equation}
+    は線型作用素である。
+    但し，Laplace変換作用素は$f$に対して
+    \begin{equation}
+        \Laplace{f}(p)=\int_0^\infty dx\ e^{-px}\fun{f}{x}
+    \end{equation}
+    のように作用するものとする。
+    実際，積分は線型性を持つから，
+    \begin{equation}
+        \Laplace{af+bg}=a\Laplace{f}+b\Laplace{g}
+    \end{equation}
+    である。
+    このように，関数の変数を変えるような操作（別の関数空間に写す写像）も線型である場合がある。
+    Laplace変換は，微分方程式を代数方程式に置き換えることができる強力な道具でもある。
+\end{eg}
+
+\begin{rem}
+    本書では関数$\fun{f}{x}$を$a$から$b$まで積分することを，
+    \begin{equation}
+        \int_a^b \fun{f}{x}\, dx
+    \end{equation}
+    ではなく，
+    \begin{equation}
+        \int_a^b dx\, \fun{f}{x}
+    \end{equation}
+    と表記するが，これは，積分作用素$I$を，
+    \begin{equation}
+        I\coloneqq \int_a^b dx
+    \end{equation}
+    で定めたとき，
+    \begin{equation}
+        I\squ{f}=\int_a^b dx\, \fun{f}{x}
+    \end{equation}
+    のように見ることができるからである。
+    積分作用素も線型である。
+    微分作用素は左から掛けると微分されたが，積分作用素は左から掛けると積分される。
+    $\int dx\ \fun{f}{x}$の順に書くことで関数に対する操作を切り離して考えやすくなる。
+    また，重積分の際にも積分変数が見やすくなる。
+\end{rem}
+
+
+微分作用素は線型なので，$\fun{f}{x}$が$x$の冪級数として，
+\begin{equation}
+    \fun{f}{x}=\sum_{n=0}^\infty c_n x^n
+\end{equation}
+と表されるなら，これに微分作用素を施したものは，形式的に項別微分したもの：
+\begin{equation}
+    \diff{}{x}\sum_{n=0}^\infty c_nx^n=\sum_{n=0}^\infty c_n\diff{}{x}x^n=\sum_{n=0}^\infty c_n nx^{n-1}=\sum_{n=0}^\infty c_{n+1}\cdot \pare{n+1}x^n
+\end{equation}
+として表せる。
+尚，$x^0=1$に関しても，
+\begin{equation}
+    \diff{}{x}x^0=\diff{}{x}1=0=0\cdot x^{-1}
+\end{equation}
+と見れば成立しているので$n=0$の場合も成立していると考える。
+
+\begin{defi}[固有関数]
+    線型作用素$T$に対して，
+    \begin{equation}
+        Tf=\lambda f
+    \end{equation}
+    を満たす$f$を$T$の固有関数，$\lambda$をその固有値という。
+\end{defi}
+
+$f$が$0$の場合は$T$の種類に依らずに$T\cdot 0 = 0\cdot 0$を満たしてしまうので，$0$は固有関数から除外する場合が多い。
+但し，固有空間を考える場合は$0$も固有空間に属すると考える。
+
+\begin{eg}
+    $e^{ax}$は，微分作用素$\diff{}{x}$に対する固有値$a$の固有関数である。
+    実際，
+    \begin{equation}
+        \diff{}{x}e^{ax}=ae^{ax}
+    \end{equation}
+    となるから固有関数の条件を満たしている。
+\end{eg}
+
+\begin{eg}
+    $e^{ikx}$, $e^{-ikx}$, $\fun{\cos}{kx}$, $\fun{\sin}{kx}$は共に微分作用素$\diffn{}{x}{2}$の固有値$-k^2$の固有関数である。
+    実際，
+    \begin{align}
+        \diff{}{x}e^{ikx}=ik e^{ikx},\
+        \diff{}{x}e^{-ikx}=-ike^{-ikx},
+        \\
+        \diff{}{x}\fun{\cos}{kx}=-k\fun{\sin}{kx},\
+        \diff{}{x}\fun{\sin}{kx}=k\fun{\cos}{kx}
+    \end{align}
+    であり，
+    \begin{align}
+        \diffn{}{x}{2}e^{ikx}=-k^2e^{ikx},\
+        \diffn{}{x}{2}e^{-ikx}=-k^2e^{-ikx}
+        \\
+        \diffn{}{x}{2}\fun{\cos}{kx}=-k^2\fun{\cos}{kx},\
+        \diffn{}{x}{2}\fun{\sin}{kx}=-k^2\fun{\sin}{kx}
+    \end{align}
+    であるから成立している。
+    
+    これは，Eulerの公式
+    \begin{equation}
+        e^{ikx}=\fun{\cos}{kx}+i\fun{\sin}{kx}
+    \end{equation}
+    と直接関係していて，
+    \begin{equation}
+        \fun{\cos}{kx}=\frac{e^{ikx}+e^{-ikx}}{2},\
+        \fun{\sin}{kx}=\frac{e^{ikx}-e^{-ikx}}{2i}
+    \end{equation}
+    であって，右辺が$\diffn{}{x}{2}$の固有関数であることから，自動的に左辺も$\diffn{}{x}{2}$の固有関数であることが従う。
+    これは，以下の2階線型常微分方程式：
+    \begin{equation}
+        y''+k^2y=0
+    \end{equation}
+    の解空間が2次元であり，$e^{ikx}$と$e^{-ikx}$が線型独立な2解であることにも関係する。
+\end{eg}
+
+
+\subsection{Euler作用素}
+一般に，線型作用素が関数にどのように作用するかを知りたいなら，（収束性が問題にならない場合）基底にどのように働くかだけを見ればよい。
+
+
+\begin{defi}[Euler作用素]\label{def:gauss-ode-EulerOperator}
+    $x$の関数に対するEuler作用素$\vartheta$を，
+    \begin{equation}
+        \vartheta\coloneqq x\diff{}{x}
+    \end{equation}
+    で定める\footnote{$\vartheta$は$\theta$の変種文字である。
+    尚，$\theta$と書くこともある。}。
+    微分作用素は線型作用素なので，Euler作用素も線型作用素である。
+\end{defi}
+
+Euler作用素については付録\ref{sec:Euler作用素}にも記した。
+
+まずは試しに冪関数$x^\lambda$に作用させてみよう。
+計算してみると，
+\begin{equation}
+    \vartheta x^{\lambda}=x\diff{}{x}x^{\lambda}=x\cdot \lambda x^{\lambda -1}=\lambda x^{\lambda}
+\end{equation}
+となる。
+従って，$x^{\lambda}$は線型作用素$\vartheta$の固有値$\lambda$の固有関数とみなせる。
+尚，$\lambda=0$，すなわち定数に作用させる場合でも，$\vartheta\cdot 1=0=0\cdot x^{0}$と見れるので，どんな$\lambda$でも$\vartheta x^{\lambda}=\lambda x^{\lambda}$と考えてよい。
+
+次に，$x$の関数$\fun{f}{x}$が
+\begin{equation}
+    \fun{f}{x}=\sum_{n=0}^\infty c_nx^n
+\end{equation}
+と展開されているとする。
+これに$\vartheta$を作用させてみると，$\vartheta$は線型であるから
+\begin{equation}
+    \vartheta\fun{f}{x}=x\diff{}{x}\sum_{n=0}^\infty c_nx^n
+    =\sum_{n=0}^\infty c_n\pare{x\diff{}{x} x^n}=\sum_{n=0}^\infty nc_nx^n
+\end{equation}
+となり，$x^n$の係数を$n$倍することが分かる。
+
+次に，定数$a$を用いて，$a+\vartheta$を作用させてみると，
+\begin{equation}
+    \pare{a+\vartheta}\sum_{n=0}^\infty c_nx^n
+    =\sum_{n=0}^\infty c_n \pare{a+\vartheta}x^n
+    =\sum_{n=0}^\infty c_n\pare{ax^n+\vartheta x^{n}}
+    =\sum_{n=0}^\infty c_n\cdot \pare{a+n}x^n
+\end{equation}
+となる。
+
+続けて$b+\vartheta$を続けて作用させてみると，
+\begin{align}
+    &\pare{b+\vartheta}\pare{a+\vartheta}\sum_{n=0}^\infty c_nx^n
+    \\
+    &=\pare{b+\vartheta}\squ{\pare{a+\vartheta}\sum_{n=0}^\infty c_nx^n}
+    \\
+    &=\pare{b+\vartheta}\sum_{n=0}^\infty c_n\cdot \pare{a+n}x^n
+    \\
+    &=\sum_{n=0}^\infty c_n\cdot \pare{a+n} \pare{b+\vartheta}x^n
+    \\
+    &=\sum_{n=0}^\infty c_n\cdot \pare{a+n}\pare{b+n}x^n
+\end{align}
+となる。
+特に，$\pare{a+n}\pare{b+n}=\pare{b+n}\pare{a+n}$であるから，
+\begin{equation}
+    \pare{a+\vartheta}\pare{b+\vartheta}f=\pare{b+\vartheta}\pare{a+\vartheta}f
+\end{equation}
+であることにも注意。
+
+
+
+これを用いてGaussの超幾何級数：
+\begin{equation}
+    \Gauss{a}{b}{c}{x}=\sum_{n=0}^\infty \frac{\poch{a,b}{n}}{\poch{c,1}{n}}x^n
+\end{equation}
+が満たす微分方程式を求めてみよう。
+
+
+
+
+
+
+
+\subsection{Gaussの超幾何微分方程式}\label{subsec:gauss-Gaussの超幾何微分方程式}
+Gaussの超幾何級数$\sGauss{a}{b}{c}{x}$における$x^n$の係数を$c_n$と置く。
+すなわち，
+\begin{equation}
+    c_n\coloneqq \frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+\end{equation}
+とする。
+命題\ref{prop:poch-an+b}：
+\begin{equation}
+    \poch{a}{n+1}=\pare{a+n}\poch{a}{n}
+\end{equation}
+を用いると，
+\begin{equation}
+    c_{n+1}=\frac{\poch{a,b}{n+1}}{\poch{c,1}{n+1}}=\frac{\poch{a}{n+1}\poch{b}{n+1}}{\poch{c}{n+1}\poch{1}{n+1}}=\frac{\pare{a+n}\pare{b+n}}{\pare{c+n}\pare{1+n}}\cdot \frac{\poch{a}{n}\poch{b}{n}}{\poch{c}{n}\poch{1}{n}}=\frac{\pare{a+n}\pare{b+n}}{\pare{c+n}\pare{1+n}}c_n
+\end{equation}
+より，
+\begin{equation}
+    \pare{1+n}\pare{c+n}c_{n+1} = \pare{a+n}\pare{b+n} c_n
+\end{equation}
+である。
+両辺に$x^{n}$を掛けて$n$についての和を考えてみる。
+右辺については，
+\begin{equation}
+    \sum_{n=0}^\infty \pare{a+n}\pare{b+n}c_n x^{n}=\pare{a+\vartheta}\pare{b+\vartheta}\sum_{n=0}^\infty c_n x^n=\pare{a+\vartheta}\pare{b+\vartheta}\ \Gauss{a}{b}{c}{x}
+\end{equation}
+である。
+
+左辺は添字が$1$ずれているから少しややこしいが，$1+n$の因子のお陰で，$n=-1$の項を付け加えても影響しないから$n=-1$からの和にしてもよく，$n+1\mapsto n$に置き換えて$n=0$からの和に直せば，
+\begin{align}
+    &\sum_{n=0}^\infty \pare{1+n}\pare{c+n}c_{n+1} x^{n}
+    \\
+    &=\frac{1}{x}\sum_{n=0}^\infty \pare{1+n}\pare{c+n}c_{n+1} x^{n+1}
+    \\
+    &=\frac{1}{x}\sum_{n=-1}^\infty \pare{1+n}\pare{c+n}c_{n+1} x^{n+1}
+    \\
+    &=\frac{1}{x}\sum_{n=0}^\infty n\pare{c+n-1}c_{n} x^{n}
+    \\
+    &=\frac{1}{x}\sum_{n=0}^\infty \pare{0+n}\pare{c-1+n}c_{n} x^{n}
+    \\
+    &=\frac{1}{x}\cdot \pare{0+\vartheta} \pare{c-1+\vartheta}\sum_{n=0}^\infty c_n x^n
+    \\
+    &=\frac{1}{x}\cdot \vartheta\pare{c-1+\vartheta}\ \Gauss{a}{b}{c}{x}
+\end{align}
+となる。
+
+これらによりGaussの超幾何級数$\sGauss{a}{b}{c}{x}$は，
+\begin{equation}
+    \squ{\frac{1}{x}\cdot \vartheta\pare{c-1+\vartheta}-\pare{a+\vartheta}\pare{b+\vartheta}}\Gauss{a}{b}{c}{x}=0
+\end{equation}
+を満たすから，
+\begin{equation}
+    \squ{\frac{1}{x}\cdot \vartheta\pare{c-1+\vartheta}-\pare{a+\vartheta}\pare{b+\vartheta}}y=0
+\end{equation}
+の解のひとつであることが判った。
+
+Euler作用素を微分作用素$\diff{}{x}$に書き直してみよう。
+一般的な場合は付録\ref{sec:Euler作用素}の定理\ref{thm:euler-vartheta^n}で詳しく証明しているが，ここでは$\vartheta^2$までしか出てこないのでこの場で計算してしまおう。
+$\vartheta^2$は$\diff{}{x}$を用いるとどのように書き換わるか計算してみると，
+\begin{equation}
+    \vartheta^2 f=x\diff{}{x}\pare{x\diff{}{x}f}=x\pare{\diff{}{x}f+x\diffn{}{x}{2}f}=\pare{x\diff{}{x}+x^2\diffn{}{x}{2}}f
+\end{equation}
+であることが分かる。
+つまり，
+\begin{equation}
+    \vartheta^2=x\diff{}{x}+x^2\diffn{}{x}{2}\pare{=\vartheta+x^2\diffn{}{x}{2}}
+\end{equation}
+と書き換えればよい。
+
+順に計算してみよう。
+最初の部分は
+\begin{align}
+    &\frac{1}{x}\cdot \vartheta\pare{c-1+\vartheta}
+    \\
+    &=\frac{1}{x}\cdot \squ{\pare{c-1}\vartheta + \vartheta^2}
+    \\
+    &=\frac{1}{x}\cdot \squ{\pare{c\vartheta - \vartheta}+\pare{\vartheta +x^2\diffn{}{x}{2}}}
+    \\
+    &=\frac{1}{x}\cdot \squ{cx\diff{}{x} + x^2\diffn{}{x}{2}}
+    \\
+    &=c\diff{}{x}+x\diffn{}{x}{2}
+\end{align}
+である。
+
+次の部分は，
+\begin{align}
+    &\pare{a+\vartheta}\pare{b+\vartheta}
+    \\
+    &=ab+\pare{a+b}\vartheta +\vartheta^2
+    \\
+    &=ab+\pare{a+b}\vartheta +\vartheta +x^2\diffn{}{x}{2}
+    \\
+    &=ab+\pare{a+b+1}x\diff{}{x}+x^2\diffn{}{x}{2}
+\end{align}
+である。
+
+これより，
+\begin{align}
+    &\frac{1}{x}\cdot \vartheta\pare{c-1+\vartheta}-\pare{a+\vartheta}\pare{b+\vartheta}
+    \\
+    &=\pare{c\diff{}{x}+x\diffn{}{x}{2}}
+    -\pare{ab+\pare{a+b+1}x\diff{}{x}+x^2\diffn{}{x}{2}}
+    \\
+    &=x\pare{1-x}\diffn{}{x}{2}+\bra{c-\pare{a+b+1}x}\diff{}{x}-ab
+\end{align}
+が得られるので，Gaussの超幾何級数は$y=\sGauss{a}{b}{c}{x}$としたとき，
+\begin{equation}
+    \squ{x\pare{1-x}\diffn{}{x}{2}+\bra{c-\pare{a+b+1}x}\diff{}{x}-ab}y=0
+\end{equation}
+すなわち，
+\begin{equation}
+    \label{eq:gauss-ODE}
+    x\pare{1-x}y''+\bra{c-\pare{a+b+1}x}y'-aby=0
+\end{equation}
+を満たす。
+\eqref{eq:gauss-ODE}式のことをGaussの超幾何微分方程式という。
+
+一般に，2階線型常微分方程式には独立な解が2つあるはずなので，\eqref{eq:gauss-ODE}を満たし，$y_1=\sGauss{a}{b}{c}{x}$と独立な解がもうひとつあるはずであるが，それはFrobeniusの方法を説明してから述べることにする。
+
+%特異点の位置
+%無限遠との変換
+
+
+\subsection{一般化超幾何微分方程式}
+前節で，
+\begin{equation}
+    \pare{a+\vartheta}\sum_{n=0}^\infty c_nx^n
+    =\sum_{n=0}^\infty c_n\cdot \pare{a+n}x^n
+\end{equation}
+を導いたが，
+$c_n=\poch{a}{n}$である場合を考えよう。
+命題\ref{cor:poch-(a)_{n+1}}の結果：
+\begin{equation}
+    \poch{a}{n+1}=\pare{a+n}\poch{a}{n}
+\end{equation}
+を用いると，
+\begin{equation}
+    \pare{a+\vartheta}\sum_{n=0}^\infty \poch{a}{n}x^n=\sum_{n=0}^\infty \pare{a+n}\poch{a}{n}x^n=\sum_{n=0}^\infty \poch{a}{n+1}x^{n}
+\end{equation}
+である。
+
+このことを利用して，一般化超幾何級数：
+\begin{equation}
+    \pfq{r}{s}{a_1,\dots,a_r}{b_1,\dots,b_s}{x}=\sum_{n=0}^\infty \frac{\poch{a_1,\dots,a_r}{n}}{\poch{b_1,\dots,b_s,1}{n}}x^n
+\end{equation}
+が満たす微分方程式を求めてみよう。
+
+Gaussの超幾何微分方程式を導いたときは，$x^n$の係数を$c_n$と置いて，$c_{n+1}$と$c_n$の間の漸化式から\eqref{eq:gauss-ODE}式を導いた。
+ここでは先に一般化超幾何微分方程式を与えてしまって，一般化超幾何級数がその微分方程式を満たすことを直接確かめてしまおう。
+
+\begin{thm}
+    一般化超幾何級数$\pfq{r}{s}{a_1,\dots,a_r}{b_1,\dots,b_s}{x}$は，
+    一般化超幾何微分方程式：
+    \begin{equation}
+        \label{eq:gauss-一般化超幾何微分方程式}
+        \bra{
+            \frac{1}{x}\cdot \vartheta\prod_{j=1}^s\pare{b_j-1+\vartheta}-\prod_{k=1}^r\pare{a_k+\vartheta}
+        }y=0
+    \end{equation}
+    の解である。
+    \begin{proof}
+        \begin{equation}
+            \squ{\frac{1}{x}\cdot \vartheta\prod_{j=1}^s\pare{b_j-1+\vartheta}}\pfq{r}{s}{a_1,\dots,a_r}{b_1,\dots,b_s}{x}
+            =\squ{\prod_{k=1}^r\pare{a_k+\vartheta}}\pfq{r}{s}{a_1,\dots,a_r}{b_1,\dots,b_s}{x}
+        \end{equation}
+        を満たすことを確認する。
+        実際，
+        \begin{align}
+            &\squ{\prod_{k=1}^r\pare{a_k+\vartheta}}\pfq{r}{s}{a_1,\dots,a_r}{b_1,\dots,b_s}{x}
+            \\
+            &=\squ{\prod_{k=1}^r\pare{a_k+\vartheta}}\sum_{n=0}^\infty \frac{\poch{a_1,\dots,a_r}{n}}{\poch{b_1,\dots,b_s,1}{n}}x^n
+            \\
+            &=\sum_{n=0}^\infty \frac{\poch{a_1,\dots,a_r}{n+1}}{\poch{b_1,\dots,b_s,1}{n}}x^n
+            \\
+            &=\frac{1}{x}\cdot\sum_{n=0}^\infty\bra{ \pare{1+n}\prod_{j=1}^s\pare{b_j+n}}\frac{\poch{a_1,\dots,a_r}{n+1}}{\poch{b_1,\dots,b_s,1}{n+1}}x^{n+1}
+            \\
+            &=\frac{1}{x}\cdot \sum_{n=1}^\infty \bra{n\prod_{j=1}^s\pare{b_j-1+n}}\frac{\poch{a_1,\dots,a_r}{n}}{\poch{b_1,\dots,b_s,1}{n}}x^{n}
+            \\
+            &=\frac{1}{x}\cdot \sum_{n=0}^\infty \bra{n\prod_{j=1}^s\pare{b_j-1+n}}\frac{\poch{a_1,\dots,a_r}{n}}{\poch{b_1,\dots,b_s,1}{n}}x^{n}
+            \\
+            &=\frac{1}{x}\cdot \bra{\vartheta\prod_{j=1}^s\pare{b_j-1+\vartheta}}\sum_{n=0}^\infty \frac{\poch{a_1,\dots,a_r}{n}}{\poch{b_1,\dots,b_s,1}{n}}x^n
+            \\
+            &=\squ{\frac{1}{x}\cdot \vartheta\prod_{j=1}^s\pare{b_j-1+\vartheta}}\pfq{r}{s}{a_1,\dots,a_r}{b_1,\dots,b_s}{x}
+        \end{align}
+        であるから成立。
+    \end{proof}
+\end{thm}
+
+Euler作用素を微分作用素で書き直せば，一般化超幾何微分方程式は，
+\begin{equation}
+    \bra{
+        \diff{}{x}\prod_{j=1}^s\pare{b_j-1+x\diff{}{x}}
+        -\prod_{k=1}^r\pare{a_k+x\diff{}{x}}
+    }y=0
+\end{equation}
+と書き直せる。
+
+\begin{eg}[Kummerの合流型超幾何微分方程式]
+    $\spfq{1}{1}{a}{b}{x}$をKummerの合流型超幾何関数と呼ぶ。
+    一般化超幾何微分方程式において$r=s=1$のとき，
+    \begin{align}
+        &\diff{}{x}\pare{b-1+x\diff{}{x}}-\pare{a+x\diff{}{x}}
+        \\
+        &=x\diffn{}{x}{2}+\pare{b-x}\diff{}{x}-a
+    \end{align}
+    であるから，$y=\spfq{1}{1}{a}{b}{x}$はKummerの合流型超幾何微分方程式：
+    \begin{equation}
+        xy''+\pare{b-x}y'-ay=0
+    \end{equation}
+    を満たす。
+\end{eg}
+
+\end{document}

@@ -1,0 +1,184 @@
+\documentclass[a4paper,draft]{ltjsarticle}
+\usepackage{preamble}
+
+\begin{document}
+\columnseprule=0.5pt
+\begin{multicols}{2}[\subsection*{記法}]
+    \begin{itemize}
+        \item $\CC$：複素数全体
+        \item $\R$：実数全体
+        \item $\Q$：有理数全体
+        \item $\Z$：整数全体
+        \item $\N$：非負整数全体
+        \item $\re{z}$：複素数$z$の実部
+        \item $\im{z}$：複素数$z$の虚部
+        \item $z^*$：複素数$z$の複素共役
+        \item $A^\dagger$：作用素$A$のHermite共役（随伴）作用素
+        \item $A\coloneqq B$：$A$を$A=B$によって定義する
+        \item $\mathcal{O}$, $o$：Landau記号
+        \item $\binom{n}{k}$：二項係数
+        \item $\delta_{ij}$：Kroneckerのdelta記号
+        \item $\det$：行列式
+        \item $\Mat{m}{n}{S}$：$S$上の$\pare{m,n}$行列全体
+        \item $\GL{n}{K}$：体$K$上の$n$次一般線型群
+        \item $\SL{n}{K}$：体$K$上の$n$次一般線型群
+        \item $\trans{A}$：行列$A$の転置行列
+        \item $\id{S}$：$S$上の恒等写像
+        \item $\seq{a_\lambda}{\lambda\in \Lambda}$：$\Lambda$上の数列
+        \item $\forall$：全称記号
+        \item $\exists$：存在記号
+    \end{itemize}
+\end{multicols}
+\columnseprule=0.0pt
+
+
+特に断りがない限り，$0\in\N$とする。
+
+\section{まえがき}\label{sec:まえがき}
+超幾何関数は複素関数論や微分方程式論の対象であり，物理学とも深い関わりがある。
+物理学で登場する殆どの特殊関数は超幾何関数として表すことができて，その多くはLaplace作用素を含む偏微分方程式を極座標表示によって変数分離した際に現れる。
+% 初等関数とは，多項式関数・有理関数・指数関数・対数関数・三角関数・逆三角関数のことであるが，
+本書で述べるのは主にGaussの超幾何関数・Kummerの合流型超幾何関数についてであるが，一部の章では一般化超幾何関数も扱う。
+
+超幾何関数には，
+\begin{itemize}
+    \item 級数表示
+    \item 超幾何微分方程式
+    \item 積分表示
+\end{itemize}
+の3つの表示の方法がある。
+
+この章では，Gaussの超幾何関数における3つの表示の概要を簡単に述べる。
+Gaussの超幾何級数は，4つの複素数$a$, $b$, $c$, $x$をパラメータに持ち，
+\begin{equation}
+    \label{eq:まえがき-gauss-級数}
+    \Gauss{a}{b}{c}{x}\coloneqq \sum_{n=0}^\infty \dfrac{\poch{a,b}{n}}{\poch{c,1}{n}}x^n
+\end{equation}
+で定義される。
+ここで，$\poch{a}{n}$はPochhammer記号で，Gamma関数$\fun{\Gamma}{x}$を用いて
+\begin{equation}
+    \poch{a}{n}\coloneqq \dfrac{\fun{\Gamma}{a+n}}{\fun{\Gamma}{a}}
+\end{equation}
+で定義され，
+\begin{equation}
+    \poch{a_1,\dots,a_m}{n}\coloneqq \prod_{k=1}^m \poch{a_k}{n}
+\end{equation}
+である。
+Gamma関数・Pochhammer記号についての基本的な性質は付録\footnote{付録の記述の多くは\cite{nkswtr}, \cite{takenoko}を参考にした。}\ref{sec:gamma}, \ref{sec:poch}に記した。
+Gaussの超幾何級数は，$a$, $b$が共に$0$以下の整数でない場合には無限級数となる。
+
+$a$, $b$, $c$が一般のままだと見えてこないが，いくつかの具体的な初等関数をGaussの超幾何級数で表してみると，
+\begin{align}
+    \fun{\ln}{1+x}&=x\cdot \Gauss{1}{1}{2}{-x}=\sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n}x^n
+    \\
+    \fun{\arcsin}{x}&=x\cdot \Gauss{\frac{1}{2}}{\frac{1}{2}}{\frac{3}{2}}{x^2}
+    =\sum_{n=0}^\infty \dfrac{\pare{2n-1}!!}{\pare{2n}!!}x^{2n+1}
+    \\
+    \fun{\arctan}{x}&=x\cdot \Gauss{\frac{1}{2}}{1}{\frac{3}{2}}{-x^2}=\sum_{n=0}^\infty \dfrac{\pare{-1}^n}{2n+1}x^{2n+1}
+\end{align}
+のようになる。
+これらは定理\ref{thm:gauss-指数関数・双曲線関数・三角関数・対数関数の超幾何級数表示}で証明する。
+
+上ではGaussの超幾何級数による例を上げたが，\ref{sec:超幾何級数}章で述べる一般化超幾何級数に拡張することで，指数関数，双曲線関数，三角関数，正弦積分なども表すことができる。
+他にも，第一種完全楕円積分$\fun{K}{x}$，第二種完全楕円積分$\fun{E}{x}$，第一種Legendre関数$\fun{P_\lambda}{x}$，Chebyshev多項式$\fun{T_n}{x}$，Laguerre多項式$\fun{L_n}{x}$，Bessel関数$\fun{J_\lambda}{x}$，Hermite多項式$\fun{H_n}{x}$はそれぞれ，
+\begin{align}
+    \fun{K}{x}&=\dfrac{\pi}{2}\cdot \Gauss{\frac{1}{2}}{\frac{1}{2}}{1}{x^2},
+    %=\dfrac{\pi}{2}\sum_{n=0}^\infty \pare{\dfrac{\pare{2n-1}!!}{\pare{2n}!!}}^2 x^{2n}
+    %\\
+    &\fun{E}{x}&=\dfrac{\pi}{2}\cdot \Gauss{-\frac{1}{2}}{\frac{1}{2}}{1}{x^2},
+    %=\dfrac{\pi}{2}\sum_{n=0}^\infty \pare{\dfrac{\pare{2n-1}!!}{\pare{2n}!!}}^2\cdot\dfrac{x^{2n}}{1-2n}
+    \\
+    \fun{P_\lambda}{x}&=\Gauss{-\lambda}{\lambda+1}{1}{\frac{1-x}{2}},
+    %\\
+    &\fun{T_n}{x}&=\dfrac{1}{2^{n-1}}\cdot \Gauss{-n}{n}{\frac{1}{2}}{\frac{1-x}{2}},
+    \\
+    \fun{L_n}{x}&=n!\cdot \pfq{1}{1}{-n}{1}{x},
+    %\\
+    &\fun{J_\lambda}{x}&=\pare{\frac{x}{2}}^\lambda \frac{e^{-ix}}{\fun{\Gamma}{\lambda+1}}\pfq{1}{1}{\lambda+\frac{1}{2}}{2\lambda+1}{2ix}
+    \\
+    \fun{H_{2n}}{x}&=\dfrac{\pare{-1}^n\pare{2n}!}{n!}\cdot \pfq{1}{1}{-n}{\frac{1}{2}}{x^2},
+    %\\
+    &\fun{H_{2n+1}}{x}&=\dfrac{\pare{-1}^m\pare{2n+1}!}{n!}\cdot 2x\cdot \pfq{1}{1}{-n}{\frac{3}{2}}{x^2},
+\end{align}
+のように表せる。
+こうして眺めてみると，特殊関数は超幾何級数を経由することで統一的に扱えることが見えてくるのではないだろうか。
+
+Gaussの超幾何級数${}_2F_1$で表せるような特殊関数が満たす微分方程式\footnote{正確には3点を確定特異点に持つようなFuchs型の常微分方程式}は，次に述べるようなGaussの超幾何微分方程式に帰着できる。
+その他の特殊関数も，適切な変数変換を施すことで一般化超幾何微分方程式に帰着されるものが殆どである。
+
+次に，超幾何関数の2つ目の顔である微分方程式表示について簡単に述べる。
+\eqref{eq:まえがき-gauss-級数}式で定義されるGaussの超幾何級数は，Gaussの超幾何微分方程式：
+\begin{equation}
+    \label{eq:まえがき-gauss-微分方程式}
+    x\pare{1-x} y'' + \bra{c - \pare{a + b + 1} x} y' - ab y = 0
+\end{equation}
+の解の一つである。
+$x$を複素変数とみなして\eqref{eq:まえがき-gauss-微分方程式}式を複素領域の微分方程式とみなすと，解析接続によって\eqref{eq:まえがき-gauss-級数}式の定義域を拡張できる。
+こうして得られたものをGaussの超幾何関数という。
+
+例えば，Legendreの微分方程式：
+\begin{equation}
+    \label{eq:まえがき-Legendre-微分方程式}
+    \pare{1-x^2}y''-2xy'+n\pare{n+1}y=0
+\end{equation}
+は，$x=1-2z$の変数変換によって，
+\begin{equation}
+    z\pare{1-z}u''+\pare{1-2z}u'+n\pare{n+1}u=0
+\end{equation}
+に書き換えられるが，これは$a=-n$, $b=n+1$, $c=1$の場合のGaussの超幾何微分方程式そのものである。
+Gaussの超幾何微分方程式に帰着させてしまえば，この微分方程式の解の一つが自動的に，
+\begin{equation}
+    \Gauss{-n}{n+1}{1}{z}=\Gauss{-n}{n+1}{1}{\frac{1-x}{2}}=\fun{P_n}{x}
+\end{equation}
+であることが分かってしまう。
+超幾何微分方程式に帰着させるための変数変換の手法\footnote{主に一次分数変換}については本文で詳しく述べる。
+
+本来，\eqref{eq:まえがき-Legendre-微分方程式}式の解を求めるためには冪級数解法（Frobeniusの方法），すなわち，適当な$x_0$を決めて\footnote{$x_0$が確定特異点となるように選ぶとよい場合が多い}
+\begin{equation}
+    y=\sum_{n=0}^\infty c_n \cdot \pare{x-x_0}^{n+\lambda}
+\end{equation}
+と仮定して代入，$\lambda$についての条件を求めた後，$c_n$の満たす漸化式を微分方程式から決定し，それを解くことで$y$を決定する，という手順を辿る必要があった。
+しかし，超幾何微分方程式の解について予め詳しく調べておけば，そのような複雑な計算をすることなく微分方程式の解を求めることが出来てしまう。
+
+最後に，超幾何関数の3つ目の表示，積分表示について簡単に述べる。
+%この章はあくまで序章であるから，
+%ここではGaussの超幾何関数の積分表示についてのみ述べることにすると，
+\eqref{eq:まえがき-gauss-級数}式で定義されたGaussの超幾何級数は積分表示：
+\begin{equation}
+    \Gauss{a}{b}{c}{x}
+    = \dfrac{\fun{\Gamma}{c}}{\fun{\Gamma}{a}\fun{\Gamma}{c-a}}
+    \int_0^1 dt \ t^{a-1}\pare{1 - t}^{c-a-1} \pare{1-xt}^{-b}
+    \label{eq:まえがき-gauss-積分}
+\end{equation}
+を持つ。
+
+一般に，関数を冪級数表示にしてしまうと収束半径による制限があるため，複素平面上の限られた領域でしか意味をなさないことがある。
+しかし，複素関数論における一致の定理と，超幾何微分方程式を利用することで他の領域に定義域を拡張していくことが可能になる。
+それぞれの領域での超幾何関数同士の接続係数を与えるのに積分表示が重宝する。
+また，超幾何級数の特殊値を導く際に積分表示が有用なことも多い。
+
+本文では，超幾何関数の3つの表示を巡ることで特殊関数を統一的に扱うことができることを見ていく。
+
+\subsection*{注意}
+本書は未完成です。
+追記予定の内容を前提とした内容がある箇所もありますがご了承ください。
+更新履歴は私のブログ記事\footnote{\label{footnote:まえがき-blog}\url{https://fugaciousshade.blogspot.com/2021/05/HypergeometricFunction-PDF.html}}からご確認ください。
+
+本書の主な内容は超幾何関数についてですが，特殊関数などに関する内容の付録も充実させていく予定です。
+付録には公式や，本文中で必要になる概念が載っていますが，本文とは完全に独立して読めるようにもなっています。
+
+計算過程をできるだけ詳細に記したので，場合によっては却って読みづらくなっている箇所があるかもしれません。
+
+随所で微積分と級数，極限と微積分の順序交換をしていますが，厳密には交換可能のための条件が不足している箇所も少なくないと思われます。
+筆者は全て確認しているわけではないので，そのような条件の詳細は解析学の専門書（例えば\cite[杉浦]{sugiura}など）を参照してください。
+
+
+誤植や内容的な誤りにお気付きの場合には
+ブログ記事のコメント欄${}^\text{\ref{footnote:まえがき-blog}}$か，筆者のTwitterアカウント\footnote{\url{https://twitter.com/FugaciousShade}}などにご連絡いただけると幸いです。
+
+また，式番号（例えば\eqref{eq:まえがき-gauss-微分方程式}式）や参考文献（例えば\cite[原岡]{haraoka}）のような参照はハイパーリンクになっているので，ビュアーによっては数字の部分をクリックすると該当箇所に飛ぶことができます。
+
+
+
+
+\end{document}

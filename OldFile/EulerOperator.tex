@@ -1,0 +1,427 @@
+\documentclass[a4paper,draft]{ltjsarticle}
+\usepackage{preamble}
+\begin{document}
+\section{Euler作用素}\label{sec:Euler作用素}
+\newcommand{\eu}[1]{\vartheta_{#1}}
+\newcommand{\Eu}[1]{x^{#1}\partial^{#1}}
+\begin{defi}[一般化されたEuler作用素]
+    自然数$n$に対し，一般化されたEuler作用素$\vartheta_n$を
+    \begin{equation}
+        \eu{n}\coloneqq \Eu{n}\label{eq:euler-def}
+    \end{equation}
+    と定義する。
+    但し，$\partial^n \coloneqq \diffn{}{x}{n}$, $\diffn{}{x}{0}=1$である。
+    これは，十分滑らかな関数$f$に対し，
+    \begin{equation}
+        f\mapsto \eu{n}f=x^n \diffn{f}{x}{n}
+    \end{equation}
+    のように作用するものとする。
+    また，$\eu{n}$の累乗$\eu{n}^k$を，
+    \begin{equation}
+        \eu{n}^k\coloneqq\begin{cases}
+            \begin{array}{cl}
+                1, &\pare{k=0}
+                \\
+                \eu{n}\eu{n}^{k-1}, &\pare{k\geq 1}
+            \end{array}
+        \end{cases}
+    \end{equation}
+    によって定める。
+\end{defi}
+
+\eqref{def:gauss-ode-EulerOperator}式のEuler作用素$\vartheta$は，\eqref{eq:euler-def}式の$\eu{n}$を用いると$\vartheta=\eu{1}$と書ける。
+また，$\eu{n}$は線形作用素であり，任意の定数$a$, $b$に対して
+\begin{equation}
+    \eu{n}\pare{af+bg}=a\eu{n}f+b\eu{n}g
+\end{equation}
+が成立する。
+
+\begin{prop}
+    $m$, $n$を自然数としたとき，以下が成立する：
+    \begin{equation}
+        \eu{m}\eu{n}=\sum_{k=0}^m \binom{m}{k}\binom{n}{m-k}\pare{m-k}! \eu{n+k}.
+        \label{eq:euler-eu_m*eu_n}
+    \end{equation}
+    \begin{proof}
+        微分に関するLeibniz則：
+        \begin{equation}
+            \partial^n\pare{fg} = \sum_{k=0}^n \binom{n}{k} \pare{\partial^k f}\pare{\partial^{n-k}g}
+        \end{equation}
+        を用いると，
+        \begin{align}
+            \eu{m}\eu{n}&=\Eu{m}\pare{\Eu{n}}
+            =x^m\sum_{k=0}^m \binom{m}{k}\pare{\partial^{m-k} x^n} \pare{\partial^k \partial^n}
+            \\
+            &=x^m \sum_{k=0}^m \binom{m}{k} \frac{n!}{\pare{n-m+k}!}x^{n-m+k}\partial^{n+k}
+            \\
+            &=\sum_{k=0}^m \binom{m}{k}\frac{n!}{\pare{n-m+k}!\pare{m-k}!}\cdot \pare{m-k}! x^{n+k}\partial^{n+k}
+            \\
+            &=\sum_{k=0}^m \binom{m}{k}\binom{n}{m-k}\pare{m-k}! \eu{n+k}
+        \end{align}
+        であるから確かに成立している。
+    \end{proof}
+\end{prop}
+
+\begin{cor}\label{cor:euler-eu_1*eu_n}
+    $m=1$とすると，
+    \begin{equation}
+        \eu{1}\eu{n}=n\eu{n}+\eu{n+1}
+    \end{equation}
+    である。
+    \begin{proof}
+        命題\ref{eq:euler-eu_m*eu_n}の結果を用いて，
+        \begin{align}
+            \eu{1}\eu{n}
+            &=\sum_{k=0}^{1}\binom{1}{k}\binom{n}{1-k}\pare{1-k}!\eu{n+k}
+            =\binom{1}{0}\binom{n}{1}1! \eu{n}+ \binom{1}{1}\binom{n}{0}0!\eu{n+1}
+            \\
+            &=n\eu{n}+\eu{n+1}
+        \end{align}
+        であるから確かに成立する。
+    \end{proof}
+\end{cor}
+
+\begin{prop}
+    $n$を正整数としたとき，$\eu{1}^n$は$\eu{1},\,\eu{2},\,\dots,\,\eu{n}$の正整数係数の線形結合によって一意的に表せる。
+    特に，
+    \begin{equation}
+        \eu{1}^n = \sum_{m=1}^n a_{n}^{\pare{m}}\eu{m}
+    \end{equation}
+    と書いたとき，正整数係数$a_n^{\pare{1}},\,\dots,\, a_{n}^{\pare{m}}$は以下の漸化式：
+    \begin{equation}
+        \begin{cases}
+            \begin{array}{ll}
+                a_{n+1}^{\pare{m}}=m a_n^{\pare{m}}+a_{n}^{\pare{m-1}}, &\pare{2\leq m \leq n}
+                \\
+                a_n^{\pare{1}}=a_{n}^{\pare{n}}=1,\
+                a_1^{\pare{k}}=0, &\pare{2\leq k}
+            \end{array}
+        \end{cases}
+        \label{eq:euler-漸化式}
+    \end{equation}
+    を満たす。
+
+    \begin{proof}
+        数学的帰納法によって示す。
+        $n=1$については定義から，
+        \begin{equation}
+            \eu{1}^1=\eu{1}\eu{1}^0=\eu{1}\cdot 1=\eu{1}
+        \end{equation}
+        であり，右辺は$\eu{1}$の正整数係数の線形結合であり，一意的であるから成立。
+        次に，ある正整数$n$について，正整数係数$a_n^{\pare{1}},\,\dots,\, a_{n}^{\pare{m}}$が一意的に存在して，
+        \begin{equation}
+            \eu{1}^n=\sum_{m=1}^n a_n^{\pare{m}}\eu{m}
+        \end{equation}
+        と表せたとすると，$\eu{1}$の線型性と系\ref{cor:euler-eu_1*eu_n}の結果から，
+        \begin{align}
+            \eu{1}^{n+1}&=\eu{1}\eu{1}^n=\eu{1}\sum_{m=1}^n a_{n}^{\pare{m}}\eu{m}=\sum_{m=1}^n a_n^{\pare{m}}\eu{1}\eu{m}
+            \\
+            &=\sum_{m=1}^n a_n^{\pare{m}}\pare{m\eu{m}+\eu{m+1}}
+            \\
+            &=a_n^{\pare{1}}\eu{1}+\sum_{m=2}^n \pare{ma_n^{\pare{m}}+a_n^{\pare{m-1}}}\eu{m}+a_{n}^{\pare{n}}\eu{n+1}
+            \label{eq:euler-漸化式-pre}
+        \end{align}
+        となる。
+        最後の表式から，$\eu{1}^{n+1}$は$\eu{1},\,\eu{2},\,\dots,\,\eu{n},\,\eu{n+1}$の線形結合で表されており，一意的である。
+        数学的帰納法により，$n$を正整数としたとき，$\eu{1}^n$は$\eu{1},\,\eu{2},\,\dots,\,\eu{n}$の正整数係数の線形結合によって一意的に表せることが示された。
+        但し，一意性は$\eu{1},\,\dots,\,\eu{n}$の線型独立性が成立する関数空間に作用させる場合に限る。
+
+        \eqref{eq:euler-漸化式-pre}式と$\eu{1}^{n+1}=\sum_{m=1}^{n+1}a_{n+1}^{\pare{m}}\eu{m}$を比較すると，
+        \begin{equation}
+            a_{n+1}^{\pare{1}}=a_{n}^{\pare{1}},\
+            a_{n+1}^{\pare{m}}=ma_n^{\pare{m}}+a_n^{\pare{m-1}}\eu{m},\ \pare{2\leq m\leq n},\
+            a_{n+1}^{\pare{n+1}}=a_n^{\pare{n}}
+        \end{equation}
+        が成立していることが判る。
+        特に，$\eu{1}^1=1\cdot\eu{1}$であることから$a_{1}^{\pare{1}}=1$であるから，$a_{n+1}^{\pare{1}}=a_n^{\pare{1}}=\cdots=a_2^{\pare{1}}=a_1^{\pare{1}}=1$であり，$a_{n+1}^{\pare{n+1}}=a_n^{\pare{n}}=\cdots=a_2^{\pare{2}}=a_1^{\pare{1}}=1$であるから，確かに，
+        \begin{equation}
+            \begin{cases}
+                \begin{array}{ll}
+                    a_{n+1}^{\pare{m}}=m a_n^{\pare{m}}+a_{n}^{\pare{m-1}}, &\pare{2\leq m \leq n}
+                    \\
+                    a_n^{\pare{1}}=a_{n}^{\pare{n}}=1,\
+                    a_1^{\pare{k}}=0, &\pare{2\leq k}
+                \end{array}
+            \end{cases}
+        \end{equation}
+        が成立する。
+    \end{proof}
+\end{prop}
+
+\begin{eg}\label{eg:euler-m=2,3}
+    $m=2$, $3$の場合に具体的に漸化式を解いて$a_n^{\pare{2}}$, $a_{n}^{\pare{3}}$を決定する。
+
+    $m=2$のとき，
+    \begin{equation}
+        a_1^{\pare{2}}=0,\
+        a_{n+1}^{\pare{2}}=2a_n^{\pare{2}}+a_n^{\pare{1}}=2a_n^{\pare{2}}+1
+    \end{equation}
+    であり，これを解くと，
+    \begin{equation}
+        a_n^{\pare{2}}=2^{n-1}-1
+    \end{equation}
+    となる。
+
+    次に，$m=3$のとき，
+    \begin{equation}
+        a_1^{\pare{3}}=0,\
+        a_{n+1}^{\pare{3}}=3a_n^{\pare{3}}+a_n^{\pare{2}}=3a_n^{\pare{3}}+2^{n-1}-1
+    \end{equation}
+    であり，
+    \begin{equation}
+        a_{n+1}^{\pare{3}}+2^n-\frac{1}{2}=3\pare{a_n^{\pare{3}}+2^{n-1}-\frac{1}{2}}
+    \end{equation}
+    と変形できるから，
+    \begin{equation}
+        a_n^{\pare{3}}=\frac{1}{2}-2^{n-1}+\frac{3^{n-1}}{2}
+    \end{equation}
+    と表せる。
+
+    特に，
+    \begin{align}
+        a_n^{\pare{2}}&=-1+\frac{1}{2}\cdot 2^n,
+        \\
+        a_n^{\pare{3}}&=\frac{1}{2}-\frac{1}{2}\cdot 2^n+\frac{1}{6}\cdot 3^n
+    \end{align}
+    と表せる。
+\end{eg}
+
+\begin{thm}
+    \eqref{eq:euler-漸化式}式の解は，
+    \begin{equation}
+        a_n^{\pare{m}}=\frac{1}{m!}\sum_{k=1}^m\binom{m}{k}\pare{-1}^{m-k} k^n,\quad\pare{1\leq m \leq n}
+    \end{equation}
+    である。
+
+    \begin{proof}
+        $a_n^{\pare{1}}=a_n^{\pare{n}}=1$は既に判っているので，
+        \begin{align}
+            \begin{cases}
+                \begin{array}{ll}
+                    a_{n+1}^{\pare{m}}=m a_n^{\pare{m}}+a_{n}^{\pare{m-1}}, &\pare{2\leq m \leq n},\\
+                    a_1^{\pare{k}}=0, &\pare{2\leq k\leq m}
+                \end{array} 
+            \end{cases}
+        \end{align}
+        を解けばよい。
+        例\ref{eg:euler-m=2,3}の結果から，解は
+        \begin{equation}
+            a_n^{\pare{m}}=\sum_{k=1}^m k^n c_k^{\pare{m}}
+            \label{eq:euler-a_n^(m)-defi}
+        \end{equation}
+        のような形をしていることが予想される。
+        これを仮定して漸化式に代入すると，
+        \begin{align}
+            0&=ma_n^{\pare{m}}+a_n^{\pare{m-1}}-a_{n+1}^{\pare{m}}
+            \\
+            &=\sum_{k=1}^{m-1}k^n \bra{\pare{m-k}c_k^{\pare{m}}+c_k^{\pare{m-1}}}
+        \end{align}
+        であるから，関係式：
+        \begin{equation}
+            c_k^{\pare{m}}=-\frac{c_k^{\pare{m-1}}}{m-k}, \quad\pare{1\leq k \leq m-1}
+        \end{equation}
+        を満たしていれば漸化式を満たす。
+        これを変形していくと，
+        \begin{equation}
+            c_k^{\pare{m}}=-\frac{c_k^{\pare{m-1}}}{m-k}=\frac{-1}{m-k}\cdot \frac{-1}{m-1-k} c_k^{\pare{m-2}}=\cdots=\frac{\pare{-1}^{m-k}c_k^{\pare{k}}}{\pare{m-k}!},\quad\pare{1\leq k\leq m-1}
+            \label{eq:euler-c_k^(m)}
+        \end{equation}
+        が得られる。
+        この条件からは$c_m^{\pare{m}}$が決定されないが，$a_1^{\pare{m}}=0$を使えば決定できて，
+        \begin{align}
+            0=a_1^{\pare{m}}=\sum_{k=1}^m k^1 c_k^{\pare{m}}=\sum_{k=1}^{m-1} k\cdot \frac{\pare{-1}^{m-k}c_k^{\pare{k}}}{\pare{m-k}!}
+            +mc_m^{\pare{m}}
+        \end{align}
+        であるから，
+        \begin{equation}
+            c_m^{\pare{m}}=-\frac{1}{m}\sum_{k=1}^{m-1}\frac{\pare{-1}^{m-k}k c_k^{\pare{k}}}{\pare{m-k}!}
+            \label{eq:euler-c_m^(m)}
+        \end{equation}
+        と判る。
+
+        $1=a_1^{\pare{1}}=\sum_{k=1}^1 k^1 c_k^{\pare{1}}=c_1^{\pare{1}}$であるから$c_1^{\pare{1}}=1$であり，\eqref{eq:euler-c_m^(m)}式によって$c_k^{\pare{k}}$が決定され，\eqref{eq:euler-c_k^(m)}式を用いることで任意の$a_n^{\pare{m}}$が計算できる。
+        
+        具体的に数項計算してみると，$c_1^{\pare{1}}=1$を用いて，
+        \begin{align}
+            c_2^{\pare{2}}&=-\frac{1}{2}\cdot \frac{\pare{-1}^{2-1}\cdot 1}{\pare{2-1}!}c_1^{\pare{1}}=\frac{1}{2}=\frac{1}{2!},
+            \\[5pt]
+            c_3^{\pare{3}}&=-\frac{1}{3}\cdot \pare{
+                \frac{\pare{-1}^{3-1}\cdot 1}{\pare{3-1}!}c_1^{\pare{1}}
+                +\frac{\pare{-1}^{3-2}\cdot 2}{\pare{3-2}!}c_2^{\pare{2}}
+            }=-\frac{1}{3}\cdot \pare{\frac{1}{2}-\frac{2}{1}\cdot \frac{1}{2}}=\frac{1}{6}=\frac{1}{3!},
+            \\[5pt]
+            c_4^{\pare{4}}&=-\frac{1}{4}\cdot \pare{
+                \frac{\pare{-1}^{4-1}\cdot 1}{\pare{4-1}!}c_1^{\pare{1}}
+                +\frac{\pare{-1}^{4-2}\cdot 2}{\pare{4-2}!}c_2^{\pare{2}}
+                +\frac{\pare{-1}^{4-3}\cdot 3}{\pare{4-3}!}c_3^{\pare{3}}
+            }
+            \\
+            &=-\frac{1}{4}\cdot \pare{-\frac{1}{6}\cdot 1+\frac{2}{2}\cdot \frac{1}{2}-\frac{3}{1}\cdot \frac{1}{6}}=\frac{1}{24}=\frac{1}{4!},
+            \\[5pt]
+            c_5^{\pare{5}}&=-\frac{1}{5}\cdot \pare{
+                \frac{c_1^{\pare{1}}}{\pare{5-1}!}
+                -\frac{2c_2^{\pare{2}}}{\pare{5-2}!}
+                +\frac{3c_3^{\pare{3}}}{\pare{5-3}!}
+                -\frac{4c_4^{\pare{4}}}{\pare{5-4}!}
+                }
+            \\
+            &=-\frac{1}{5}\cdot \pare{\frac{1}{24}-\frac{2}{6}\cdot \frac{1}{2}+\frac{3}{2}\cdot \frac{1}{6}-\frac{4}{1}\cdot \frac{1}{24}}=\frac{1}{120}=\frac{1}{5!},
+            \\[5pt]
+            c_6^{\pare{6}}&=-\frac{1}{6}\cdot \pare{
+                -\frac{1}{5!}c_1^{\pare{1}}
+                +\frac{2}{4!}c_2^{\pare{2}}
+                -\frac{3}{3!}c_3^{\pare{3}}
+                +\frac{4}{2!}c_4^{\pare{4}}
+                -\frac{5}{1!}c_5^{\pare{5}}
+            }
+            =\frac{1}{720}=\frac{1}{6!}.
+        \end{align}
+        これらのことから，一般に$c_m^{\pare{m}}=\frac{1}{m!}$だと予想できる。
+        実際，数学的帰納法によって，$c_1^{\pare{1}}=1=\frac{1}{1!}$は成立しているので，$\pare{m-1}$以下での正整数での成立を仮定すると，
+        \begin{align}
+            c_m^{\pare{m}}&=-\frac{1}{m}\sum_{k=1}^{m-1}\frac{\pare{-1}^{k-1}k}{\pare{m-k}!}c_k^{\pare{k}},\quad\pare{\ell \coloneqq m-k}
+            \\
+            &=-\frac{1}{m}\sum_{\ell = 1}^{m-1} \frac{\pare{-1}^{\ell}\pare{m-\ell}}{\ell !}c_{m-\ell}^{\pare{m-\ell}},\quad\pare{c_{m-\ell}^{\pare{m-\ell}}=\frac{1}{\pare{m-\ell}!}}
+            \\
+            &=-\frac{1}{m!}\sum_{\ell = 1}^{m-1}\frac{\pare{-1}^{\ell} \pare{m-1}!}{\ell! \pare{m-\ell-1}!}
+            \\
+            &=-\frac{1}{m!}\pare{-1+\sum_{\ell=0}^{m-1}\binom{m-1}{\ell}\pare{-1}^{\ell}}
+            \\
+            &=-\frac{1}{m!}\bra{-1+\pare{1-1}^{m-1}}
+            \\
+            &=\frac{1}{m!}
+        \end{align}
+        となるから，任意の正整数$m$に対して
+        \begin{equation}
+            c_m^{\pare{m}}=\frac{1}{m!}
+            \label{eq:euler-c_m^(m)-true}    
+        \end{equation}
+        が成立する。
+
+        これで$a_n^{\pare{m}}$を明示的に表すための準備は全て整った。
+        \eqref{eq:euler-a_n^(m)-defi}式に\eqref{eq:euler-c_k^(m)}及び，\eqref{eq:euler-c_m^(m)-true}式を代入すれば，$2\leq m\leq n-1$において，
+        \begin{align}
+            a_n^{\pare{m}}&=\sum_{k=1}^m k^n c_k^{\pare{m}}=\sum_{k=1}^{m-1}k^n c_k^{\pare{m}}+m^n c_m^{\pare{m}}
+            \\
+            &=\sum_{k=1}^{m-1}\frac{k^n \pare{-1}^{m-k}c_k^{\pare{k}}}{\pare{m-k}!}+\frac{m^n}{m!}
+            \\
+            &=\frac{1}{m!}\pare{m^n+\sum_{k=1}^{m-1}\binom{m}{k}\pare{-1}^{m-k} k^n}
+            \\
+            &=\frac{1}{m!}\sum_{k=1}^m\binom{m}{k}\pare{-1}^{m-k} k^n
+            \label{eq:euler-a_n^(m)}
+        \end{align}
+        が従う。
+        また，\eqref{eq:euler-a_n^(m)}の表式は，$a_n^{\pare{1}}=a_n^{\pare{n}}=1$も再現するので，結局$1\leq m\leq n$の全てで成り立つ。
+    \end{proof}
+\end{thm}
+
+このことから直ちに以下が従う：
+
+\begin{thm}\label{thm:euler-vartheta^n}
+    Euler作用素の累乗は
+    \begin{equation}
+        \eu{1}^n=\sum_{m=1}^{n}\frac{1}{m!}\sum_{k=1}^m\binom{m}{k}\pare{-1}^{m-k} k^n\eu{m}
+    \end{equation}
+    と書ける。
+    これを微分作用素で書き直せば，
+    \begin{equation}
+        \pare{x\diff{}{x}}^n=\sum_{m=1}^{n}\frac{1}{m!}\sum_{k=1}^m\binom{m}{k}\pare{-1}^{m-k} k^n x^m\diffn{}{x}{m}
+    \end{equation}
+    である。
+\end{thm}
+
+\begin{defi}[第二種Stirling数]
+    第二種Stirling数$\sstir{n}{m}$を以下で定義する：
+    \begin{equation}
+        \stir{n}{m}\coloneqq \frac{1}{m!}\sum_{k=1}^m\binom{m}{k}\pare{-1}^{m-k} k^n 
+    \end{equation}
+    但し，$\sstir{0}{0}\coloneqq 1$とし，$n$が正整数の場合は$\sstir{n}{0}\coloneqq 0$とする。
+\end{defi}
+
+
+\begin{cor}
+    Euler作用素の累乗は第二種Stirling数$\sstir{m}{k}$を用いて以下のように表せる：
+    \begin{equation}
+        \eu{1}^n=\sum_{m=1}^n \stir{n}{m}\eu{m}.
+    \end{equation}
+    これを微分作用素で書き直せば，
+    \begin{equation}
+        \pare{x\diff{}{x}}^n=\sum_{m=1}^n \stir{n}{m} x^m \diffn{}{x}{m}.
+    \end{equation}
+\end{cor}
+
+\begin{supple}
+    第二種Stirling数$\sstir{n}{m}$は，元の個数が$n$個であるような集合を，空でない部分集合$m$個に分割する場合の数に等しい。
+\end{supple}
+
+\begin{eg}
+    第二種Stirling数$\sstir{n}{m}$の具体的な値は表\ref{tab:Stirling}に示した。
+\end{eg}
+
+\begin{luacode*}
+    function factorial(n)
+        if n == 0 then
+            return 1
+        else
+            return n * factorial(n - 1)
+        end
+    end
+
+
+    function StirlingNumber(n, m)
+        if n < m then
+            return nill
+        end
+        if n == 0 then
+            return 1
+        elseif m == 0 then
+            return 0
+        end
+
+        local temp = 0
+        for k = 1, m do
+            temp = temp + math.pow(-1, m - k) * math.pow(k, n) * factorial(m) / (factorial(k) * factorial(m - k))
+        end
+        temp = temp / factorial(m)
+        return temp
+    end
+
+
+    function createStirlingTable(row)
+        tex.print("\\begin{table}\\caption{第二種Stirling数$\\sstir{n}{m}$の具体値($0\\leq m \\leq n\\leq"..row.."$)}\\label{tab:Stirling}\\centering\\begin{tabular}{")
+        tex.print("c|")
+        for i = 0, row do
+            tex.print("r")
+        end
+        tex.print("}")
+        tex.print("\\diagbox[width=30pt, height=25pt]{$n$}{$m$}")
+        for i = 0, row do
+            tex.print("& $"..i.."$")
+        end
+        tex.print("\\\\ \\hline ")
+        for i = 0, row do
+            tex.print("$"..i.."$ & ")
+            for j = 0, i do
+                tex.print("\\footnotesize $"..math.floor(StirlingNumber(i, j)).."$")
+                if j < i then
+                    tex.print("&")
+                end
+            end
+            for k = 1, row - i - 1 do
+                tex.print("&")
+            end
+            if i < row then
+                tex.print("\\\\")
+            end
+        end
+        tex.print("\\end{tabular}\\end{table}")
+    end
+\end{luacode*}
+
+
+\begin{landscape}
+    \directlua{createStirlingTable(15)}
+\end{landscape}
+
+
+\end{document}

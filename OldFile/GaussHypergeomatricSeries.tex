@@ -1,0 +1,559 @@
+\documentclass[a4paper,draft]{ltjsarticle}
+\usepackage{preamble}
+
+\begin{document}
+\section{超幾何級数}\label{sec:超幾何級数}
+\subsection{原点周りの冪級数表示}
+Gamma関数の定義や性質については付録\ref{sec:gamma}に記した。
+Pochhammer記号の定義・性質については付録\ref{sec:poch}にまとめてある。
+Pochhammer記号の定義は
+\begin{equation}
+    \poch{a}{n}\coloneqq \dfrac{\fun{\Gamma}{a+n}}{\fun{\Gamma}{a}}
+\end{equation}
+である。
+Pochhammer記号同士の積は略記して，
+\begin{equation}
+    \poch{a,b}{n}\coloneqq \poch{a}{n}\poch{b}{n}=\dfrac{\fun{\Gamma}{a+n}\fun{\Gamma}{b+n}}{\fun{\Gamma}{a}\fun{\Gamma}{b}}
+\end{equation}
+と表すことがある。
+
+この節ではGamma関数の階乗の一般化としての性質から導かれる，
+\begin{equation}
+    \poch{a}{n}=\prod_{k=0}^{n-1}\pare{a+k}=a\pare{a-1}\cdots\pare{a+n-1}
+\end{equation}
+と，$\poch{1}{n}=\fun{\Gamma}{n+1}=n!$及び，$\poch{a}{n+1}=\pare{a+n}\poch{a}{n}$さえ押さえておけば問題ない。
+
+\begin{defi}[Gaussの超幾何関数]
+    Gaussの超幾何級数は，複素変数$a$, $b$, $c$, $x$を用いて，
+    \begin{equation}
+        \Gauss{a}{b}{c}{x}\coloneqq \sum_{n=0}^\infty \dfrac{\poch{a,b}{n}}{\poch{c,1}{n}}x^n
+        \label{eq:Gaussの超幾何級数-1-gauss-級数}
+    \end{equation}
+    で定義される。
+\end{defi}
+
+具体的に数項を書き下してみると，
+\begin{equation}
+    \Gauss{a}{b}{c}{x}
+    = 1 + \dfrac{ab}{c\cdot 1}x + \dfrac{a\pare{a+1}b\pare{b+1}}{c\pare{c+1}\cdot 1 \cdot 2}x^2 + \dfrac{a\pare{a+1}\pare{a+2}b\pare{b+1}\pare{b+2}}{c\pare{c+1}\pare{c+2}\cdot 1\cdot 2 \cdot 3} x^3 + \cdots
+\end{equation}
+となる。
+
+\begin{rem}
+    文中ではスペースの都合上，$y=\Gauss{a}{b}{c}{x}$とは書かずに，$y=\sGauss{a}{b}{c}{x}$のようにセミコロン区切りで表記することがある。
+\end{rem}
+
+\begin{rem}\label{rem:gauss-対称性}
+    Pochhammer記号は，$\poch{a,b}{n}=\poch{a}{n}\poch{b}{n}=\poch{b,a}{n}$を満たすから，$a$, $b$に関して対称，すなわち
+    \begin{equation}
+        \Gauss{a}{b}{c}{x}=\Gauss{b}{a}{c}{x}
+    \end{equation}
+    を満たす。
+\end{rem}
+
+もしも$c$が$0$以下の整数だとすると$-c < n$のときに$\poch{c}{n}=0$となり（命題\ref{prop:poch-(-m)_{n}=0}参照），分母が$0$になってしまうため，以降では$c\not\in\Z_{\leq 0}$を仮定する。
+
+また，$a$, $b$のいずれかが$0$以下の整数の場合，$\poch{a,b}{n}=0$となる$n$が存在し，それ以降の$n$でも$\poch{a,b}{n}$は全て$0$となるので，\eqref{eq:Gaussの超幾何級数-1-gauss-級数}式は$x$に関する有限次の多項式関数になる。
+
+\begin{defi}[一般化超幾何級数]
+    $r$, $s$を自然数，$a_1,\dots,a_s$, $b_1,\dots,b_r$, $x$を複素変数とする。
+    一般化超幾何級数は，
+    \begin{equation}
+        \pfq{r}{s}{a_1,\dots,a_r}{b_1,\dots,b_s}{x}\coloneqq \sum_{n=0}^\infty \dfrac{\poch{a_1,\dots,a_r}{n}}{\poch{b_1,\dots,b_s,1}{n}}x^n
+    \end{equation}
+    で定義する。
+    但し，$r$が$0$の場合，
+    \begin{equation}
+        \pfq{0}{s}{-}{b_1,\dots,b_s}{x}\coloneqq\sum_{n=0}^\infty \dfrac{1}{\poch{b_1,\dots,b_s,1}{n}}x^n
+    \end{equation}
+    と定義し，$s$が$0$の場合，
+    \begin{equation}
+        \pfq{r}{0}{a_1,\dots,a_r}{-}{x}\coloneqq \sum_{n=0}^\infty \dfrac{\poch{a_1,\dots,a_r}{n}}{\poch{1}{n}}x^n
+    \end{equation}
+    と定め，$r=s=0$の場合にも，
+    \begin{equation}
+        \pfq{0}{0}{-}{-}{x}\coloneqq \sum_{n=0}^\infty \dfrac{1}{\poch{1}{n}}x^n
+    \end{equation}
+    とする。
+\end{defi}
+
+\begin{rem}
+    Gaussの超幾何級数と同様，スペースの都合で文中では$y=\pfq{r}{s}{a_1,\dots,a_r}{b_1,\dots,b_s}{x}$とは書かずに，$y=\spfq{r}{s}{a_1,\dots,a_r}{b_1,\dots,b_s}{x}$のようにセミコロン区切りで表記することがある。
+\end{rem}
+
+\begin{rem}
+    一般化超幾何級数も注意\ref{rem:gauss-対称性}と同様に，引数$\pare{a_1,\dots,a_r}$は順序には依らない。
+    $\pare{b_1,\dots,b_s}$の順序も任意である。
+\end{rem}
+
+\begin{supple}
+    $a_r=b_s=c$の場合，$\poch{a_1,\dots,a_{r-1},a_r}{n}=\poch{a_1,\dots,a_{r-1}}{n}\poch{a_r}{n}$などから，
+    \begin{align}
+        \pfq{r}{s}{a_1,\dots,a_{r-1},c}{b_1,\dots,b_{s-1},c}{x}
+        &= \sum_{n=0}^\infty \dfrac{\poch{a_1,\dots,a_{r-1}}{n}\poch{c}{n}}{\poch{b_1,\dots,b_{s-1},1}{n}\poch{c}{n}}x^n
+        \\
+        &=\sum_{n=0}^\infty \dfrac{\poch{a_1,\dots,a_{r-1}}{n}}{\poch{b_1,\dots,b_{s-1},1}{n}}x^n=\pfq{r-1}{s-1}{a_1,\dots,a_{r-1}}{b_1,\dots,b_{s-1}}{x}
+    \end{align}
+    が成立する。
+
+    例えば，
+    \begin{equation}
+        \pfq{3}{2}{\frac{1}{2},\frac{1}{2},\frac{3}{4}}{\frac{3}{4},\frac{3}{2}}{x}=\Gauss{\frac{1}{2}}{\frac{1}{2}}{\frac{3}{2}}{x}
+    \end{equation}
+    が成立する。
+    この場合，左辺の${}_3F_2$には上段・下段に引数$\frac{3}{4}$が共通しているため，$\frac{3}{4}$がキャンセルされて引数の個数が減り，${}_2F_1$に落ちる。
+\end{supple}
+
+\begin{prop}[超幾何級数の収束半径]
+    有限和ではないような一般化超幾何級数の収束半径$R$は，
+    \begin{equation}
+        R=\case{
+            \begin{array}{cl}        
+                \infty, & \pare{r>s+1}
+                \\
+                1, & \pare{r=s+1}
+                \\
+                0, & \pare{r<s+1}
+            \end{array}
+        }
+    \end{equation}
+    である。
+    \begin{proof}
+        d'Alembertの収束判定法を用いる。
+        一般化超幾何級数$\pfq{r}{s}{a_1,\dots,a_r}{b_1,\dots,b_s}{x}$の$x^n$の係数を$c_n$と置く：
+        \begin{equation}
+            c_n\coloneqq \dfrac{\poch{a_1,\dots,a_r}{n}}{\poch{b_1,\dots,b_s,1}{n}}.
+        \end{equation}
+
+        収束半径$R$は，
+        \begin{align}
+            R&=\limn\dfrac{c_n}{c_{n+1}}
+            \\
+            &=\limn\dfrac{\poch{a_1,\dots,a_r}{n}}{\poch{b_1,\dots,b_s,1}{n}}
+            \cdot
+            \dfrac{\poch{b_1,\dots,b_s,1}{n+1}}{\poch{a_1,\dots,a_r}{n+1}}
+            \\
+            &=\limn\dfrac{\pare{b_1+n}\cdots\pare{b_s+n}\pare{n+1}}{\pare{a_1+n}\cdots\pare{a_r+n}}
+        \end{align}
+        となる。
+        $n$に関して，分子は$\spare{s+1}$次，分母は$r$次である。
+        $r=s+1$のときは，分母・分子を$n^r$で割ると$R=1$が分かる。
+        $r>s+1$のときは，分母・分子を$n^{s+1}$で割ると$R=0$が分かる。
+        $r<s+1$のときは，分母・分子を$n^r$で割ると$R=\infty$が分かる。
+    \end{proof}
+\end{prop}
+
+Gaussの超幾何級数は，$r=2$, $s=1$に該当するから，$r=s+1$であり，収束半径は$R=1$である。
+すなわち，Gaussの超幾何級数：
+\begin{equation}
+    \Gauss{a}{b}{c}{z}=\sum_{n=0}^\infty \dfrac{\poch{a,b}{n}}{\poch{c,1}{n}}z^n
+\end{equation}
+は，$\abs{z}<1$で絶対収束する。
+
+\begin{rem}
+    詳細は\ref{subsec:gauss-収束半径と特異点}節で述べるが，ある点$c$の周りでの冪級数展開の収束半径が有限の値$R$を取る場合，収束円$\abs{z-c}=R$上に少なくとも1点は特異点が存在する。
+    このことから，有限和でないGaussの超幾何級数は収束半径が$1$であるため，複素平面上の単位円$\abs{z}=1$の上のどこかに特異点があることが判る（実際には$z=1$）。
+    特異点と解析接続の関係は，Gaussの超幾何微分方程式を導いた後で詳しく議論されることになる。
+\end{rem}
+
+\begin{comment}
+$z=1$における収束性はd'Alembertの収束判定法からは保証されないが，実際には後述するEuler積分表示から導かれる超幾何定理から，
+\begin{equation}
+    \Gauss{a}{b}{c}{1}=\dfrac{\fun{\Gamma}{c}\fun{\Gamma}{c-a-b}}{\fun{\Gamma}{c-a}\fun{\Gamma}{c-b}}\quad\pare{\re{c-a-b}>0}
+\end{equation}
+となることが示される。    
+\end{comment}
+
+\subsection{初等関数の超幾何級数表示}
+上では一般的な定義を述べたが，適当な冪級数を超幾何級数に直す練習として，
+指数関数・双曲線関数・三角関数・対数関数を超幾何級数を用いて表してみる。
+
+
+\begin{thm}[指数関数・双曲線関数・三角関数・対数関数の超幾何級数表示]
+    \label{thm:gauss-指数関数・双曲線関数・三角関数・対数関数の超幾何級数表示}
+    \begin{align}
+        e^x&=\pfq{0}{0}{-}{-}{x},
+        &
+        \fun{\ln}{1+x}&=x\cdot \Gauss{1}{1}{2}{-x},
+        \\
+        \fun{\cosh}{x}&=\pfq{0}{1}{-}{\frac{1}{2}}{\frac{x^2}{4}},
+        &
+        \fun{\sinh}{x}&=x\cdot \pfq{0}{1}{-}{\frac{3}{2}}{\frac{x^2}{4}},
+        \\
+        \fun{\cos}{x}&=\pfq{0}{1}{-}{\frac{1}{2}}{-\frac{x^2}{4}},
+        &
+        \fun{\sin}{x}&=x\cdot \pfq{0}{1}{-}{\frac{3}{2}}{-\frac{x^2}{4}},
+        \\
+        \fun{\arcsin}{x}&=x\cdot \Gauss{\frac{1}{2}}{\frac{1}{2}}{\frac{3}{2}}{x^2},
+        &
+        \fun{\arctan}{x}&=x\cdot \Gauss{\frac{1}{2}}{1}{\frac{3}{2}}{-x^2}.
+    \end{align}
+    \begin{proof}        
+        $e^x$については，$\poch{1}{n}=n!$を用いれば，
+        \begin{equation}
+            e^x=\sum_{n=0}^\infty \frac{x^n}{n!}=\sum_{n=0}^\infty \dfrac{1}{\poch{1}{n}}x^n=\pfq{0}{0}{-}{-}{x}
+        \end{equation}
+        となる。
+
+        超幾何級数には必ず定数項$1$が存在することに注意する。
+        すなわち，$x^0$の項が存在しない冪級数の場合は，定数項が1になるように$x$などで括り，定数項が$1$となるように次数を調節しておく必要がある。
+
+        $\fun{\ln}{1+x}$については最低次の次数が$x$であり，その係数は$1$だから，冪級数全体を$x$で括る必要がある。
+        まず添字をひとつずらして，
+        \begin{equation}
+            \fun{\ln}{1+x}=\sum_{n=1}^\infty \frac{\pare{-1}^{n-1}}{n}x^n
+            =\sum_{n=0}^\infty \frac{\pare{-1}^n}{n+1}x^{n+1}=x\sum_{n=0}^\infty \frac{\pare{-1}^n}{n+1}x^{n}
+        \end{equation}
+        としておく。
+        命題\ref{prop:poch-an+b}の結果から，
+        \begin{equation}
+            n+1=1\cdot \frac{\poch{2}{n}}{\poch{1}{n}}
+        \end{equation}
+        であり，これを代入すれば，
+        \begin{equation}
+            \fun{\ln}{1+x}=x\sum_{n=0}^\infty \frac{\pare{-1}^n}{n+1}x^{n}=x \sum_{n=0}^\infty \frac{\pare{-1}^n\poch{1}{n}}{\poch{2}{n}}x^n
+        \end{equation}
+        と書き換えられる。
+        超幾何級数の各項の係数の分母には$\poch{1}{n}=n!$が必ずあるはずなので$\poch{1}{n}$を分母分子に掛けておき，$\pare{-1}^n$を$x^n$とまとめておくと，
+        \begin{equation}
+            \fun{\ln}{1+x}=x\sum_{n=0}^\infty \frac{\poch{1}{n}\poch{1}{n}}{\poch{2}{n}\poch{1}{n}}\pare{-x}^n=x\sum_{n=0}^\infty \dfrac{\poch{1,1}{n}}{\poch{2,1}{n}}\pare{-x}^n=x\cdot \Gauss{1}{1}{2}{-x}
+        \end{equation}
+        を得る。
+
+        $\cosh$や$\cos$のように$\pare{2n}!$が出てくる場合は，命題\ref{prop:poch-(2n)!}の
+        \begin{equation}
+            \pare{2n}!=2^{2n}\poch{1}{n}\poch{\frac{1}{2}}{n}
+        \end{equation}
+        を用いて，
+        \begin{equation}
+            \fun{\cosh}{x}=\sum_{n=0}^\infty \frac{x^{2n}}{\pare{2n}!}
+            =\sum_{n=0}^\infty \frac{1}{2^{2n}\poch{1}{n}\poch{\frac{1}{2}}{n}}x^{2n}
+            =\sum_{n=0}^\infty \frac{1}{\poch{\frac{1}{2},1}{n}}\pare{\frac{x^2}{4}}^n
+            =\pfq{0}{1}{-}{\frac{1}{2}}{\frac{x^2}{4}}
+        \end{equation}
+        のようにすればよい。
+
+        $\arcsin$のように二重階乗を含む場合は，命題\ref{prop:poch-二重階乗}の式を利用する。
+        命題\ref{prop:poch-二重階乗}によれば，
+        \begin{equation}
+            \frac{\pare{2n-1}!!}{\pare{2n}!!}=\frac{1}{n!}\poch{\frac{1}{2}}{n}=\frac{\poch{\frac{1}{2}}{n}}{\poch{1}{n}}
+        \end{equation}
+        である。
+        また，命題\ref{prop:poch-an+b}の結果から，
+        \begin{equation}
+            2n+1=1\cdot\frac{\poch{\frac{3}{2}}{n}}{\poch{\frac{1}{2}}{n}}\label{eq:gauss-2n+1}
+        \end{equation}
+        であるから，
+        \begin{align}
+            \fun{\arcsin}{x}&=\sum_{n=0}^\infty \frac{\pare{2n-1}!!}{\pare{2n}!!}\cdot \frac{x^{2n+1}}{2n+1}=x\sum_{n=0}^\infty \frac{\poch{\frac{1}{2}}{n}}{\poch{1}{n}}\cdot\frac{\poch{\frac{1}{2}}{n}}{\poch{\frac{3}{2}}{n}}x^{2n}
+            \\
+            &=x\sum_{n=0}^\infty \frac{\poch{\frac{1}{2},\frac{1}{2}}{n}}{\poch{\frac{3}{2},1}{n}}\pare{x^2}^n
+            =x\cdot \Gauss{\frac{1}{2}}{\frac{1}{2}}{\frac{3}{2}}{x^2}
+        \end{align}
+        が従う。
+
+        $\arctan$は\eqref{eq:gauss-2n+1}式を用いれば十分で，
+        \begin{align}
+            \fun{\arctan}{x}&=\sum_{n=0}^\infty \frac{\pare{-1}^n}{2n+1}x^{2n+1}=x\sum_{n=0}^\infty \frac{\poch{\frac{1}{2}}{n}}{\poch{\frac{3}{2}}{n}}\cdot \frac{\poch{1}{n}}{\poch{1}{n}}\pare{-1}^nx^{2n}
+            \\
+            &=x\sum_{n=0}^\infty \frac{\poch{\frac{1}{2},1}{n}}{\poch{\frac{3}{2},1}{n}}\pare{-x^2}^n
+            =x\cdot  \Gauss{\frac{1}{2}}{1}{\frac{3}{2}}{-x^2}
+        \end{align}
+        となる。
+    \end{proof}
+\end{thm}
+
+\begin{prob}
+    定理\ref{thm:gauss-指数関数・双曲線関数・三角関数・対数関数の超幾何級数表示}の証明において取り扱わなかった関数についても同様にして証明せよ。
+\end{prob}
+
+\subsection{収束半径と特異点}\label{subsec:gauss-収束半径と特異点}
+この節では，冪級数の収束半径と特異点の関係について述べる。
+
+\begin{thm}
+    $z=c$周りの冪級数：
+    \begin{equation}
+        \sum_{n=0}^\infty c_n\cdot \pare{z-c}^n
+    \end{equation}
+    の収束半径$R$が有限の場合，収束円$\abs{z-c}=R$上に少なくとも1点は特異点が存在する。
+    言い換えると，$z=c$周りの冪級数の収束半径は，$z=c$から最も近い位置にある特異点までの距離である。
+\end{thm}
+
+冪級数展開を用いて得られた微分方程式の冪級数解の収束半径が有限の場合，収束円の境界上に特異点が存在する。
+収束円内の別の点から再び冪級数展開することによって，収束する領域を広げることができる場合がある。
+
+\begin{eg}
+    原点周りの冪級数：
+    \begin{equation}
+        \sum_{n=0}^\infty \frac{1}{n!}z^n
+    \end{equation}
+    の収束半径は$R=\infty$であり，複素平面上の全域で$e^z$に一致する。
+\end{eg}
+
+\begin{eg}
+    原点周りの冪級数：
+    \begin{equation}
+        \sum_{n=1}^\infty \frac{\pare{-1}^{n-1}}{n}z^{n}
+    \end{equation}
+    の収束半径は$R=1$であり，少なくとも$\abs{z}<1$で$\fun{\ln}{1+z}$に一致する。
+    $\fun{\ln}{1+z}$は$z=-1$を特異点に持ち，展開の中心$z=0$と特異点$z=-1$の距離は$1$であり，確かに収束半径と一致する。
+\end{eg}
+
+\begin{eg}
+    原点周りの冪級数：
+    \begin{equation}
+        \sum_{n=0}^\infty z^n
+    \end{equation}
+    の収束半径は$R=1$であり，少なくとも$\abs{z}<1$で$\frac{1}{1-z}$に一致する。
+    $\frac{1}{1-z}$は$z=1$を特異点に持ち，展開の中心$z=0$と特異点$z=1$の距離は$1$であり，確かに収束半径と一致する。
+\end{eg}
+
+Gaussの超幾何級数：
+\begin{equation}
+    \Gauss{a}{b}{c}{z}\label{eq:gauss-Gaussの超幾何級数}
+\end{equation}
+の収束半径は$R=1$である。
+これより，単位円$\abs{z}=1$上のどこかに特異点が存在することになる。
+\ref{subsec:gauss-Gaussの超幾何微分方程式}節で見るように，特異点は$z=0$と$z=1$にあり，\eqref{eq:gauss-Gaussの超幾何級数}式はそもそも特異点周りの解である。
+特異点周りの解であるのにも関わらず\eqref{eq:gauss-Gaussの超幾何級数}式は少なくとも$z=0$を含めた$\abs{z}<1$では正則であることは少々奇妙に感じるかもしれないが，\eqref{eq:gauss-Gaussの超幾何級数}式は\ref{subsec:gauss-Gaussの超幾何微分方程式}節で述べるGaussの超幾何微分方程式の解の一部に過ぎず，実際，$z=0$が特異点になる解もある。
+
+\subsection{Gaussの超幾何定理}\label{subsec:gauss-Gaussの超幾何定理}
+Gaussの超幾何級数の積分表示の節でもう一度導出することになるが，ここでは積分表示を用いずに直接証明する方法を紹介する。
+
+\begin{thm}[Kummerの関係]
+    $a$, $b$, $c$を複素数とし，$c\not\in\Z_{\leq 0}$, $\re{c-a-b}>0$のとき，
+    \begin{equation}
+        \Gauss{a}{b}{c}{1}
+        =\sum_{n=0}^\infty \frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+        =\frac{\fun{\Gamma}{c}\fun{\Gamma}{c-a-b}}{\fun{\Gamma}{c-a}\fun{\Gamma}{c-b}}
+    \end{equation}
+    が成立する。
+
+    \begin{proof}
+        収束条件が$\re{c-a-b}>0$であることを確認するために，各項の漸近形を調べておく。
+        まず，
+        \begin{align}
+            \frac{\fun{\Gamma}{x+n}}{\fun{\Gamma}{x}}
+            &=x\pare{x+1}\pare{x+2}\cdots \pare{x+n-2}\pare{x+n-1}
+            \\
+            &=\prod_{k=0}^{n-1}\pare{x+k}
+            =x^n\prod_{k=0}^{n-1}\pare{1+\frac{k}{x}}
+            \sim x^n\quad \pare{x\to \infty}
+        \end{align}
+        である\footnote{
+            $\fun{f}{x}\sim \fun{g}{x}\ \pare{x\to\infty}$
+            であるとは，
+            $\frac{\fun{f}{x}}{\fun{g}{x}}\rightarrow 1\ \pare{x\to \infty}$
+            が成立すること。
+        }\footnote{この議論はやや不完全で，厳密にはGamma関数の漸近展開（追記予定）を用いて証明されるべきである。}から，
+        \begin{equation}
+            \frac{\fun{\Gamma}{n+a}}{\fun{\Gamma}{n}}\sim n^a\quad\pare{n\to\infty}
+        \end{equation}
+        である。
+        これを用いると，各項の漸近形は，
+        \begin{align}
+            \frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+            &=\frac{\fun{\Gamma}{c}}{\fun{\Gamma}{a}\fun{\Gamma}{b}}\cdot \frac{\fun{\Gamma}{a+n}\fun{\Gamma}{b+n}}{\fun{\Gamma}{c+n}\fun{\Gamma}{n+1}}
+            \\
+            &=\frac{\fun{\Gamma}{c}}{\fun{\Gamma}{a}\fun{\Gamma}{b}}
+            \cdot \frac{\fun{\Gamma}{a+n}}{\fun{\Gamma}{n}}
+            \cdot \frac{\fun{\Gamma}{b+n}}{\fun{\Gamma}{n}}
+            \cdot \frac{\fun{\Gamma}{n}}{\fun{\Gamma}{c+n}}
+            \cdot \frac{\fun{\Gamma}{n}}{\fun{\Gamma}{1+n}}
+            \\
+            &\sim \frac{\fun{\Gamma}{c}}{\fun{\Gamma}{a}\fun{\Gamma}{b}}
+            \cdot n^a\cdot n^b \cdot \frac{1}{n^c}\cdot \frac{1}{n^1}=\frac{\fun{\Gamma}{c}}{\fun{\Gamma}{a}\fun{\Gamma}{b}}\cdot \frac{1}{n^{c-a-b+1}}\quad \pare{n\to\infty}
+            \label{eq:gauss-(a,b)_n/(c,1)_nの漸近形}
+        \end{align}
+        と分かる。
+        一般に，
+        \begin{equation}
+            \fun{\zeta}{z}=\sum_{n=1}^\infty \frac{1}{n^z}
+        \end{equation}
+        が収束するのは$\re{z}>1$に限る（命題\ref{prop:RiemannZeta-絶対収束}参照）から，$\re{c-a-b+1}>1$, すなわち$\re{c-a-b}>0$が収束条件である。
+
+        次に具体的な収束値を示す。
+        Gaussの超幾何級数の$z=1$における級数の値を$\fun{C}{a,b,c}$と置く。
+        すなわち，
+        \begin{equation}
+            \fun{C}{a,b,c}\coloneqq \Gauss{a}{b}{c}{1}
+            =\sum_{n=0}^\infty \frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+        \end{equation}
+        と定める。
+
+        以下，証明の方針を述べる。
+        まず，
+        \begin{equation}
+            \frac{\fun{C}{a,b,c+1}}{\fun{C}{a,b,c}}=\frac{c\pare{c-a-b}}{\pare{c-a}\pare{c-b}}
+            \label{eq:gauss-C/C}
+        \end{equation}
+        を示す。
+        次に，
+        \begin{equation}
+            \fun{C}{a,b,c+m}\longrightarrow 1\quad \pare{m\to\infty}
+        \end{equation}
+        を示し，Gamma関数のEuler乗積表示（命題\ref{prop:gamma-euler}）を用いることで証明が完成する。
+
+        \eqref{eq:gauss-C/C}式を示すために，Pochhammer記号に関する恒等式：
+        \begin{equation}
+            c\pare{c-a-b}\frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+            =\pare{c-a}\pare{c-b}\frac{\poch{a,b}{n}}{\poch{c+1,1}{n}}
+            +c\pare{
+                n\frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+                -\pare{n+1}\frac{\poch{a,b}{n+1}}{\poch{c,1}{n+1}}
+            }
+            \label{eq:gauss-pochの恒等式}
+        \end{equation}
+        を示す。
+        命題\ref{prop:poch-an+b}から
+        \begin{equation}
+            \poch{a+1}{n}=\frac{a+n}{a}\cdot \poch{a}{n}
+        \end{equation}
+        であって，命題\ref{prop:poch-(a)_{n+k}}から
+        \begin{equation}
+            \poch{a}{n+1}=\poch{a}{n}\poch{a+n}{1}=\pare{a+n}\poch{a}{n}
+        \end{equation}
+        であり，これを用いて右辺を計算すると，
+        \begin{align}
+            &\pare{c-a}\pare{c-b}\frac{\poch{a,b}{n}}{\poch{c+1,1}{n}}
+            +c\pare{
+                n\frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+                -\pare{n+1}\frac{\poch{a,b}{n+1}}{\poch{c,1}{n+1}}
+            }
+            \\
+            &=\pare{c-a}\pare{c-b}\cdot \frac{c}{c+n}\cdot \frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+            +c\pare{
+                n\frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+                -\pare{n+1}\cdot \frac{\pare{a+n}\pare{b+n}}{\pare{c+n}\pare{n+1}}\frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+            }
+            \\
+            &=\frac{c}{c+n}\cdot \frac{\poch{a,b}{n}}{\poch{c,1}{n}}\cdot
+            \bra{
+                \pare{c-a}\pare{c-b}+n\pare{n+c}-\pare{n+a}\pare{n+b}
+            }
+            \\
+            &=\frac{c}{c+n}\cdot \frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+            \cdot \pare{c+n}\pare{c-a-b}
+            \\
+            &=c\pare{c-a-b}\frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+        \end{align}
+        となるので確かに成立。
+
+        \eqref{eq:gauss-pochの恒等式}式の両辺を$n=0,1,2,\dots$で足し合わせると，左辺は，
+        \begin{align}
+            &c\pare{c-a-b}\sum_{n=0}^\infty \frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+            \\
+            &=c\pare{c-a-b}\fun{C}{a,b,c}
+        \end{align}
+        となり，
+        右辺は，
+        \begin{align}
+            &\sum_{n=0}^\infty \squ{\pare{c-a}\pare{c-b}\frac{\poch{a,b}{n}}{\poch{c+1,1}{n}}
+            +c\pare{
+                n\frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+                -\pare{n+1}\frac{\poch{a,b}{n+1}}{\poch{c,1}{n+1}}
+            }}
+            \\
+            &=\pare{c-a}\pare{c-b}\sum_{n=0}^\infty \frac{\poch{a,b}{n}}{\poch{c+1,1}{n}}+c\squ{
+                \sum_{n=0}^\infty n\frac{\poch{a,b}{n}}{\poch{c,1}{n}}
+                -\sum_{n=0}^\infty\pare{n+1}\frac{\poch{a,b}{n+1}}{\poch{c,1}{n+1}}
+            }
+            \\
+            &=\pare{c-a}\pare{c-b}\fun{C}{a,b,c+1}+c\cdot 0\cdot \frac{\poch{a,b}{0}}{\poch{c,1}{0}}
+            \\
+            &=\pare{c-a}\pare{c-b}\fun{C}{a,b,c+1}
+        \end{align}
+        となり，
+        \begin{equation}
+            c\pare{c-a-b}\fun{C}{a,b,c}=\pare{c-a}\pare{c-b}\fun{C}{a,b,c+1}
+        \end{equation}
+        が従うから確かに，
+        \begin{equation}
+            \frac{\fun{C}{a,b,c+1}}{\fun{C}{a,b,c}}=\frac{c\pare{c-a-b}}{\pare{c-a}\pare{c-b}}
+        \end{equation}
+        が成立する。
+
+        次に，
+        \begin{equation}
+            \fun{C}{a,b,c+m}\longrightarrow 1\quad \pare{m\to\infty}
+        \end{equation}
+        を示す。
+        \begin{equation}
+            \fun{C}{a,b,c+m}
+            =\Gauss{a}{b}{c+m}{1}
+            =1+\sum_{n=1}^\infty\frac{\poch{a,b}{n}}{\poch{c+m,1}{n}}
+        \end{equation}
+        である。
+        最右辺の級数の各項は命題\ref{prop:poch-(a)_n=prod(a+k)}により
+        \begin{equation}
+            \frac{\poch{a,b}{n}}{\poch{c+m,1}{n}}=\frac{\poch{a,b}{n}}{\poch{1}{n}}\cdot \prod_{k=0}^{n-1}\frac{1}{c+m+k}
+            \longrightarrow 0\quad \pare{m\to \infty}
+        \end{equation}
+        であって，かつ\eqref{eq:gauss-(a,b)_n/(c,1)_nの漸近形}式の議論から，
+        \begin{equation}
+            \frac{\poch{a,b}{n}}{\poch{c+m,1}{n}}=\fun{\mathcal{O}}{\frac{1}{n^{c-a-b+m+1}}}\quad \pare{n\to\infty}
+        \end{equation}
+        なので全ての項は$0$に向かい，
+        \begin{equation}
+            \sum_{n=1}^\infty\frac{\poch{a,b}{n}}{\poch{c+m,1}{n}}\longrightarrow 0\quad \pare{m\to\infty}
+        \end{equation}
+        である。
+        このことから，
+        \begin{equation}
+            \fun{C}{a,b,c+m}\longrightarrow 1\quad \pare{m\to\infty}
+        \end{equation}
+        である。
+
+        また，\eqref{eq:gauss-C/C}式から，
+        \begin{equation}
+            \fun{C}{a,b,c}=\frac{\pare{c-a}\pare{c-b}}{c\pare{c-a-b}}\fun{C}{a,b,c+1}
+        \end{equation}
+        であって，数学的帰納法により，任意の自然数$m$について
+        \begin{equation}
+            \fun{C}{a,b,c}=\fun{C}{a,b,c+m+1}\prod_{k=0}^{m}\frac{\pare{c-a+k}\pare{c-b+k}}{\pare{c+k}\pare{c-a-b+k}}
+            \label{eq:gamma-C(a,b,c)=}
+        \end{equation}
+        が言える。
+        最後に，命題\ref{prop:gamma-euler}のGamma関数のEuler乗積表示から，
+        \begin{equation}
+            \fun{\Gamma}{z}=\lim_{m\to\infty}m^z \cdot m!\prod_{k=0}^m\frac{1}{z+k}
+        \end{equation}
+        を用いて，
+        \begin{align}
+            &\fun{C}{a,b,c+m+1}\prod_{k=0}^{m}\frac{\pare{c-a+k}\pare{c-b+k}}{\pare{c+k}\pare{c-a-b+k}}
+            \\
+            &=\fun{C}{a,b,c+m+1}\cdot \frac{m^{c-a}
+            \cdot m^{c-b}}{m^{c}\cdot m^{c-a-b}}\cdot \frac{
+                \squ{m^c\cdot m!\prod_{k=0}^m\frac{1}{c+k}}\squ{m^{c-a-b}\cdot m!\prod_{k=0}^m\frac{1}{\spare{c-a-b}+k}}
+            }{
+                \squ{m^{c-a}\cdot m!\prod_{k=0}^m\frac{1}{\spare{c-a}+k}}
+                \squ{m^{c-b}\cdot m!\prod_{k=0}^m\frac{1}{\spare{c-b}+k}}
+            }
+            \\
+            &\longrightarrow 1\cdot 1\cdot \frac{\fun{\Gamma}{c}\cdot \fun{\Gamma}{c-a-b}}{\fun{\Gamma}{c-a}\cdot\fun{\Gamma}{c-b}}=\frac{\fun{\Gamma}{c}\fun{\Gamma}{c-a-b}}{\fun{\Gamma}{c-a}\fun{\Gamma}{c-b}}
+            \quad\pare{m\to\infty}
+        \end{align}
+        となる。
+        元々\eqref{eq:gamma-C(a,b,c)=}式の左辺は$m$に依らないから，
+        \begin{equation}
+            \Gauss{a}{b}{c}{1}=\fun{C}{a,b,c}
+            =\frac{\fun{\Gamma}{c}\fun{\Gamma}{c-a-b}}{\fun{\Gamma}{c-a}\fun{\Gamma}{c-b}}
+        \end{equation}
+        が従うことが判った。
+        収束条件は上で述べたように$\re{c-a-b}>0$である。
+    \end{proof}
+\end{thm}
+
+Pochhammer記号の部分をGamma関数を使って書き直せば，
+\begin{equation}
+    \frac{\fun{\Gamma}{c}}{\fun{\Gamma}{a}\fun{\Gamma}{b}}\sum_{n=0}^\infty \frac{\fun{\Gamma}{a+n}\fun{\Gamma}{b+n}}{\fun{\Gamma}{c+n}\cdot n!}
+    =\frac{\fun{\Gamma}{c}\fun{\Gamma}{c-a-b}}{\fun{\Gamma}{c-a}\fun{\Gamma}{c-b}}
+\end{equation}
+あるいは左辺の因子を右辺に寄せて，
+\begin{equation}
+    \sum_{n=0}^\infty \frac{\fun{\Gamma}{a+n}\fun{\Gamma}{b+n}}{\fun{\Gamma}{c+n}\cdot n!}
+    =\frac{\fun{\Gamma}{c-a-b}\fun{\Gamma}{a}\fun{\Gamma}{b}}{\fun{\Gamma}{c-a}\fun{\Gamma}{c-b}}
+\end{equation}
+とも書ける。
+
+\end{document}

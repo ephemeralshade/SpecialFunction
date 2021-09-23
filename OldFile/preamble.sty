@@ -1,0 +1,211 @@
+
+\usepackage{ifdraft}
+\ifdraft{\usepackage{showkeys}}{}
+
+\usepackage{docmute}
+
+
+\usepackage{multicol}
+
+\usepackage{luacode}
+%\usepackage[dvipdfmx]{color}
+%\usepackage[ipaex]{pxchfon}
+%\usepackage[top=30truemm, bottom=30truemm, left=20truemm, right=20truemm]{geometry}
+\usepackage{amsmath}
+\usepackage{ascmac}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+%\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{comment}
+\usepackage{url}
+\usepackage{here}
+%\usepackage[unicode,hidelinks,pdfusetitle]{hyperref}
+\usepackage[unicode,pdfusetitle]{hyperref}
+
+\usepackage{mleftright}
+%\usepackage{otf}
+\usepackage{exscale}
+%\usepackage[framemethod = tikz, roundcorner = 10pt]{mdframed}
+
+% \usepackage[version=3]{mhchem} %化学式のパッケージ \ce{H2O}のようにして使う
+% \usepackage{mdwlist}
+%\usepackage{tikz}
+%\usetikzlibrary{intersections, calc, arrows, cd}
+%\usepackage{tikz-3dplot}
+%\usepackage{empheq}
+
+\usepackage{diagbox}
+\usepackage{lscape}
+
+\begin{comment}
+\begin{empheq}[left=\empheqlbrace]{align}
+f(x) &= x^2+3x+1 \\
+f'(x) &= 2x+3
+\end{empheq}
+\end{comment}
+
+
+\newcommand{\pdiff}[2]{\frac{\partial #1}{\partial #2}} % 偏微分
+\newcommand{\pdiffn}[3]{\frac{\partial^{#3} #1}{\partial #2^{#3}}} % n階偏微分
+\newcommand{\diff}[2]{\frac{d #1}{d #2}} % 常微分
+\newcommand{\diffn}[3]{\frac{d^{#3} #1}{d #2^{#3}}} % n階常備分
+\newcommand{\substitute}[2]{\mleft. #1 \mright|_{#2}} % 代入
+\newcommand{\Res}[2]{\underset{#2}{\mathrm{Res}}\pare{#1}} % 留数
+
+\newcommand{\ele}{\bm{e}} % 単位ベクトル
+\newcommand{\N}{\mathbb{N}} % 自然数全体
+\newcommand{\Z}{\mathbb{Z}} % 整数全体
+\newcommand{\Q}{\mathbb{Q}} % 有理数全体
+\newcommand{\R}{\mathbb{R}} % 実数全体
+\newcommand{\CC}{\mathbb{C}} % 複素数全体
+
+\newcommand{\pmat}[1]{\mleft(\begin{matrix} #1 \end{matrix}\mright)} % 括弧付きの行列
+\newcommand{\mat}[1]{\begin{matrix} #1 \end{matrix}} % 括弧なしの行列
+\newcommand{\vctr}[1]{\mleft(\begin{matrix} #1 \end{matrix}\mright)} % ベクトル(縦なら \vctr{a\b\c}のように)
+\newcommand{\sgn}[1]{\mathrm{sgn}\pare{#1}} % 符号sgn(x)
+
+\newcommand{\trans}[1]{{}^t{#1}}
+
+\newcommand{\spare}[1]{( #1 )} % 小括弧
+\newcommand{\pare}[1]{\mleft( #1 \mright)} % 括弧
+\newcommand{\bra}[1]{\mleft\{ #1 \mright\} } % 中括弧
+\newcommand{\squ}[1]{\mleft[ #1 \mright]} % 大括弧
+\newcommand{\norm}[1]{\mleft\|#1\mright\|} %ノルム記号
+\newcommand{\bsqu}[1]{\Bigl[ #1 \Bigr]} %大括弧 (積分などで強制的に大きくしたい場合)
+\newcommand{\case}[1]{\mleft\{\begin{aligned}#1\end{aligned}\mright.} %場合分け
+
+\newcommand{\abs}[1]{\mleft|#1\mright|} % 絶対値
+\newcommand{\card}[1]{\mleft|#1\mright|} % 集合の濃度(個数)
+
+\newcommand{\cinterval}[2]{\mleft[#1,\,#2\mright]}
+
+\newcommand{\relmiddle}[1]{\mathrel{}\middle#1\mathrel{}} % 集合の縦棒
+\newcommand{\set}[2]{\mleft\{ \rule{0pt}{10pt} \ #1 \relmiddle{|} #2\ \mright\}} % 集合
+\newcommand{\sset}[2]{\mleft\{ #1 \relmiddle{|} #2\mright\}} % 集合
+\newcommand{\seq}[2]{\mleft\{#1\mright\}_{#2}} % 数列
+\newcommand{\fset}[2]{\mleft\{#1\mright\}_{#2}} % 集合族
+\newcommand{\gene}[1]{\mleft\langle #1 \mright\rangle} % 生成
+
+\newcommand{\defarrow}{\stackrel{\mathrm{def}}{\Longleftrightarrow}} % 定義矢印(同値矢印の上にdef)
+\newcommand{\ord}[1]{\mathrm{ord}\pare{#1}} % 元の位数
+
+\newcommand{\SL}[2]{\mathrm{SL}_{#1}\pare{#2}} % 特殊線形群
+\newcommand{\GL}[2]{\mathrm{GL}_{#1}\pare{#2}} % 一般線形群
+\newcommand{\id}[1]{\mathrm{id}_{#1}}
+\newcommand{\Mat}[3]{\mathrm{Mat}\pare{#1,#2,#3}}
+\newcommand{\fun}[2]{#1 \pare{#2}} % 関数
+\newcommand{\Laplace}[1]{\mathcal{L}\mleft[ #1 \mright]} % Laplace変換
+\newcommand{\Fourier}[1]{\mathcal{F}\mleft[ #1 \mright]} % Fourier変換
+
+\newcommand{\Gauss}[4]{{}_2F_1\mleft[\mleft.
+        \begin{matrix}
+            #1, #2
+            \\
+            #3 
+        \end{matrix}\, 
+        \mright|\
+        #4\,
+    \mright]
+}
+
+\newcommand{\pfq}[5]{{}_{#1}F_{#2}\mleft[\mleft.
+    \begin{matrix}
+        #3
+        \\
+        #4 
+    \end{matrix}\,
+    \mright|\
+    #5\,
+    \mright]
+}
+
+\newcommand{\sGauss}[4]{{}_{2}F_{1}\mleft({#1},\, {#2}\,;\, {#3}\, ;\, {#4}\mright)}
+\newcommand{\spfq}[5]{{}_{#1}F_{#2}\mleft({#3}\,;\, {#4}\, ;\, {#5}\mright)}
+
+\newcommand{\poch}[2]{\mleft(#1\mright)_{#2}}
+
+\newcommand{\Poch}[2]{\frac{\Gamma\mleft(#1+#2\mright)}{\Gamma\mleft(#1\mright)}}
+
+
+\newcommand{\cosech}{\mathrm{cosech}}
+
+\newcommand{\limn}{\lim_{n\to\infty}}
+
+\newcommand{\Li}[2]{\mathrm{Li}_{#1}\mleft(#2\mright)}
+
+\newcommand{\re}[1]{\mathrm{Re}\mleft(#1\mright)}
+\newcommand{\im}[1]{\mathrm{Im}\mleft(#1\mright)}
+
+\newcommand{\inner}[2]{\mleft\langle #1\, \middle|\, #2 \mright\rangle}
+\newcommand{\Bra}[1]{\mleft\langle #1\, \middle|\mright.}
+\newcommand{\Ket}[1]{\mleft. \middle|\, #1 \mright\rangle}
+
+\newcommand{\diffun}[3]{{#1}^{\mleft({#2}\mright)}\mleft({#3}\mright)}
+
+\DeclareRobustCommand{\sstir}{\genfrac\{\}{0pt}1}
+\DeclareRobustCommand{\stir}{\genfrac\{\}{0pt}0}
+
+\newcommand{\Schrodinger}{Schr\"odinger}
+
+\newcommand{\prb}{\begin{prob}
+\rm{(解答)}
+\end{prob}}
+
+
+\theoremstyle{definition}
+\theoremstyle{definition}
+\newtheorem{thm}{定理}[section]
+\newtheorem{prob}{問}[section]
+\newtheorem{defi}[thm]{定義}
+\newtheorem{axio}[thm]{公理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{cor}[thm]{系}
+\newtheorem{eg}[thm]{例}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{nota}[thm]{記法}
+\newtheorem{supple}[thm]{補足}
+
+\newtheorem*{ans}{解答}
+
+\if0
+% 数式(演算子など)のスペースを詰める
+% =,→ 間の余白
+\thickmuskip=1.0\thickmuskip
+% +,- 間の余白
+\medmuskip=0.8\medmuskip
+% … などの装飾記号の余白
+\thinmuskip=0.8\thinmuskip
+% 行列を詰める
+\arraycolsep=0.3\arraycolsep
+% 数式の上下のスペースの変更
+\AtBeginDocument{
+  \abovedisplayskip     =0.5\abovedisplayskip
+  \abovedisplayshortskip=0.5\abovedisplayshortskip
+  \belowdisplayskip     =0.5\belowdisplayskip
+  \belowdisplayshortskip=0.5\belowdisplayshortskip}
+  \setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\fi
+
+\mathtoolsset{showonlyrefs=true} % 式番号を参照されたもののみ付ける
+
+%\begin{comment}
+% 式番号をsectionごとにつける
+\makeatletter
+\@addtoreset{equation}{section}
+\def\theequation{\thesection.\arabic{equation}}
+\@addtoreset{table}{section}
+\def\thetable{\thesection.\arabic{table}}
+\@addtoreset{figure}{section}
+\def\thefigure{\thesection.\arabic{figure}}
+\makeatother
+%\end{comment}
+
+% \parindent = 0pt
+\allowdisplaybreaks[1] % 数式途中の改ページを許すかどうか(0:許さない, 1~3:値が大きいほど規制がゆるい)

@@ -1,0 +1,290 @@
+\documentclass[a4paper,draft]{ltjsarticle}
+\usepackage{preamble}
+\begin{document}
+\section{Poisson和公式}\label{sec:Poisson}
+Poisson和公式は，元の関数の整数点における値の無限和と，Fourier変換した後の関数の整数点における値の無限和を結びつける公式で，様々な関数等式を導くことのできる大変強力な公式である。
+また，Poisson和公式から導かれるTheta変換公式は楕円関数論や数論においても重要な役割を果たすが，ここではその詳細については立ち入らず，証明の紹介だけする。
+
+本章では，正弦関数の無限積表示(定理\ref{thm:Poisson-sin})の証明を目標にする。
+
+\subsection{Fourier変換とPoisson和公式}
+\begin{defi}[Fourier変換]
+    関数$\fun{f}{x}$のFourier変換$\fun{\tilde{f}}{\xi}$を，
+    \begin{equation}
+        \fun{\tilde{f}}{\xi}\coloneqq \int_{-\infty}^\infty d\xi\ \fun{f}{x}e^{-2\pi i \xi x}
+    \end{equation}
+    で定義する。
+    但し，収束性のために$\fun{f}{x}$は以下の2条件を満たすとする：
+    \begin{enumerate}[label=(\roman*)]
+        \item $\exists \delta>0,\ \fun{f}{x}=\fun{\mathcal{O}}{\abs{x}^{-\delta -1}}\ \pare{x\to\pm\infty}$
+        \item $\exists \varepsilon>0,\ \fun{\tilde{f}}{\xi}=\fun{\mathcal{O}}{\abs{\xi}^{-\varepsilon-1}}\ \pare{\xi\to\pm\infty}$
+    \end{enumerate}
+\end{defi}
+
+\begin{thm}[Poisson和公式]
+    Fourier変換可能な関数$f$について，以下が成立する：
+    \begin{equation}
+        \sum_{m=-\infty}^\infty \fun{f}{x+m} = \sum_{n=-\infty}^\infty \fun{\tilde{f}}{n}e^{-2n\pi i x}
+    \end{equation}
+    これを，（一般化された）Poisson和公式と呼ぶ。
+
+    \begin{proof}
+        関数$g$を以下のように定める：
+        \begin{equation}
+            \fun{g}{x}\coloneqq \sum_{m=-\infty}^\infty \fun{f}{x+m}
+        \end{equation}
+        このとき，任意の$x$について$\fun{g}{x+1}=\fun{g}{x}$が成立するから，関数$g$は周期$1$の周期関数であるから，複素Fourier級数展開：
+        \begin{equation}
+            \fun{g}{x}=\sum_{n=-\infty}^\infty c_n e^{2n\pi i x}
+        \end{equation}
+        を持つ。
+        係数$c_n$は，
+        \begin{equation}
+            c_n=\int_0^1 dx\ \fun{g}{x} e^{-2\pi i nx}
+            = \sum_{m=-\infty}^\infty \int_0^1 dx\ \fun{f}{x+m}e^{-2\pi i nx}
+        \end{equation}
+        である。
+        各$m$について，$x+m\mapsto x'$とすると，区間は$\squ{0,1}\mapsto\squ{m,m+1}$となり，複素指数関数の周期性から，$e^{-2\pi i \spare{x'-m}}=e^{-2\pi i nx'}$である。
+        $m$について和を取ると，
+        \begin{align}
+            c_n
+            &=\sum_{m=-\infty}^\infty \int_0^1 dx\ \fun{f}{x+m}e^{-2 \pi i n x}
+            \\
+            &=\sum_{m=-\infty}^\infty \int_m^{m+1} dx'\ \fun{f}{x'}e^{-2\pi i nx'}
+            \\
+            &=\int_{-\infty}^\infty dx\ \fun{f}{x}e^{-2\pi i n x}
+            \\
+            &=\fun{\tilde{f}}{n}
+        \end{align}
+        となる。
+        これより，
+        \begin{equation}
+            \fun{g}{x}=\sum_{m=-\infty}^\infty \fun{f}{x+m}=\sum_{n=-\infty}^\infty \fun{\tilde{f}}{n}e^{-2\pi i nx}
+        \end{equation}
+        を得る。
+    \end{proof}
+\end{thm}
+
+\begin{cor}[Poisson和公式]
+    Poisson和公式において，$x=0$とすれば，
+    \begin{equation}
+        \sum_{m=-\infty}^\infty \fun{f}{m}=\sum_{n=-\infty}^\infty \fun{\tilde{f}}{n}
+    \end{equation}
+    となる。
+    この式をPoisson和公式と呼ぶことが多い。
+\end{cor}
+
+\subsection{coth, cosechの級数展開}
+\begin{eg}[$\fun{\coth}{\pi x}$の無限級数展開]\label{eg:Poisson-coth}
+    $\fun{f}{x}\coloneqq e^{-2\pi a\abs{x}}$として，Poisson和公式を適用する。
+    $f$のFourier変換は，
+    \begin{align}
+        \fun{\tilde{f}}{\xi}&=\int_{-\infty}^\infty dx\ e^{-2\pi a\abs{x}}e^{2\pi i \xi x}
+        \\
+        &=\int_{-\infty}^0 dx\ e^{2\pi\spare{a-i\xi}x}
+        +\int_0^\infty dx\ e^{-2\pi\spare{a+i\xi}x}
+        \\
+        &=\dfrac{1}{2\pi}\pare{\dfrac{1}{a-i\xi}+\dfrac{1}{a+i\xi}}
+        \\
+        &=\dfrac{a}{\pi}\cdot\dfrac{1}{\xi^2+a^2}
+    \end{align}
+    となる。
+    Poisson和公式の左辺は，
+    \begin{align}
+        \sum_{m=-\infty}^\infty \fun{f}{m}
+        &=\sum_{m=-\infty}^{-1}e^{2\pi a m}
+        + 1
+        + \sum_{m=1}^\infty e^{2\pi a m}
+        \\
+        &= 1 + 2\sum_{m=1}^\infty e^{-2\pi am}
+        = 1 + \dfrac{2e^{-2\pi a}}{1-e^{-2\pi a}}
+        \\
+        &=\dfrac{e^{\pi a}+e^{-\pi a}}{e^{\pi a}-e^{-\pi a}}=\fun{\coth}{\pi a}
+    \end{align}
+    となるから，右辺と比較して，
+    \begin{equation}
+        \fun{\coth}{\pi a}=\sum_{m=-\infty}^\infty \dfrac{a}{\pi}\cdot\dfrac{1}{m^2+a^2}
+    \end{equation}
+    を得る。
+    あるいは，
+    \begin{equation}
+        \sum_{m=1}^\infty \dfrac{1}{m^2+a^2}=\dfrac{\pi}{2a}\fun{\coth}{\pi a}-\dfrac{1}{a^2}
+    \end{equation}
+    と書き直すこともできる。
+\end{eg}
+
+\begin{eg}[$\fun{\cosech}{\pi a}$の無限級数展開]\label{eg:cosech}
+    例\ref{eg:Poisson-coth}と同じく$\fun{f}{x}=e^{-2\pi a\abs{x}}$として，一般化されたPoisson和公式で$x=\frac{1}{2}$とすることで，
+    \begin{equation}
+        \sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n^2+a^2}
+        =\dfrac{1}{2a^2}-\dfrac{\pi}{2a}\fun{\cosech}{\pi a}
+    \end{equation}
+    を得ることもできる。
+\end{eg}
+
+\begin{cor}
+    以下が成立する：
+    \begin{equation}
+        \sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n^3}\fun{\cosech}{\pi n}=\dfrac{\pi^3}{360}
+    \end{equation}
+    
+    \begin{proof}
+        例\ref{eg:cosech}で述べた$\fun{\cosech}{\pi n}$に関する和公式：
+        \begin{equation}
+            \sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n^2+m^2}=\dfrac{1}{2m^2}-\dfrac{\pi}{2m}\fun{\cosech}{\pi m}
+        \end{equation}
+        の両辺を$\pare{-1}^{m-1}m^2$で割って，$m=1,2,\dots$で足し合わせると，左辺は，
+        \begin{align}
+            &\sum_{m=1}^\infty \dfrac{\pare{-1}^{m-1}}{m^2}\sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n^2+m^2}
+            \\
+            &=\sum_{n=1}^\infty\sum_{m=1}^\infty \dfrac{1}{n^2}\pare{\dfrac{1}{m^2}-\dfrac{1}{m^2+n^2}}
+            \\
+            &=\sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n^2}\sum_{m=1}^\infty \pare{\dfrac{\pare{-1}^{m-1}}{m^2}-\dfrac{\pare{-1}^{m-1}}{m^2+n^2}}
+            \\
+            &=\pare{\sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n^2}}^2-\sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n^2}\pare{\dfrac{1}{2n^2}-\dfrac{\pi}{2n}\fun{\cosech}{\pi n}}
+            \\
+            &=\pare{\dfrac{\pi^2}{12}}^2-\dfrac{1}{2}\sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n^4}+\dfrac{\pi}{2}\sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n^3}\fun{\cosech}{\pi n}
+            \\
+            &=\dfrac{\pi^4}{144}-\dfrac{7\pi^4}{1440}
+            +\dfrac{\pi}{2}\sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n^3}\fun{\cosech}{\pi n}
+            \\
+            &=\dfrac{3\pi^4}{1440}+\dfrac{\pi}{2}\sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n^3}\fun{\cosech}{\pi n}
+        \end{align}
+        となり，右辺は，
+        \begin{align}
+            &\dfrac{1}{2}\sum_{m=1}^\infty \dfrac{\pare{-1}^{m-1}}{m^4}-\dfrac{\pi}{2}\sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n^3}\fun{\cosech}{\pi n}
+            \\
+            &=\dfrac{7\pi^4}{1440}
+            -\dfrac{\pi}{2}\sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n^3}\fun{\cosech}{\pi n}
+        \end{align}
+        となる。
+        但し，
+        \begin{equation}
+            \sum_{n=1}^\infty \frac{\pare{-1}^{n-1}}{n^2}=\frac{\pi^2}{12},\
+            \sum_{n=1}^\infty \frac{\pare{-1}^{n-1}}{n^4}=\frac{7\pi^4}{720}
+        \end{equation}
+        を用いた。
+        これらは，Riemann zeta関数$\fun{\zeta}{z}$を用いて一般に，
+        \begin{equation}
+            \sum_{n=1}^\infty \frac{\pare{-1}^{n-1}}{n^z}=\pare{1-2^{-z}}\fun{\zeta}{z}
+        \end{equation}
+        と書けて，命題\ref{thm:RiemannZeta-2n}から
+        \begin{equation}
+            \fun{\zeta}{2}=\frac{\pi^2}{6},\
+            \fun{\zeta}{4}=\frac{\pi^4}{90}
+        \end{equation}
+        であることを用いると導かれる。
+
+        これより，
+        \begin{equation}
+            \sum_{n=1}^\infty \dfrac{\pare{-1}^{n-1}}{n^3}\fun{\cosech}{\pi n}=\dfrac{\pi^3}{360}
+        \end{equation}
+        を得る。
+    \end{proof}
+\end{cor}
+
+\subsection{正弦関数の無限積表示}
+\begin{thm}[正弦関数の無限積展開]\label{thm:Poisson-sin}
+    \begin{equation}
+        \fun{\sin}{x}= x\prod_{n=1}^\infty \pare{1-\dfrac{x^2}{n^2\pi^2}}
+    \end{equation}
+    \begin{proof}
+        $\coth$の展開公式\ref{eg:Poisson-coth}で，$\fun{\coth}{ix}=-i\fun{\cot}{x}$を用いることで，
+        \begin{equation}
+            \pi\fun{\cot}{\pi x}=\dfrac{1}{x}+\sum_{n=1}^\infty\dfrac{2x}{x^2-n^2}
+        \end{equation}
+        を得る。
+        両辺微分して符号を入れ替えると，
+        \begin{equation}
+            \dfrac{\pi^2}{\fun{\sin^2}{\pi x}}
+            =\dfrac{1}{x^2}+\sum_{n=1}^\infty \pare{
+                \dfrac{1}{\pare{x-n}^2}+\dfrac{1}{\pare{x+n}^2}
+            }
+        \end{equation}
+        を得る。
+        ここで，
+        \begin{equation}
+            \fun{f}{x}\coloneqq \pi x \prod_{n=1}^\infty \pare{1-\dfrac{x^2}{n^2}}
+        \end{equation}
+        と定めて両辺の対数微分を取ると，
+        \begin{equation}
+            \dfrac{\fun{f'}{x}}{\fun{f}{x}}=\dfrac{1}{x}+\sum_{n=1}^\infty\dfrac{2x}{x^2-n^2}=\pi\fun{\cot}{\pi x}
+        \end{equation}
+        が分かる。
+        両辺積分すると，
+        \begin{equation}
+            \fun{f}{x}=\pi x \prod_{n=1}^\infty \pare{1-\dfrac{x^2}{n^2}}= \fun{\sin}{\pi x}
+        \end{equation}
+        が従う\footnote{積分定数を決める必要があるが，例えば$x=\frac{1}{2}$における値としてWallisの公式：$\frac{2}{\pi}=\prod_{n=1}^\infty \pare{1-\frac{1}{4n^2}}$を用いればよい。}。
+        よって，
+        \begin{equation}
+            \fun{\sin}{x}=x\prod_{n=1}^\infty\pare{1-\dfrac{x^2}{n^2\pi^2}}
+        \end{equation}
+        である。
+    \end{proof}
+\end{thm}
+
+
+
+\subsection{Theta変換公式}
+\begin{thm}[Theta変換公式]
+    $\alpha$, $t$を正の実数とするとき，
+    \begin{equation}
+        \sum_{n=-\infty}^\infty \fun{\exp}{-\pi t\pare{n+\alpha}^2}
+        =\dfrac{1}{\sqrt{t}}\sum_{n=-\infty}^\infty \fun{\exp}{2\pi i n\alpha -\dfrac{n^2\pi}{t}}
+    \end{equation}    
+    が成立する。
+
+    \begin{proof}
+        $\fun{f}{x}\coloneqq \fun{\exp}{-\pi t \spare{x+\alpha}^2 }$に対してPoisson和公式を適用する。
+        $f$のFourier変換：
+        \begin{equation}
+            \fun{\tilde{f}}{\xi}=\int_{-\infty}^\infty dx\ e^{-\pi t\pare{x+\alpha}^2}e^{2\pi i \xi x}
+        \end{equation}
+        を求める。
+        被積分関数の指数を平方完成すると，
+        \begin{align}
+            -\pi t \pare{x+\alpha}^2-2\pi i \xi x
+            &= -\pi t \bra{
+                x^2+2\pare{\alpha+\dfrac{i\xi}{t}}x+\alpha^2
+            }
+            \\
+            &=-\pi t \pare{x+\alpha+\dfrac{i\xi}{t}}-\pi\pare{\dfrac{\xi^2}{t}-2i \alpha \xi}
+        \end{align}
+        となるので，Gauss積分（命題\ref{prop:gamma-Gauss積分}）に帰着させて，
+        \begin{align}
+            \fun{\tilde{f}}{\xi}
+            &=\fun{\exp}{2\pi i \alpha \xi -\dfrac{\pi \xi^2}{t}}\int_{-\infty}^\infty dx\ \fun{\exp}{-\pi t\pare{x+\alpha+\dfrac{i\xi}{t}}^2}
+            \\
+            &=\fun{\exp}{2\pi i \alpha \xi -\dfrac{\pi \xi^2}{t}}\cdot \sqrt{\pi}\cdot\dfrac{1}{\sqrt{\pi t}}
+            \\
+            &=\dfrac{1}{\sqrt{t}}\fun{\exp}{2\pi i \alpha \xi-\dfrac{\pi\xi^2}{t}}
+        \end{align}
+        となる。
+        Poisson和公式から，
+        \begin{equation}
+            \sum_{n=-\infty}^\infty \fun{\exp}{-\pi t\pare{n+\alpha}^2}
+        =\dfrac{1}{\sqrt{t}}\sum_{n=-\infty}^\infty \fun{\exp}{2\pi i n\alpha -\dfrac{n^2\pi}{t}}
+        \end{equation}
+        である。
+    \end{proof}
+\end{thm}
+
+\begin{cor}[Theta関数]\label{cor:Poisson-Theta変換公式}
+    Theta関数$\fun{\vartheta}{x}$を，
+    \begin{equation}
+        \fun{\vartheta}{x}\coloneqq \sum_{n=1}^\infty e^{-\pi n^2 x} \label{eq:Poisson-Theta関数}
+    \end{equation}
+    で定めると，
+    \begin{equation}
+        1+2\fun{\vartheta}{\dfrac{1}{x}}=\sqrt{x}\pare{1+2\fun{\vartheta}{x}}
+    \end{equation}
+    が成立する。
+    \begin{proof}
+        Theta変換公式をTheta関数で書き直せば得られる。
+    \end{proof}
+\end{cor}
+
+Theta関数は楕円関数と関係があり，数論でも重要な役割を果たす。
+詳しくは\cite[小山]{koyama}を参照。
+\end{document}

@@ -1,0 +1,37 @@
+\RequirePackage[l2tabu, orthodox]{nag}
+% \documentclass[a4paper,draft]{ltjsarticle} % 下書き用
+\documentclass[a4paper]{ltjsarticle} % 清書用
+
+\usepackage{preamble}
+
+\title{超幾何関数}
+\author{Twitter : @FugaciousShade}
+\date{最終更新日：\today}
+
+
+% \parindent = 0pt
+\allowdisplaybreaks[1] % 数式途中の改ページを許すかどうか(0:許さない, 1~3:値が大きいほど規制がゆるい)
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\input{introduction.tex}
+\input{GaussHypergeomatricSeries.tex}
+\input{GaussHypergeometricODE.tex}
+
+\appendix
+\def\thesection{\Alph{section}}
+\input{GammaFunction}
+\input{PochhammerSymbol.tex}
+\input{ODE.tex}
+\input{PoissonSummation.tex}
+\input{Polylogarithm.tex}
+\input{RiemannZetaFunction.tex}
+\input{HilbertSpace.tex}
+\input{EulerOperator.tex}
+
+\input{Reference.tex}
+
+
+\end{document}

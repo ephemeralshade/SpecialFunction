@@ -1,0 +1,653 @@
+\documentclass[a4paper,draft]{ltjsarticle}
+\usepackage{preamble}
+
+\begin{document}
+
+\section{Gamma関数}\label{sec:gamma}
+Gamma関数は階乗$n!$の一般化としても知られているが，特殊関数の関数等式を結びつける際にも重宝する。
+以降の記述の多くは\cite{nkswtr}を参考にしているが，\cite{nkswtr}の定理を出発点（定義）にして，\cite{nkswtr}の定義を定理として導くようなスタイルを採った。
+それぞれ議論の流れが異なるので，\cite{nkswtr}も併せて参照されたい。
+
+\subsection{無限積表示}
+\begin{defi}[Gamma関数]
+    Gamma関数を以下で定義する：
+    \begin{equation}
+        \fun{\Gamma}{z}\coloneqq \dfrac{e^{-\gamma z}}{z}\prod_{n=1}^\infty\pare{\dfrac{n}{z+n}e^{\frac{z}{n}}}
+    \end{equation}
+    $\gamma$はEuler定数\footnote{Euler-Mascheroni定数と呼ばれることもある。}で，
+    \begin{equation}
+        \gamma\coloneqq \limn\pare{\sum_{k=1}^n\dfrac{1}{k}-\ln n}=0.577215664901532860606512090082\cdots
+    \end{equation}
+    である\footnote{現在，Euler定数$\gamma$は無理数であるかどうかすら不明らしい。}。
+\end{defi}
+
+一般に，Gamma関数は積分を用いて定義されることが多い。
+上のような無限積表示で定めておくと，Gamma関数の極の位置$z=-n$ ($n\in\N$)が分かりやすい。
+また，対数微分を計算しやすい。
+
+\begin{prob}\label{prob-gamma:digamma1}
+    Gamma関数の対数微分：
+    \begin{equation}
+        \fun{\psi}{z}\coloneqq \diff{}{z}\fun{\ln}{\fun{\Gamma}{z}}
+    \end{equation}
+    をdigamma関数と呼ぶ。
+    \begin{enumerate}[label=(\arabic*)]
+        \item Gamma関数の定義式の対数を取ったものを項別微分することにより，
+        \begin{equation}
+            \fun{\psi}{z}=-\gamma+\sum_{n=0}^\infty \pare{\frac{1}{n+1}-\frac{1}{n+z}}
+        \end{equation}
+        が成立することを示せ。
+
+        \item $\fun{\ln}{1+x}$の冪級数展開に$x=1$を代入して得られる等式：
+        \begin{equation}
+            \fun{\ln}{2}=\sum_{n=1}^\infty \frac{\pare{-1}^{n-1}}{n}
+        \end{equation}
+        を用いて，
+        \begin{equation}
+            \fun{\psi}{\frac{1}{2}}=-\gamma-2\fun{\ln}{2}
+        \end{equation}
+        を示せ。
+        但し，途中で和の順序を入れ替える必要がある。
+    \end{enumerate}
+\end{prob}
+
+
+\begin{prop}[Gamma関数のEuler乗積表示]\label{prop:gamma-euler}
+    \begin{equation}
+        \fun{\Gamma}{z}=\limn n^z n! \prod_{k=0}^n\dfrac{1}{z+k}
+    \end{equation}
+    が成立する。
+    \begin{proof}
+        Gamma関数の逆数を変形していくと，
+        \begin{align}
+            \dfrac{1}{\fun{\Gamma}{z}}
+            = & ze^{\gamma z}\prod_{k=1}^\infty\pare{1+\dfrac{z}{k}}e^{-z/k}
+            \\
+            = & z\limn e^{z\pare{-\ln n+\sum_{k=1}^n 1/k}}\prod_{k=1}^n\pare{1+\dfrac{z}{k}}e^{-z/k}
+            \\
+            = & z\limn n^{-z}\prod_{k=1}^n\pare{1+\dfrac{z}{k}}
+            \\
+            = & \limn\dfrac{1}{n^z n!}\prod_{k=0}^n\pare{z+k}
+        \end{align}
+        となる。
+        これより，
+        \begin{equation}
+            \fun{\Gamma}{z}=\limn n^z n! \prod_{k=0}^n\dfrac{1}{z+k}
+        \end{equation}
+        である。
+    \end{proof}
+\end{prop}
+
+これを用いて$\fun{\Gamma}{1}$の値を計算してみると，
+\begin{align}
+    \fun{\Gamma}{1}&=\limn n^1 n!\prod_{k=0}^n\dfrac{1}{1+k}
+    \\
+    &=\limn\dfrac{n\cdot n!}{\pare{n+1}!}
+    \\
+    &=\limn\dfrac{n}{n+1}=1
+\end{align}
+を得る。
+
+\begin{prop}[階乗の一般化]\label{prop:階乗の一般化}
+    \begin{equation}
+        z\fun{\Gamma}{z}=\fun{\Gamma}{z+1}
+    \end{equation}
+    が成立する。
+    特に，$n\in\N$に対して，
+    \begin{equation}
+        \fun{\Gamma}{n+1}=n!
+    \end{equation}
+    である。
+    \begin{proof}
+        \begin{align}
+            \fun{\Gamma}{z+1}&=\limn n^{z+1}n!\prod_{k=0}^n\dfrac{1}{z+1+k}
+            \\
+            &=\limn z\cdot \dfrac{n}{n+z+1}\cdot n^z n!\prod_{k=0}^n \dfrac{1}{z+k}
+            \\
+            &=z\limn n^z n!\prod_{k=0}^n \dfrac{1}{z+k}
+            \\
+            &=z\fun{\Gamma}{z}
+        \end{align}
+        よって$z\fun{\Gamma}{z}=\fun{\Gamma}{z+1}$である。
+        $\fun{\Gamma}{1}=1=0!$と，数学的帰納法によって，$n\fun{\Gamma}{n}=\fun{\Gamma}{n+1}=n!$が言える。
+    \end{proof}
+\end{prop}
+
+
+\subsection{相反公式}
+\begin{thm}[Gamma関数の相反公式]\label{thm:Gamma-相反公式}
+    \begin{equation}
+        \fun{\Gamma}{z}\fun{\Gamma}{1-z}=\dfrac{\pi}{\fun{\sin}{\pi z}}
+    \end{equation}
+    が成立する。
+    \begin{proof}
+        \begin{align}
+            \fun{\Gamma}{z}\fun{\Gamma}{1-z}
+            & = -z\fun{\Gamma}{z}\fun{\Gamma}{-z}
+            \\
+            & = -z\pare{\dfrac{e^{\gamma z}}{z}\prod_{n=1}^\infty\pare{\dfrac{n}{n+z}e^{z/n}}}\pare{\dfrac{e^{-\gamma z}}{-z}\prod_{n=1}^\infty\pare{\dfrac{n}{n-z}e^{-z/n}}}
+            \\
+            & = \dfrac{1}{z}\prod_{n=1}^\infty\pare{\dfrac{n^2}{n^2-z^2}}
+            = \dfrac{\pi}{\fun{\sin}{\pi z}}
+        \end{align}
+        但し，最後の等号で正弦関数の無限積展開の公式(定理\ref{thm:Poisson-sin})から導かれる，
+        \begin{equation}
+            \fun{\sin}{\pi z}=\pi z\prod_{n=1}^\infty \pare{1-\dfrac{z^2}{n^2}}
+        \end{equation}
+        を用いている。
+    \end{proof}
+\end{thm}
+
+相反公式で$z=\frac{1}{2}$とすることで$\fun{\Gamma}{\frac{1}{2}}^2=\pi$となる。
+定義式から$\fun{\Gamma}{\frac{1}{2}}>0$であるから，
+\begin{equation}
+    \fun{\Gamma}{\dfrac{1}{2}}=\sqrt{\pi}
+    \label{eq:gamma-Gamma(1/2)}
+\end{equation}
+が分かる。
+これはGauss積分の値を計算するときにも使える。
+
+\begin{prob}\label{prob-gamma:相反公式-cos}
+    以下の等式を証明せよ：
+    \begin{equation}
+        \fun{\Gamma}{\frac{1}{2}-z}\fun{\Gamma}{\frac{1}{2}+z}=\frac{\pi}{\fun{\cos}{\pi z}}
+    \end{equation}
+\end{prob}
+
+\begin{prob}\label{prob-gamma:半整数におけるGamma関数の値}
+    $n$を自然数とするとき，
+    \begin{equation}
+        \fun{\Gamma}{n+\frac{1}{2}}=\frac{\pare{2n}!}{2^{2n}n!}\sqrt{\pi}
+    \end{equation}
+    が成立することを示せ。
+\end{prob}
+
+\begin{prop}[Gamma関数の極と留数]
+    $z=-n$ ($n\in\N$)はGamma関数$\fun{\Gamma}{z}$の1位の極であり，その留数は$\frac{\pare{-1}^n}{n!}$である。
+    \begin{proof}
+        Gamma関数の相反公式から，
+        \begin{align}
+            \lim_{z\to -n}\pare{z+n}\fun{\Gamma}{z}
+            &=\lim_{z\to -n}\frac{1}{\fun{\Gamma}{1-z}}\cdot\frac{\pi\pare{z+n}}{\fun{\sin}{\pi z}}
+            \\
+            &=\frac{1}{\fun{\Gamma}{1+n}}\cdot \lim_{z\to -n} \frac{\pi}{\pi\fun{\cos}{\pi z}}
+            \\
+            &=\frac{1}{n!}\cdot \frac{1}{\fun{\cos}{n \pi}}
+            \\
+            &=\frac{\pare{-1}^n}{n!}
+        \end{align}
+        である。
+    \end{proof}
+\end{prop}
+
+
+\subsection{積分表示}
+\begin{thm}[Gamma関数の積分表示\footnote{この定理の証明には\cite{takenoko}における\S1.2の議論を参考にした。\cite{takenoko}はGamma関数の定義に積分表示を採用しているので，本書とは前提と結論がちょうど入れ替わっている。\cite{takenoko}のスタイルの方が一般的なので，そちらも参照されたい。}]\label{thm:Gamma-積分表示}
+    $\re{z}>0$であるような複素数$z$について，
+    \begin{equation}
+        \fun{\Gamma}{z}=\int_0^\infty dt\ t^{z-1}e^{-t}
+    \end{equation}
+    が成立する。
+    \begin{proof}
+        自然数$n$に対して，
+        \begin{equation}
+            \fun{G_n}{z}\coloneqq \int_0^n dt\ t^{z-1}\pare{1-\dfrac{t}{n}}^n
+        \end{equation}
+        と置く。
+        $t=nu$とすれば，
+        \begin{equation}
+            \fun{G_n}{z}=n^z\int_0^1 du\ u^{z-1} \pare{1-u}^n 
+        \end{equation}
+        となる。
+        \begin{equation}
+            \fun{g_n}{z}\coloneqq \int_0^1 du\ u^{z-1} \pare{1-u}^n 
+        \end{equation}
+        とすると，$n\geq 1$については
+        \begin{align}
+            \fun{g_n}{z}&=\int_0^1 du\ u^{z-1}\pare{1-u}^n
+            \\
+            &=\squ{\dfrac{u^z}{z}\pare{1-u}^n}_0^1
+            + \dfrac{n}{z} \int_0^1 du\ u^z\pare{1-u}^{k-1}
+            \\
+            &=\dfrac{n}{z}\fun{g_{n-1}}{z}
+        \end{align}
+        となる。
+        $n=0$のときは，
+        \begin{equation}
+            \fun{g_0}{z}=\int_0^1du\ u^{z-1}=\dfrac{1}{z}
+        \end{equation}
+        となるので，
+        \begin{equation}
+            \fun{g_n}{z}=n!\prod_{k=0}^n\dfrac{1}{z+k}
+        \end{equation}
+        が従う。
+        これより，
+        \begin{equation}
+            \fun{G_n}{z}=n^zn!\prod_{k=0}^n\dfrac{1}{z+k}
+        \end{equation}
+        であって，命題\ref{prop:gamma-euler}から，
+        \begin{equation}
+            \limn \fun{G_n}{z}=\fun{\Gamma}{z}
+        \end{equation}
+        である。
+        他方，$\fun{G_n}{z}$の定義から，
+        \begin{align}
+            \fun{\Gamma}{z}&=\limn \fun{G_n}{z}
+            \\
+            &=\limn \int_0^n dt\ t^{z-1}\pare{1-\dfrac{t}{n}}^n
+            %\\
+            %&=\int_0^n dt\ t^{z-1} \limn \pare{1-\dfrac{t}{n}}^n
+            \\
+            &=\int_0^\infty dt\ t^{z-1}e^{-t}
+        \end{align}
+        となる。
+        %但し，積分の極限を取る際に$\re{z}>0$を用いた。
+    \end{proof}
+\end{thm}
+
+\begin{prob}\label{prob-gamma:digamma2}
+    問\ref{prob-gamma:digamma1}で定義された$\fun{\psi}{z}$を用いると，
+    \begin{equation}
+        \fun{\Gamma'}{z}=\fun{\Gamma}{z}\fun{\psi}{z}
+    \end{equation}
+    と表せることを用いて，
+    \begin{equation}
+        \fun{\Gamma'}{1}=\int_0^\infty dt\ e^{-t}\fun{\ln}{t}=-\gamma
+    \end{equation}
+    を証明せよ。
+\end{prob}
+
+\begin{prop}[Gauss積分]\label{prop:gamma-Gauss積分}
+    以下が成立する：
+    \begin{equation}
+        \int_{-\infty}^\infty dx\ e^{-x^2}=\sqrt{\pi}
+    \end{equation}
+    \begin{proof}
+        被積分関数が偶関数であることと，変数変換$x=\sqrt{t}$を用いると，
+        \begin{equation}
+            dx = \frac{t^{-\frac{1}{2}}}{2} dt
+        \end{equation}
+        であるから，
+        \begin{equation}
+            \int_{-\infty}^\infty dx\ e^{-x^2}
+            =2\int_0^\infty dx\ e^{-x^2}
+            =2\int_0^\infty \frac{t^{-\frac{1}{2}}}{2}dt\ e^{-t}
+            =\int_0^\infty dt\ t^{\frac{1}{2}-1}e^{-t}
+            =\fun{\Gamma}{\frac{1}{2}}=\sqrt{\pi}
+        \end{equation}
+        を得る。
+        但し，最後の等号で\eqref{eq:gamma-Gamma(1/2)}式の結果を用いた。
+    \end{proof}
+\end{prop}
+
+\begin{prop}[Gauss積分の一般化 その1]\label{prop:gamma-gauss1}
+    任意の非負整数$n$，正整数$m$，正の実数$a$に対して以下が成立する：
+    \begin{equation}
+        \int_0^\infty dx\ x^n e^{-ax^{m}}=\frac{a^{-\frac{n+1}{m}}}{m}\fun{\Gamma}{\frac{n+1}{m}}
+    \end{equation}
+    \begin{proof}
+        変数変換$t=ax^m$を用いると，$x=a^{-\frac{1}{m}}t^{\frac{1}{m}}$であるから，
+        \begin{equation}
+            dx=\frac{a^{-\frac{1}{m}}t^{-1+\frac{1}{m}}}{m}dt
+        \end{equation}
+        であり，$a>0$を仮定しているから積分区間は変わらないので，
+        \begin{equation}
+            \int_0^\infty dx\ x^n e^{-ax^{m}}
+            =\int_0^\infty \frac{a^{-\frac{1}{m}}t^{-1+\frac{1}{m}}}{m}dt\ a^{-\frac{n}{m}}t^{\frac{n}{m}}e^{-t}
+            =\frac{a^{-\frac{\pare{n+1}}{m}}}{m}\int_0^\infty dt\ t^{\frac{n+1}{m}-1}e^{-t}
+            =\frac{a^{-\frac{n+1}{m}}}{m}\fun{\Gamma}{\frac{n+1}{m}}
+        \end{equation}
+        を得る。
+    \end{proof}
+\end{prop}
+
+\begin{eg}
+    命題\ref{prop:gamma-gauss1}の具体値は表\ref{tab:Gamma-Gauss}に示した。
+\end{eg}
+
+
+
+\begin{prop}[Gauss積分の一般化 その2]
+    $m$を正整数とする。
+    $c_{2m}<0$であるような任意の実数列$\seq{c_n}{0\leq n\leq 2m}$に対して以下が成立する：
+    \begin{align}
+        &\int_{-\infty}^\infty dx\ \fun{\exp}{\sum_{k=0}^{2m} c_k x^k}
+        \\
+        &=\frac{\pare{-c_{2m}}^{-\frac{1}{2m}}e^{c_0}}{m}\sum_{
+            \substack{
+                \pare{a_1,\dots, a_{2m-1}}\in \N^{2m-1}
+                \\
+                a_1+a_3+\cdots+a_{2m-1}\equiv 0\ \pare{\mathrm{mod}.\, 2}
+            }
+        }
+        \fun{\Gamma}{\frac{1}{2m}+\frac{1}{2m}\sum_{k=1}^{2m-1}k a_k}
+        \prod_{\ell = 1}^{2m-1}\frac{c_\ell^{a_\ell} \pare{-c_{2m}}^{-\frac{\ell a_\ell}{2m}}}{a_\ell !}
+    \end{align}
+    \begin{proof}
+        一般形は少々厳めしいが，順に追えばそれぞれは単純な計算である。
+        まずは，非負整数$n$，正整数$m$，正の実数$a$に対して成立する以下の等式を示す：
+        \begin{equation}
+            \int_{-\infty}^\infty dx\ x^{n}e^{-ax^{2m}}=\frac{1+\pare{-1}^n}{2m}a^{-\frac{n+1}{2m}}\fun{\Gamma}{\frac{n+1}{2m}}.
+        \end{equation}
+        $n$が奇数の場合，被積分関数は奇関数なので$0$となり，$n$が偶数の場合は，
+        \begin{equation}
+            \int_{-\infty}^\infty dx\ x^{n}e^{-ax^{2m}}=2\int_0^\infty dx\ x^{n}e^{-ax^{2m}}
+            =2\cdot \frac{a^{-\frac{n+1}{2m}}}{2m}\fun{\Gamma}{\frac{n+1}{2m}}
+        \end{equation}
+        である。
+        但し，命題\ref{prop:gamma-gauss1}で示した結果を用いた。
+        これらを合わせて表記すると，
+        \begin{equation}
+            \int_{-\infty}^\infty dx\ x^{n}e^{-ax^{2m}}=\pare{1+\pare{-1}^n}\int_{0}^\infty dx\ x^{n}e^{-ax^{2m}}=\frac{1+\pare{-1}^n}{2m}a^{-\frac{n+1}{2m}}\fun{\Gamma}{\frac{n+1}{2m}}
+        \end{equation}
+        となる。
+
+        これを用いて主張の式を示す。
+        まず，指数法則により，
+        \begin{equation}
+            \int_{-\infty}^\infty dx\ \fun{\exp}{\sum_{k=0}^{2m} c_k x^k}
+            =e^{c_0}\int_{-\infty}^\infty dx\ e^{c_{2m}x^{2m}}\fun{\exp}{\sum_{k=1}^{2m-1}c_k x^k}
+        \end{equation}
+        である。
+        被積分関数の後半をMaclaurin展開し，多項定理を用いると，
+        \begin{align}
+            &\exp\pare{\sum_{k=1}^{2m-1}c_k x^k}
+            \\
+            &=\sum_{n=0}^\infty\dfrac{1}{n!}\pare{\sum_{k=1}^{2m-1}c_k x^k}^n
+            \\
+            &=\sum_{n=0}^\infty\dfrac{1}{n!}\sum_{a_1+\cdots+a_{2m-1}=n}\dfrac{n!}{a_1!\cdots a_{2m-1}!}(c_1 x)^{a_1}\cdots (c_{2m-1}x^{2m-1})^{a_{2m-1}}
+            \\
+            &=\sum_{(a_1,\ldots,a_{2m-1})\in\N^{2m-1}}
+            \dfrac{
+            c^{a_1}_1\cdots c^{a_{2m-1}}_{2m-1}
+            }{a_1!\cdots a_{2m-1}!}
+            x^{a_1+2a_2+\cdots+(2m-1)a_{2m-1}}
+            \\
+            &=
+            \sum_{(a_1,\ldots,a_{2m-1})\in\N^{2m-1}}
+            x^{a_1+2a_2+\cdots+(2m-1)a_{2m-1}}
+            \prod_{k=1}^{2m-1}\dfrac{c^{a_k}_k}{a_k!}
+        \end{align}
+        となる。
+        これを元の式に代入して積分と和の順序交換を行うと，
+        \begin{align}
+            &\int_{-\infty}^\infty dx\ \fun{\exp}{\sum_{k=0}^{2m}c_kx^k}
+            \\
+            &=e^{c_0}\sum_{\pare{a_1,\ldots,a_{2m-1}}\in\N^{2m-1}}
+            \prod_{k=1}^{2m-1}\dfrac{c_k^{a_k}}{a_k!}
+            \int_{-\infty}^\infty dx\ e^{c_{2m}x^{2m}}x^{a_1+2a_2+\cdots+\pare{2m-1}a_{2m-1}}
+            \\
+            &
+            \begin{aligned}
+            =&e^{c_0}\sum_{\pare{a_1,\ldots,a_{2m-1}}\in\N^{2m-1}}
+            \pare{\prod_{k=1}^{2m-1}\dfrac{c_k^{a_k}}{a_k!}}
+            \dfrac{1+(-1)^{a_1+2a_2+\cdots+\pare{2m-1}a_{2m-1}}}{2m}
+            \\
+            &\times
+            \pare{-c_{2m}}^{-(1+a_1+2a_2+\cdots+(2m-1)a_{2m-1})/2m}
+            \\
+            &\times
+            \fun{\Gamma}{\dfrac{1+a_1+2a_2+\cdots+(2m-1)a_{2m-1}}{2m}}
+            \end{aligned}
+        \end{align}
+        のようになる。
+
+        途中の因子の分子にある$1+(-1)^{a_1+2a_2+\cdots+\pare{2m-1}a_{2m-1}}$に着目すると，$a_1+2a_2+\cdots+(2m-1)a_{2m-1}$が奇数だと$0$になるため，これが偶数になる部分だけ取ればよく，
+        \begin{align}
+            &\sum_{k=1}^{2m-1} ka_k \equiv 0 \pmod{2}
+            \\
+            \Longleftrightarrow\ 
+            &\sum_{k=1}^m \pare{2k-1}a_{2k-1}+\sum_{\ell=1}^{m-1}2\ell a_{2\ell}\equiv 0 \pmod{2}
+            \\
+            \Longleftrightarrow\ 
+            &\sum_{k=1}^{m} a_{2k-1}\equiv 0 \pmod{2}
+        \end{align}
+        が条件である。
+        この条件の下では$1+(-1)^{a_1+2a_2+\cdots+(2m-1)a_{2m-1}}=2$であるから，それを適用し，その他の因子も総和・相乗記号を用いて書き直せば，
+        \begin{align}
+            &\int_{-\infty}^\infty dx\ \fun{\exp}{\sum_{k=0}^{2m} c_k x^k}
+            \\
+            &=\frac{\pare{-c_{2m}}^{-\frac{1}{2m}}e^{c_0}}{m}\sum_{
+                \substack{
+                    \pare{a_1,\dots, a_{2m-1}}\in \N^{2m-1}
+                    \\
+                    a_1+a_3+\cdots+a_{2m-1}\equiv 0\ \pare{\mathrm{mod}.\, 2}
+                }
+            }
+            \fun{\Gamma}{\frac{1}{2m}+\frac{1}{2m}\sum_{k=1}^{2m-1}k a_k}
+            \prod_{\ell = 1}^{2m-1}\frac{c_\ell^{a_\ell} \pare{-c_{2m}}^{-\frac{\ell a_\ell}{2m}}}{a_\ell !}
+        \end{align}
+        が得られる。
+    \end{proof}
+\end{prop}
+
+
+
+
+
+
+\subsection{Beta関数}
+\begin{defi}[Beta関数]
+    Beta関数$\fun{B}{z,w}$を以下のように定義する\footnote{一般には，Beta関数も積分を用いて定義されることが多い。}：
+    \begin{equation}
+        \fun{B}{z,w}\coloneqq\dfrac{\fun{\Gamma}{z}\fun{\Gamma}{w}}{\fun{\Gamma}{z+w}}
+    \end{equation}
+\end{defi}
+
+\begin{comment}
+    後のために$\fun{B}{z,1}$の値を求めておくと，
+    \begin{equation}
+        \fun{B}{z,1}=\dfrac{\fun{\Gamma}{z}\fun{\Gamma}{1}}{\fun{\Gamma}{z+1}}=\dfrac{\fun{\Gamma}{z}\cdot 1}{z\fun{\Gamma}{z}}=\dfrac{1}{z}
+    \end{equation}
+    となる。
+\end{comment}
+
+\begin{thm}[Beta関数の積分表示]
+    $\re{z}$, $\re{w}>0$であるような複素数$z$, $w$に対して，
+    \begin{equation}
+        \fun{B}{z,w}=\int_0^1 dt\ t^{z-1}\pare{1-t}^{w-1}
+    \end{equation}
+    が成立する。
+    \begin{proof}
+        Beta関数の定義と，Gamma関数の積分表示を用いて，
+        \begin{align}
+            \fun{\Gamma}{z+w}\fun{B}{z,w}
+            &=\fun{\Gamma}{z}\fun{\Gamma}{w}
+            \\
+            &=\pare{\int_0^\infty dt\ t^{z-1}e^{-t}}\pare{\int_0^\infty du\ u^{w-1}e^{-u}}
+            \\
+            &=\int_0^\infty dt\int_0^\infty du\ t^{z-1}u^{w-1}e^{-t-u}\quad\pare{u\coloneqq x-t}
+            \\
+            &=\int_0^\infty dt\int_t^\infty dx\ t^{z-1}\pare{x-t}^{w-1}e^{-x}
+            \\
+            &=\int_0^\infty dx\int_0^x dt\ t^{z-1}\pare{x-t}^{w-1}e^{-x}\quad\pare{t\coloneqq ux}
+            \\
+            &=\int_0^\infty dx\int_0^1 du\ x\cdot x^{z-1}u^{z-1}x^{w-1}\pare{1-u}^{w-1}e^{-x}
+            \\
+            &=\pare{\int_0^\infty dx\ x^{z+w-1}e^{-x}}\pare{\int_0^1 du\ u^{z-1}\pare{1-u}^{w-1}}
+            \\
+            &=\fun{\Gamma}{z+w}\int_0^1 du\ u^{z-1}\pare{1-u}^{w-1}
+        \end{align}
+        である。
+        Gamma関数は零点を持たないから，
+        \begin{equation}
+            \fun{B}{z,w}=\int_0^1 dt\ t^{z-1}\pare{1-t}^{w-1}
+        \end{equation}
+        である。
+    \end{proof}
+\end{thm}
+
+\begin{prob}\label{prob-gamma:ベータ関数の積分公式}
+    Beta関数の積分表示を利用した例題をいくつか挙げる。
+    \begin{enumerate}[label=(\arabic*)]
+        \item $m$, $n$を自然数，$a$, $b$を実数とするとき，
+        \begin{equation}
+            \int_a^b dx\, \pare{x-a}^m \pare{b-x}^n = \frac{m!n!}{\pare{m+n+1}!}\pare{b-a}^{m+n+1}
+        \end{equation}
+        が成立することを示せ。
+
+        \item 複素数$z$, $w$が$\re{z}>0$, $\re{w}>0$を満たすとき，
+        \begin{equation}
+            \fun{B}{z,w}=2\int_0^{\frac{\pi}{2}}d\theta\ \pare{\fun{\cos}{\theta}}^{2z-1}\pare{\fun{\sin}{\theta}}^{2w-1}
+        \end{equation}
+        が成立することを示せ。
+
+        \item 上の結果を用いて，$n$を自然数とするとき，
+        \begin{equation}
+            \int_0^\pi d\theta\ \pare{\fun{\sin}{\theta}}^{2n}
+        \end{equation}
+        を求めよ。
+    \end{enumerate}
+\end{prob}
+
+\begin{prob}
+    $p$, $q$を正の実数とし，以下の積分：
+    \begin{equation}
+        \fun{I}{p,q}\coloneqq \int_0^\infty \frac{dx}{\pare{1+x^p}^q}
+    \end{equation}    
+    について考える。
+    \begin{enumerate}[label=(\arabic*)]
+        \item $\fun{I}{p,q}$の収束条件は$pq>1$であることを示せ。
+        \item $\fun{I}{p,q}$は，Beta関数を用いて，
+        \begin{equation}
+            \fun{I}{p,q}=\frac{1}{p}\fun{B}{q-\frac{1}{p}, \frac{1}{p}}
+        \end{equation}
+        と表せることを示せ。
+        \item $q=1$のとき，
+        \begin{equation}
+            \fun{I}{p,1}=\int_0^\infty \frac{dx}{1+x^p}=\frac{\pi}{p\fun{\sin}{\frac{\pi}{p}}}
+        \end{equation}
+        が成立することを示せ。
+    \end{enumerate}
+\end{prob}
+
+\subsection{倍角公式}
+\begin{thm}[Legendreの倍角公式]\label{thm-Gamma-Legendreの倍角公式}
+    \begin{equation}
+        \fun{\Gamma}{2z}=\dfrac{2^{2z-1}}{\sqrt{\pi}}\fun{\Gamma}{z}\fun{\Gamma}{z+\dfrac{1}{2}}
+    \end{equation}
+    \begin{proof}
+        関数$f$を，
+        \begin{equation}
+            \fun{f}{z}\coloneqq \int_{-1}^1 dt\ \pare{1-t^2}^{z-1}
+        \end{equation}
+        と定める。
+        右辺の積分を2通りの方法で計算する。
+        \begin{enumerate}[label=(\roman*)]
+            \item 被積分関数は偶関数であるから，
+            \begin{equation}
+                \fun{f}{z}\coloneqq 2\int_{0}^1 dt\ \pare{1-t^2}^{z-1}
+            \end{equation}
+            となる。
+            $t=\sqrt{u}$と置換すると，
+            \begin{align}
+                \fun{f}{z}&=2\int_0^1 du\ \pare{1-u}^{z-1}\cdot 2^{-1}u^{-\frac{1}{2}}
+                \\
+                &=\fun{B}{z,\frac{1}{2}}=\dfrac{\fun{\Gamma}{z}\fun{\Gamma}{\frac{1}{2}}}{\fun{\Gamma}{z+\frac{1}{2}}}
+                \\
+                &=\dfrac{\sqrt{\pi}\fun{\Gamma}{z}}{\fun{\Gamma}{z+\frac{1}{2}}}
+            \end{align}
+
+            \item $x=2u-1$と置換すると，$1-x^2=4u\pare{1-u}$であるから，
+            \begin{align}
+                \fun{f}{z}&=\int_0^1 du\ 4^{z-1}u^{z-1}\pare{1-u}^{z-1}\cdot 2
+                \\
+                &=2^{2z-1}\fun{B}{z,z}=2^{2z-1}\dfrac{\fun{\Gamma}{z}^2}{\fun{\Gamma}{2z}}
+            \end{align}
+        \end{enumerate}
+        これらを比較すると，
+        \begin{equation}
+            \fun{f}{z}=\dfrac{\sqrt{\pi}\fun{\Gamma}{z}}{\fun{\Gamma}{z+\frac{1}{2}}}
+            =2^{2z-1}\fun{B}{z,z}=2^{2z-1}\dfrac{\fun{\Gamma}{z}^2}{\fun{\Gamma}{2z}}
+        \end{equation}
+        であるから，
+        \begin{equation}
+            \fun{\Gamma}{2z}=\dfrac{2^{2z-1}}{\sqrt{\pi}}\fun{\Gamma}{z}\fun{\Gamma}{z+\dfrac{1}{2}}
+        \end{equation}
+        を得る。
+    \end{proof}
+
+    これは，
+    \begin{equation}
+        \fun{\Gamma}{z}=\frac{2^{z-1}}{\sqrt{\pi}}\fun{\Gamma}{\frac{z}{2}}\fun{\Gamma}{\frac{z+1}{2}}
+    \end{equation}
+    とも書ける。
+\end{thm}
+
+
+
+\begin{luacode*}
+    function Factorial(n)
+        if n == 0 then
+            return 1
+        else
+            return n * Factorial(n - 1)
+        end
+    end
+
+    function GCD(a, b)
+        return b == 0 and a or GCD(b, a % b)
+    end
+
+    function CreateGaussianTable(row)
+        tex.print("\\begin{table}\\caption{Gauss積分$\\displaystyle \\int_0^\\infty dx\\, x^n e^{-x^m}$の具体値 ($0\\leq n < m\\leq"..row.."$)}\\label{tab:Gamma-Gauss}\\centering\\begin{tabular}{")
+        tex.print("c|r")
+        for m = 2, row do
+            tex.print("c")
+        end
+        tex.print("}")
+        tex.print("\\diagbox[width=27pt, height=30pt]{$n$}{$m$}")
+        for m = 1, row do
+            tex.print("& $"..m.."$")
+        end
+        tex.print("\\\\ \\hline ")
+        for n = 0, row do
+            tex.print("$"..n.."$ & ")
+            for m = 1, row do
+                if m == 1 then
+                    tex.print("\\footnotesize$"..(Factorial(n)).."$")
+                elseif m / GCD(n + 1, m) == 1 then
+                    local k = (n + 1) / m
+                    local numerator = Factorial(k - 1)
+                    local denominator = m
+                    local g = GCD(numerator, denominator)
+                    numerator, denominator = math.floor(numerator / g), math.floor(denominator / g)
+                    if denominator == 1 then
+                        tex.print("$"..numerator.."$")
+                    else
+                        tex.print("$\\frac{"..numerator.."}{"..denominator.."}$")
+                    end
+                elseif math.floor(m / GCD(n + 1, m)) == 2 then
+                    local k = ((n + 1) / GCD(n + 1, m) - 1) / 2
+                    local numerator = Factorial(2 * k)
+                    local denominator = m * math.pow(2, 2 * k) * Factorial(k)
+                    local g = GCD(numerator, denominator)
+                    numerator, denominator = math.floor(numerator / g), math.floor(denominator / g)
+                    if numerator == 1 then
+                        tex.print("$\\frac{\\sqrt{\\pi}}{"..denominator.."}$")
+                    else
+                        tex.print("$\\frac{"..numerator.."\\sqrt{\\pi}}{"..denominator.."}$")
+                    end
+                else
+                    tex.print("$\\frac{1}{"..m.."} \\fun{\\Gamma}{\\frac{"..(math.floor((n + 1) / GCD(n + 1, m))).."}{"..(math.floor(m / GCD(n + 1, m))).."}}$")
+                end
+                if m < row then
+                    tex.print("&")
+                elseif n < row then
+                    tex.print("\\\\")
+                end
+            end
+        end
+        tex.print("\\end{tabular}\\end{table}")
+    end
+\end{luacode*}
+
+
+\begin{landscape}
+    \directlua{CreateGaussianTable(13)}
+\end{landscape}
+
+
+
+
+\end{document}
