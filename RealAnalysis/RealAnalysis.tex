@@ -497,18 +497,13 @@ $2$ノルムはEuclidノルムに一致する。
 
 \subsection{関数のノルム}\subseclabel{実ノルム-関数のノルム}
 \begin{defi}[$L^p$ノルム]\defilabel{実ノルム-Lpノルム}
-    $I$を$\R$上の区間とし，$f\colon I\to \R^n$は$I$上可積分とし，$1\leq p <\infty$する。
+    $A$を$\R^m$の部分集合とし，$f\colon A\to \R^n$は$A$上可積分とし，$1\leq p <\infty$する。
     このとき，$f$のノルム$\norm{f}_p$を，
     \begin{equation}
-        \norm{f}_p \coloneqq \pare{\int_I dx\, \norm{\fun{f}{x}}^p}^{\frac{1}{p}}
+        \norm{f}_p \coloneqq \pare{\int_A dx\, \norm{\fun{f}{x}}^p}^{\frac{1}{p}}
     \end{equation}
-    と定める。
+    と定める\footnote{右辺の積分は$n$重積分である。}。
 \end{defi}
-
-\begin{supple}
-    \defiref{実ノルム-Lpノルム}は多変数ベクトル値関数に拡張することができる。
-    詳細は\cite{nomura}など。
-\end{supple}
 
 \begin{defi}[$L^\infty$ノルム]\defilabel{実ノルム-Linftyノルム}
     $A$を$\R^m$の部分集合とし，$f\colon A\to \R^n$とする。
