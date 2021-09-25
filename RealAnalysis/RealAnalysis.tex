@@ -497,10 +497,10 @@ $2$ノルムはEuclidノルムに一致する。
 
 \subsection{関数のノルム}\subseclabel{実ノルム-関数のノルム}
 \begin{defi}[$L^p$ノルム]\defilabel{実ノルム-Lpノルム}
-    $I$を$\R$上の区間とし，$f\colon I\to \CC$は$I$上可積分とし，$1\leq p <\infty$する。
+    $I$を$\R$上の区間とし，$f\colon I\to \R^n$は$I$上可積分とし，$1\leq p <\infty$する。
     このとき，$f$のノルム$\norm{f}_p$を，
     \begin{equation}
-        \norm{f}_p \coloneqq \pare{\int_I dx\, \abs{\fun{f}{x}}^p}^{\frac{1}{p}}
+        \norm{f}_p \coloneqq \pare{\int_I dx\, \norm{\fun{f}{x}}^p}^{\frac{1}{p}}
     \end{equation}
     と定める。
 \end{defi}
@@ -514,7 +514,7 @@ $2$ノルムはEuclidノルムに一致する。
     $A$を$\R^m$の部分集合とし，$f\colon A\to \R^n$とする。
     $f$のノルム$\norm{f}_\infty$を，
     \begin{equation}
-        \norm{f}_\infty \coloneqq \sup_{x \in A}\bra{ \abs{\fun{f}{x}} }
+        \norm{f}_\infty \coloneqq \sup_{x \in A}\bra{ \norm{\fun{f}{x}} }
     \end{equation}
     と定める。
 \end{defi}
@@ -864,10 +864,21 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
         \forall\varepsilon\in\Rposi,\, \exists N\in\N;\,
         \forall n\in\N,\, \bsqu{N\leq n\ \Longrightarrow\ \norm{f_n-f}<\varepsilon}.
     \end{equation}
+    \begin{policy}
+        $\norm{f}$の定義にはmaxではなくsupが使われているため，一般には，
+        \begin{equation}
+            \bsqu{\forall x\in A,\, \norm{\fun{f}{x}}<\varepsilon}\, \Longrightarrow\, \norm{f}\leq \varepsilon
+        \end{equation}
+        であり，
+        \begin{equation}
+            \bsqu{\forall x\in A,\, \norm{\fun{f}{x}}<\varepsilon}\, \Longleftrightarrow\, \norm{f}< \varepsilon
+        \end{equation}
+        は成立しないことに注意する。
+    \end{policy}
     \begin{proof}
         \defiref{実ノルム-Linftyノルム}により，
         \begin{equation}
-            \norm{f_n-f}<\varepsilon\ \Longleftrightarrow\ \sup_{x\in A}\bra{\norm{\fun{f_n}{x}-\fun{f}{x}}}<\varepsilon\ \Longleftrightarrow\ \forall x\in A,\, \norm{\fun{f_n}{x}-\fun{f}{x}}<\varepsilon
+            \norm{f_n-f}<\varepsilon\ \Longrightarrow\ \sup_{x\in A}\bra{\norm{\fun{f_n}{x}-\fun{f}{x}}}<\varepsilon\ \Longrightarrow\ \forall x\in A,\, \norm{\fun{f_n}{x}-\fun{f}{x}}<\varepsilon
         \end{equation}
         である。
         このことと，\lemref{一様収束-forallの順序交換}で示した\equref{一様収束-forallの順序交換}を用いれば，
@@ -875,15 +886,45 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
             &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\,
             \forall n\in\N,\, \bsqu{N\leq n\ \Longrightarrow\ \norm{f_n-f}<\varepsilon}
             \\
-            \Longleftrightarrow\
+            \Longrightarrow\
             &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\,
             \forall n\in\N,\, \bsqu{N\leq n\ \Longrightarrow\ \forall x\in A,\, \norm{\fun{f_n}{x}-\fun{f}{x}}<\varepsilon}
             \\
-            \Longleftrightarrow\
+            \Longrightarrow\
             &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\, \forall x\in A,\,
             \forall n\in \N,\, \bsqu{N\leq n\ \Longrightarrow\ \norm{\fun{f_n}{x}-\fun{f}{x}}<\varepsilon}
         \end{align}
-        となり，\defiref{一様収束-各点収束と一様収束の定義}の\equref{一様収束-一様収束の定義}と同値であることが示された。
+        である。
+
+        逆も示す。
+        方針で述べたように，一般には
+        \begin{equation}
+            \forall x\in A,\, \norm{\fun{f_n}{x}-\fun{f}{x}}<\varepsilon\ \Longrightarrow\ \norm{f_n-f}<\varepsilon
+        \end{equation}
+        は成立しないことに注意して$\varepsilon$の取り方を少し変える。
+        \begin{align}
+            &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\, \forall x\in A,\,
+            \forall n\in \N,\, \bsqu{N\leq n\ \Longrightarrow\ \norm{\fun{f_n}{x}-\fun{f}{x}}<\varepsilon}
+            \\
+            \Longrightarrow\
+            &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\, \forall x\in A,\,
+            \forall n\in \N,\, \bsqu{N\leq n\ \Longrightarrow\ \norm{\fun{f_n}{x}-\fun{f}{x}}<\frac{\varepsilon}{2}}
+            \\
+            \Longrightarrow\
+            &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\,
+            \forall n\in\N,\, \bsqu{N\leq n\ \Longrightarrow\ \forall x\in A,\, \norm{\fun{f_n}{x}-\fun{f}{x}}<\frac{\varepsilon}{2}}
+            \\
+            \Longrightarrow\
+            &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\,
+            \forall n\in\N,\, \bsqu{N\leq n\ \Longrightarrow\ \norm{f_n-f}\leq \frac{\varepsilon}{2}<\varepsilon}
+            \\
+            \Longrightarrow\
+            &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\,
+            \forall n\in\N,\, \bsqu{N\leq n\ \Longrightarrow\ \norm{f_n-f}<\varepsilon}
+        \end{align}
+        である。
+        
+        上と併せれば，\defiref{一様収束-各点収束と一様収束の定義}の\equref{一様収束-一様収束の定義}と同値であることが示された。
     \end{proof}
 \end{prop}
 
@@ -927,6 +968,7 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
         \begin{itemize}
             \item 一様収束するならCauchy列
         \end{itemize}
+
         $\seq{f_n}{n\in\N}$の一様収束性から，
         \begin{equation}
             \forall\varepsilon\in\Rposi,\,\exists N\in\N;\, \forall n\in\N,\, \squ{
@@ -953,6 +995,7 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
         \begin{itemize}
             \item Cauchy列なら一様収束する
         \end{itemize}
+        
         まず，$\seq{f_n}{n\in\N}$が各点収束極限を持つことを示す。
         $\seq{f_n}{n\in\N}$は$A$上のCauchy列であるから，
         \begin{equation}
@@ -961,7 +1004,7 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
             }
         \end{equation}
         が成立している。
-        更に，\lemref{実ノルム-ベクトルと関数のノルムの不等式}から，
+        また，\lemref{実ノルム-ベクトルと関数のノルムの不等式}から，
         \begin{equation}
             \forall x\in A,\ \norm{\fun{f_m}{x}-\fun{f_n}{x}} \leq \norm{f_m-f_n}
         \end{equation}
@@ -1012,13 +1055,14 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
 \begin{supple}\supplelabel{一様収束-m to inftyの意味}
     \thmref{一様収束-一様収束性とCauchy列の同値性}の証明中，Cauchy列なら一様収束することを示す際に$m\to\infty$の極限を取る操作を行った。
     ここではその詳細を述べる。
+
     まず，\equref{一様収束-Cauchy列のときf_n(x)はCauchy列を用いた}で$\varepsilon$ではなく$\varepsilon/2$と取った理由を簡単に述べておく。
     一般に，収束列$\seq{a_n}{n\in\N}$, $\seq{b_n}{n\in\N}$が，
     \begin{equation}
         \forall n\in\N,\ a_n < b_n
     \end{equation}
-    を満たしており，$n\to\infty$におけるそれぞれの極限を$a$, $b$としたとき，成り立つのは$a\leq b$であり，$a<b$は一般には成立しない。
-    実際，\equref{一様収束-Cauchy列のときf_n(x)はCauchy列を用いた}で$m\to\infty$とした\equref{一様収束-Cauchy列のときf_n(x)はCauchy列でm to inftyとした}で成り立つのは$\norm{\fun{f}{x}-\fun{f_n}{x}}\leq {\varepsilon/2}$であり，$\norm{\fun{f}{x}-\fun{f_n}{x}}<{\varepsilon/2}$ではない。
+    を満たしており，$n\to\infty$におけるそれぞれの極限を$a$, $b$としたとき，成り立つのは$a\leq b$であり，$a<b$は一般には成立しない
+    実際，\equref{一様収束-Cauchy列のときf_n(x)はCauchy列を用いた}で$m\to\infty$とした\equref{一様収束-Cauchy列のときf_n(x)はCauchy列でm to inftyとした}で成り立つのは$\norm{\fun{f}{x}-\fun{f_n}{x}}\leq {\varepsilon/2}$であり，$\norm{\fun{f}{x}-\fun{f_n}{x}}<{\varepsilon/2}$ではない\footnote{\propref{一様収束-一様収束の一様ノルムを用いた表現}でわざわざ同値性を示しておいたので，不等号にイコールが入るかどうかはあまり細かく気にする必要もない。}。
 
     次に，\equref{一様収束-Cauchy列のときf_n(x)はCauchy列を用いた}で$m\to\infty$とする操作が正当化される理由を述べる。
     $x$を固定したとき，$\seq{\fun{f_n}{x}}{n\in\N}$はCauchy列であり，特に，収束列である。
@@ -1040,6 +1084,12 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
         \norm{f_n-f}=\sup_{x\in A}\bra{\norm{\fun{f_n}{x}-\fun{f}{x}}}\leq 2\varepsilon
     \end{equation}
     となる。
+    適当に$\varepsilon$を取り直せば
+    \begin{equation}
+        \forall\varepsilon\in\Rposi,\, \exists N\in\N;\,
+        \forall n\in\N,\, \bsqu{N\leq n\ \Longrightarrow\ \norm{f_n-f}<\varepsilon}.
+    \end{equation}
+    も言えるから，$\seq{f_n}{n\in\N}$は$f$に$A$上で一様収束する。
 \end{supple}
 
 
