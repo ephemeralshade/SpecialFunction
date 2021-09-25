@@ -185,7 +185,11 @@ $E$を$\R\times\R^{n}$の部分集合とし，
         E\coloneqq \set{\pare{t,x}\in\R\times\R^n}{\abs{t-a}\leq r,\, \norm{x-b}\leq \rho}
         \equlabel{ODE_R-Eの定義}
     \end{equation}
-    上でLipschitz連続\footnote{\defiref{Lipschitz-Lipschitz連続}参照}であるとする。
+    上で$x$に関してLipschitz連続\footnote{\defiref{Lipschitz-Lipschitz連続}参照}，すなわち，
+    \begin{equation}
+        \exists L\in\Rnonnega;\, \forall\pare{t,x},\forall\pare{t,y}\in E,\ \bsqu{\norm{\fun{f}{t,x}-\fun{f}{t,y}}\leq L\norm{x-y}}
+    \end{equation}
+    であるとする\footnote{$\fun{f}{t,x}$と$\fun{f}{t,y}$で$t$は共通のものであることに注意。}。
     \begin{equation}
         M\coloneqq \max_{\pare{t,x}\in E}\bra{\norm{\fun{f}{t,x}}},\
         r'\coloneqq \min\bra{r,\frac{\rho}{M}}
