@@ -755,14 +755,14 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
 \end{prop}
 
 \section{一様収束}\seclabel{一様収束}
-無限和，微積分，極限の順序変更において重要な役割を果たす一様収束の概念について述べる。
-一様収束する関数列には連続性が受け継がれたり，項別微分，有限領域での項別積分が可能など，直観的な操作が保証される。
+無限和，微積分，極限の順序変更において特に重要な役割を果たす一様収束の概念について述べる。
+一様収束する関数列には連続性が受け継がれたり，項別微分，有限領域での項別積分が可能など，様々な直観的な操作が保証される。
 参考文献は\cite{sugiura}である。
 
 \subsection{各点収束・一様収束}\subseclabel{一様収束-各点収束・一様収束}
 \begin{defi}[各点収束・一様収束]\defilabel{一様収束-各点収束と一様収束の定義}
     $m_1$, $m_2$を正整数，$A\subseteq\R^{m_1}$とし，$f\colon A\to \R^{m_2}$とする。
-    また，各自然数$n$に対し，$f_n\colon A\to \R$による関数列$\seq{f_n}{n\in\N}$を考える。
+    また，各自然数$n$に対し，$f_n\colon A\to \R^{m_2}$による関数列$\seq{f_n}{n\in\N}$を考える。
     関数列$\seq{f_n}{n\in\N}$が$A$上で$f$に各点収束するとは，
     \begin{equation}
         \forall\varepsilon\in\Rposi,\,\forall x\in A,\, \exists N\in\N;\,
@@ -908,15 +908,15 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
             \\
             \Longrightarrow\
             &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\, \forall x\in A,\,
-            \forall n\in \N,\, \bsqu{N\leq n\ \Longrightarrow\ \norm{\fun{f_n}{x}-\fun{f}{x}}<\frac{\varepsilon}{2}}
+            \forall n\in \N,\, \squ{N\leq n\ \Longrightarrow\ \norm{\fun{f_n}{x}-\fun{f}{x}}<\frac{\varepsilon}{2}}
             \\
             \Longrightarrow\
             &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\,
-            \forall n\in\N,\, \bsqu{N\leq n\ \Longrightarrow\ \forall x\in A,\, \norm{\fun{f_n}{x}-\fun{f}{x}}<\frac{\varepsilon}{2}}
+            \forall n\in\N,\, \squ{N\leq n\ \Longrightarrow\ \forall x\in A,\, \norm{\fun{f_n}{x}-\fun{f}{x}}<\frac{\varepsilon}{2}}
             \\
             \Longrightarrow\
             &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\,
-            \forall n\in\N,\, \bsqu{N\leq n\ \Longrightarrow\ \norm{f_n-f}\leq \frac{\varepsilon}{2}<\varepsilon}
+            \forall n\in\N,\, \squ{N\leq n\ \Longrightarrow\ \norm{f_n-f}\leq \frac{\varepsilon}{2}<\varepsilon}
             \\
             \Longrightarrow\
             &\forall\varepsilon\in\Rposi,\, \exists N\in\N;\,
@@ -1035,14 +1035,14 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
         次に，$\seq{f_n}{n\in\N}$は各点収束極限$f$に一様収束することを示す。
         \equref{一様収束-Cauchy列のときf_n(x)はCauchy列}より，
         \begin{equation}
-            \forall\varepsilon\in\Rposi,\,\exists N\in\N;\,\forall x\in A,\, \forall m,\forall n\in\N,\ \bsqu{
+            \forall\varepsilon\in\Rposi,\,\exists N\in\N;\,\forall x\in A,\, \forall m,\forall n\in\N,\ \squ{
                 N\leq n\leq m\ \Longrightarrow\ \norm{\fun{f_m}{x}-\fun{f_n}{x}}<\frac{\varepsilon}{2}
             }
             \equlabel{一様収束-Cauchy列のときf_n(x)はCauchy列を用いた}
         \end{equation}
         であり，\equref{一様収束-Cauchy列のとき各点収束極限の存在}を用いて$m\to\infty$の極限\footnote{後述の\suppleref{一様収束-m to inftyの意味}も参照}を取ると，
         \begin{align}
-            \forall\varepsilon\in\Rposi,\,\exists N\in\N;\,\forall x\in A,\, \forall n\in\N,\ \bsqu{
+            \forall\varepsilon\in\Rposi,\,\exists N\in\N;\,\forall x\in A,\, \forall n\in\N,\ \squ{
                 N\leq n\ \Longrightarrow\ \norm{\fun{f}{x}-\fun{f_n}{x}}\leq\frac{\varepsilon}{2}<\varepsilon
             }
             \equlabel{一様収束-Cauchy列のときf_n(x)はCauchy列でm to inftyとした}
@@ -1062,7 +1062,7 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
         \forall n\in\N,\ a_n < b_n
     \end{equation}
     を満たしており，$n\to\infty$におけるそれぞれの極限を$a$, $b$としたとき，成り立つのは$a\leq b$であり，$a<b$は一般には成立しない
-    実際，\equref{一様収束-Cauchy列のときf_n(x)はCauchy列を用いた}で$m\to\infty$とした\equref{一様収束-Cauchy列のときf_n(x)はCauchy列でm to inftyとした}で成り立つのは$\norm{\fun{f}{x}-\fun{f_n}{x}}\leq {\varepsilon/2}$であり，$\norm{\fun{f}{x}-\fun{f_n}{x}}<{\varepsilon/2}$ではない\footnote{\propref{一様収束-一様収束の一様ノルムを用いた表現}でわざわざ同値性を示しておいたので，不等号にイコールが入るかどうかはあまり細かく気にする必要もない。}。
+    実際，\equref{一様収束-Cauchy列のときf_n(x)はCauchy列を用いた}で$m\to\infty$とした\equref{一様収束-Cauchy列のときf_n(x)はCauchy列でm to inftyとした}で成り立つのは$\norm{\fun{f}{x}-\fun{f_n}{x}}\leq {\varepsilon/2}$であり，$\norm{\fun{f}{x}-\fun{f_n}{x}}<{\varepsilon/2}$ではない\footnote{\propref{一様収束-一様収束の一様ノルムを用いた表現}でわざわざ同値性を示しておいたので，実際にはこの辺りの不等号にイコールが入るかどうかはあまり細かく気にする必要もない。}。
 
     次に，\equref{一様収束-Cauchy列のときf_n(x)はCauchy列を用いた}で$m\to\infty$とする操作が正当化される理由を述べる。
     $x$を固定したとき，$\seq{\fun{f_n}{x}}{n\in\N}$はCauchy列であり，特に，収束列である。
@@ -1149,5 +1149,65 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
         であり，方針で述べたように，これは\equref{一様収束-積分と極限の順序交換}の成立を意味する。
     \end{proof}
 \end{prop}
+
+\subsection{無限和と一様収束性}\subsection{一様収束-無限和と一様収束}
+
+\begin{defi}[関数列の無限和]\defilabel{一様収束-関数列の無限和}
+    $\seq{f_n}{n\in\N}$を$A$上の関数列とする。
+    $\sum_{n=0}^\infty f_n$が$A$上で一様収束するとは，
+    \begin{equation}
+        s_n\coloneqq\sum_{k=0}^n f_k
+    \end{equation}
+    としたとき，関数列$\seq{s_n}{n\in\N}$が$A$上で一様収束することである。
+\end{defi}
+
+\begin{thm}[Weierstrassの$M$判定法]\defilabel{一様収束-WeierstrassのM判定法}
+    $A$上の関数列$\seq{f_n}{n\in\N}$に対し，実数列$\seq{M_n}{n\in\N}$が以下の条件\equref{一様収束-WeierstrassのM判定法条件1,一様収束-WeierstrassのM判定法条件2}を共に満たせば$\sum_{n=0}^\infty f_n$は$A$上で一様収束する：
+    \begin{align}
+        \forall n\in\N,\ \norm{f_n}\leq M_n\equlabel{一様収束-WeierstrassのM判定法条件1}
+        \\
+        \sum_{n=0}^\infty M_n < \infty. \equlabel{一様収束-WeierstrassのM判定法条件2}
+    \end{align}
+    \begin{policy}
+        部分和$s_n\coloneqq\sum_{k=0}^nf_k$がCauchy列になっていることを示し，\thmref{一様収束-一様収束性とCauchy列の同値性}を用いる。
+    \end{policy}
+    \begin{proof}
+        $f_n$と$M_n$の部分和をそれぞれ，
+        \begin{equation}
+            s_n\coloneqq \sum_{k=0}^n f_k,\ 
+            t_n\coloneqq \sum_{k=0}^n M_k
+        \end{equation}
+        とする。
+        $n<m$のとき，ノルムの三角不等式より，
+        \begin{equation}            
+            \norm{s_m-s_n}=\norm{\sum_{k=0}^m f_k - \sum_{k=0}^nf_k}=\norm{\sum_{k=n+1}^mf_k}
+            \leq\sum_{k=n+1}^m\norm{f_k}
+        \end{equation}
+        であり，条件\equref{一様収束-WeierstrassのM判定法条件1}より，
+        \begin{equation}
+            \sum_{k=n+1}^m\norm{f_k}\leq\sum_{k=n+1}^mM_k=\sum_{k=0}^mM_k-\sum_{k=0}^nM_k=t_m-t_n
+        \end{equation}
+        である。
+        また，条件\equref{一様収束-WeierstrassのM判定法条件1}とノルムの非負性($0\leq \norm{f_n}$)から
+        \begin{equation}
+            \forall n\in \N,\ 0\leq M_n
+        \end{equation}
+        も言えるので，$0\leq t_m-t_n=\abs{t_m-t_n}$と書ける。
+        これにより，
+        \begin{equation}
+            \norm{s_m-s_n}\leq \abs{t_m-t_n}
+        \end{equation}
+        である。
+        条件\equref{一様収束-WeierstrassのM判定法条件2}より，$\seq{t_n}{n\in\N}$は収束列であるからCauchy列である。
+        従って，
+        \begin{equation}
+            \forall\varepsilon\in\Rposi,\,\exists N\in\N;\, \forall m,\forall n\in\N,\ \bsqu{
+                N\leq n\leq m\ \Longrightarrow\ \norm{s_m-s_n}\leq \abs{t_m-t_n}<\varepsilon
+            }
+        \end{equation}
+        が言えて，$\seq{s_n}{n\in\N}$もCauchy列である。
+        \thmref{一様収束-一様収束性とCauchy列の同値性}により，Cauchy列は一様収束するので\defiref{一様収束-関数列の無限和}と併せて$\sum_{n=0}^\infty f_n$は$A$上で一様収束する。
+    \end{proof}
+\end{thm}
 
 \end{document}
