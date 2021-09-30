@@ -1,7 +1,8 @@
 # 微分方程式と特殊函数
 少しずつ書き足しています。
 
-何かあれば[Twitter(@FugaciousShade)](https://twitter.com/FugaciousShade)まで。
+何かあれば[Twitter(@FugaciousShade)](https://twitter.com/FugaciousShade)までお願いします。
+質問や希望などは，GitHubページの[Discussions](https://github.com/ephemeralshade/SpecialFunction/discussions)に書き込んでいただいても大丈夫です。
 
 ## PDFはこちら
 [微分方程式と特殊函数PDF](/main/SpecialFunction.pdf)
