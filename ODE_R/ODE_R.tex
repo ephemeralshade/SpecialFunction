@@ -64,7 +64,7 @@ $E$を$\R\times\R^{n}$の部分集合とし，
         \begin{equation}
             \fun{y}{t}\coloneqq \int_a^t ds\,\fun{L}{s}\fun{X}{s}
         \end{equation}
-        と定めると，
+        と定めると，\equref{ODE_R-Gronwall-Bellmanの不等式-仮定}から
         \begin{equation}
             0\leq \fun{X}{t}\leq \fun{c}{t}+\fun{y}{t}
             \equlabel{ODE_R-Gronwall-Bellmanの不等式-yの評価式}
@@ -187,7 +187,8 @@ $E$を$\R\times\R^{n}$の部分集合とし，
     \end{equation}
     上で$x$に関してLipschitz連続\footnote{\defiref{Lipschitz-Lipschitz連続}参照}，すなわち，
     \begin{equation}
-        \exists L\in\Rnonnega;\, \forall\pare{t,x},\forall\pare{t,y}\in E,\ \bsqu{\norm{\fun{f}{t,x}-\fun{f}{t,y}}\leq L\norm{x-y}}
+        \exists L\in\Rnonnega;\, \forall t\in\R,\,\forall x,\forall y\in\R^n,\, \squ{\pare{t,x},\pare{t,y}\in E\ \Rightarrow\ \pare{\norm{\fun{f}{t,x}-\fun{f}{t,y}}\leq L\norm{x-y}}}
+        \equlabel{ODE_R-Lipschitz条件}
     \end{equation}
     であるとする\footnote{$\fun{f}{t,x}$と$\fun{f}{t,y}$で$t$は共通のものであることに注意。}。
     \begin{equation}
@@ -196,7 +197,7 @@ $E$を$\R\times\R^{n}$の部分集合とし，
         \equlabel{ODE_R-Mrの定義}
     \end{equation}
     としたとき，\equref{ODE_R-微分方程式}を満たす解が区間$I'\coloneqq [a-r',a+r']$において一意的に存在する。
-    \begin{proof}
+    \begin{policy}
         \equref{ODE_R-微分方程式}を満たすことと，
         \begin{equation}
             \fun{x}{t}=b+\int_a^t ds\, \fun{f}{s,\fun{x}{s}}
@@ -214,10 +215,36 @@ $E$を$\R\times\R^{n}$の部分集合とし，
         \end{equation}
         も満たす。
         ベクトルでまとめて表せば\equref{ODE_R-微分方程式}を満たすことに他ならない。
+        
+        \equref{ODE_R-積分方程式}の解の存在性を示すために，Picardの逐次近似法によって区間$I'$上で\equref{ODE_R-積分方程式}の解を構成する。
+        Picardの逐次近似法では，
+        \begin{equation}
+            \forall t\in I',\ \norm{\fun{x_0}{t}-b}\leq \rho
+        \end{equation}
+        を満たすような連続なベクトル値関数$\fun{x_0}{t}$を用いて，
+        \begin{equation}
+            \fun{x_{m+1}}{t}\coloneqq b + \int_a^t ds\, \fun{f}{s,\fun{x_{m}}{s}}
+            \equlabel{ODE_R-Picardの逐次近似法定義}
+        \end{equation}
+        によって$\fun{x_1}{t}$, $\fun{x_2}{t},\dots$を定義する。
+        $\fun{x_{m+1}}{t}$の右辺の積分の中に$\fun{x_m}{t}$があるため，$\fun{x_m}{t}$が$f$の定義域に収まっていることを確認する必要がある。
+        
+        そして，このように構成した関数列$\seq{x_m}{m\in\N}$の$m\to\infty$における各点極限関数$\fun{x}{t}$が\equref{ODE_R-微分方程式}の解になっていることを示す。
+        そのためには，\equref{ODE_R-Lipschitz条件}のLipschitz連続の条件と，\thmref{一様収束-WeierstrassのM判定法}を用いて$\fun{x_m}{t}$が各点極限関数$\fun{x}{t}$に一様収束することを確かめる。
+        一様収束することが確かめられたら，\equref{ODE_R-Picardの逐次近似法定義}の両辺で$m\to\infty$の極限を取る。
+        左辺は$\fun{x}{t}$になる。
+        右辺は，$f$の連続性と\propref{一様収束-積分と極限の順序交換}を用いて積分と極限の順序交換を行って
+        \begin{equation}
+            \lim_{m\to\infty}\squ{b + \int_a^t ds\, \fun{f}{s,\fun{x_{m}}{s}}}
+            =b + \int_a^t ds\, \lim_{m\to\infty}\fun{f}{s,\fun{x_{m}}{s}}
+            =b + \int_a^t ds\, \fun{f}{s,\fun{x}{s}}
+        \end{equation}
+        とすれば，Picardの逐次近似法\equref{ODE_R-Picardの逐次近似法定義}で定義された関数列が\equref{ODE_R-積分方程式}の解であることが分かる。
 
-        証明の流れは以下の通りである。
-        解の存在性を示すために，Picardの逐次近似法によって区間$I'$上で\equref{ODE_R-積分方程式}の解を構成する。
         そして，構成した解が唯一の解であることを\thmref{ODE_R-Gronwall-Bellmanの不等式}から得られた\corref{ODE_R-Gronwall-Bellmanの不等式の系}の不等式を用いて示す。
+    \end{policy}
+    \begin{proof}
+        方針で述べたように，\equref{ODE_R-微分方程式}の微分方程式と等価な，\equref{ODE_R-積分方程式}の積分方程式を考察する。
 
         まずは解の存在性を示すためのPicardの逐次近似法について述べる。
         $\fun{x_0}{t}$は，
