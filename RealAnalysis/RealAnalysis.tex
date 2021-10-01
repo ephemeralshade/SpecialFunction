@@ -163,7 +163,8 @@
         \end{enumerate}
         以上により\equref{実ノルム-max}で定められた$\norm{\dummy}$はノルムである。
 
-        次に，$V$上の勝手なノルム$\norm{\dummy}_1$を取ってきたときに，\equref{実ノルム-max}で定義した$\norm{\dummy}_1$と$\norm{\dummy}$が同値になってしまうことを示す。
+        次に，$V$上の勝手なノルム$\norm{\dummy}_1$を取ってきたときに，\equref{実ノルム-max}で定義した$\norm{\dummy}$と$\norm{\dummy}_1$が同値になってしまうことを示す。
+        
         $V$のコンパクト集合$S$を$S\coloneqq \sset{y\in V}{\norm{y}=1}$
         によって定め，関数$f\colon S\to \R$を$\fun{f}{y}\coloneqq \norm{y}_1$と定める。
         $f$の連続性（\propref{実ノルム-連続性}）と$S$がコンパクト集合であることから，$f$の値域には最小元$m$と最大元$M$が存在する。
@@ -1156,7 +1157,7 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
     としたとき，関数列$\seq{s_n}{n\in\N}$が$A$上で一様収束することである。
 \end{defi}
 
-\begin{thm}[Weierstrassの$M$判定法]\defilabel{一様収束-WeierstrassのM判定法}
+\begin{thm}[Weierstrassの$M$判定法]\thmlabel{一様収束-WeierstrassのM判定法}
     $A$上の関数列$\seq{f_n}{n\in\N}$に対し，実数列$\seq{M_n}{n\in\N}$が以下の条件\equref{一様収束-WeierstrassのM判定法条件1,一様収束-WeierstrassのM判定法条件2}を共に満たせば$\sum_{n=0}^\infty f_n$は$A$上で一様収束する：
     \begin{align}
         \forall n\in\N,\ \norm{f_n}\leq M_n\equlabel{一様収束-WeierstrassのM判定法条件1}
