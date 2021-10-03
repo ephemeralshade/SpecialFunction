@@ -230,16 +230,30 @@ $E$を$\R\times\R^{n}$の部分集合とし，
         $\fun{x_{m+1}}{t}$の右辺の積分の中に$\fun{x_m}{t}$があるため，$\fun{x_m}{t}$が$f$の定義域に収まっていることを確認する必要がある。
         
         そして，このように構成した関数列$\seq{x_m}{m\in\N}$の$m\to\infty$における各点極限関数$\fun{x}{t}$が\equref{ODE_R-微分方程式}の解になっていることを示す。
-        そのためには，\equref{ODE_R-Lipschitz条件}のLipschitz連続の条件と，\thmref{一様収束-WeierstrassのM判定法}を用いて$\fun{x_m}{t}$が各点極限関数$\fun{x}{t}$に一様収束することを確かめる。
-        一様収束することが確かめられたら，\equref{ODE_R-Picardの逐次近似法定義}の両辺で$m\to\infty$の極限を取る。
-        左辺は$\fun{x}{t}$になる。
+        ここで，$y_{m}\coloneqq x_{m+1} - x_{m}$
+        と定めると，
+        $\sum_{k=0}^{m-1} y_k = x_m - x_0$
+        である。
+        \equref{ODE_R-Lipschitz条件}のLipschitz連続の条件を用いると，数学的帰納法によって
+        \begin{equation}
+            \norm{\fun{y_{m}}{t}}=\norm{\fun{x_{m+1}}{t}-\fun{x_{m}}{t}}\leq \rho\frac{\pare{Lr'}^{m}}{m!}+\frac{M}{L}\frac{\pare{Lr'}^{m+1}}{\pare{m+1}!}
+        \end{equation}
+        であることが言えて，
+        \begin{equation}
+            \sum_{m=0}^\infty\norm{\fun{y_m}{t}}\leq \pare{\rho+\frac{M}{L}}e^{Lr'}<\infty
+        \end{equation}
+        が従う。
+        そこで，\thmref{一様収束-WeierstrassのM判定法}を用いると，$\fun{x_m}{t}$は一様収束することが判る。
+
+        $\seq{x_m}{m\in\N}$の一様収束性が確かめられたら，\equref{ODE_R-Picardの逐次近似法定義}の両辺で$m\to\infty$の極限を取る。
+        左辺は$\fun{x}{t}$になり，
         右辺は，$f$の連続性と\propref{一様収束-積分と極限の順序交換}を用いて積分と極限の順序交換を行って
         \begin{equation}
             \lim_{m\to\infty}\squ{b + \int_a^t ds\, \fun{f}{s,\fun{x_{m}}{s}}}
             =b + \int_a^t ds\, \lim_{m\to\infty}\fun{f}{s,\fun{x_{m}}{s}}
             =b + \int_a^t ds\, \fun{f}{s,\fun{x}{s}}
         \end{equation}
-        とすれば，Picardの逐次近似法\equref{ODE_R-Picardの逐次近似法定義}で定義された関数列が\equref{ODE_R-積分方程式}の解であることが分かる。
+        とすれば，Picardの逐次近似法\equref{ODE_R-Picardの逐次近似法定義}で定義された関数列の極限が\equref{ODE_R-積分方程式}の解であることが分かる。
 
         そして，構成した解が唯一の解であることを\thmref{ODE_R-Gronwall-Bellmanの不等式}から得られた\corref{ODE_R-Gronwall-Bellmanの不等式の系}の不等式を用いて示す。
     \end{policy}
@@ -270,7 +284,6 @@ $E$を$\R\times\R^{n}$の部分集合とし，
             \equlabel{ODE_R-x1の不等式}
         \end{equation}
         である。
-        
         \equref{ODE_R-x1の不等式}のそれぞれの不等号の理由を順に述べる。
         最初の不等号では，\propref{実ノルム-積分の不等式}の不等式を用いており，今回は$t\in I'=[a-r',a+r']$であるから，$t<a$の場合もあるので最初の不等号の式には絶対値が付く。
         二番目の不等号では\equref{ODE_R-Mrの定義}における$M$の定義から，
@@ -284,7 +297,7 @@ $E$を$\R\times\R^{n}$の部分集合とし，
         これにより，$t\in I'$のとき$\norm{\fun{x_1}{t}-b}\leq \rho$である。
         次に，\equref{ODE_R-x0の不等式}を満たす$\fun{x_0}{t}$を用いて，
         \begin{equation}
-            \fun{x_{m+1}}{t} \coloneqq b + \int_a^t ds\, \fun{f}{s,\fun{x_m}{t}},\ \pare{m\in\N,\, t\in I'}
+            \fun{x_{m+1}}{t} \coloneqq b + \int_a^t ds\, \fun{f}{s,\fun{x_m}{s}},\ \pare{m\in\N,\, t\in I'}
             \equlabel{ODE_R-xmの定義式}
         \end{equation}
         によって$\fun{x_1}{t}$, $\fun{x_2}{t}$, $\fun{x_3}{t},\dots$を定める。
@@ -309,6 +322,142 @@ $E$を$\R\times\R^{n}$の部分集合とし，
         以上の議論により，\equref{ODE_R-xmの定義式}によって任意の自然数$m$に対して$\fun{x_m}{t}$が定まる。
         次に，\equref{ODE_R-xmの定義式}で定義された$\fun{x_m}{t}$は，$m\to\infty$の極限で\equref{ODE_R-積分方程式}の解になることを示す。
         そのためには，$\fun{x_m}{t}$が一様収束することを示し，$f$の連続性から極限と積分を入れ替えられることを用いる。
+
+        以下，$\fun{x_m}{t}$の一様収束性の評価を行う。
+        方針でも述べたように，
+        \begin{equation}
+            y_{m}\coloneqq x_{m+1} - x_{m}
+        \end{equation}
+        によって関数列$\seq{y_m}{m\in\N}$を定めると，
+        \begin{equation}
+            \begin{aligned}
+                \sum_{k=0}^{m-1}y_k
+                &=\pare{x_1-x_0}+\pare{x_2-x_1}+\pare{x_3-x_2}+\dots+\pare{x_{m}-x_{m-1}}
+                \\
+                &=-x_0+\pare{x_1-x_1}+\pare{x_2-x_2}+\dots+\pare{x_{m-1}-x_{m-1}}+x_m
+                =x_m-x_0
+            \end{aligned}
+            \equlabel{ODE_R-ykの和}
+        \end{equation}
+        となる。
+        次に，
+        \begin{equation}
+            \forall m\in\N,\,\forall t\in I',\ \norm{\fun{y_{m}}{t}}=\norm{\fun{x_{m+1}}{t}-\fun{x_{m}}{t}}\leq \rho L^m\frac{\abs{t-a}^m}{m!}+mL^m\frac{\abs{t-a}^{m+1}}{\pare{m+1}!}
+            \equlabel{ODE_R-一様収束性の準備}
+        \end{equation}
+        が成立することを$m$に関する数学的帰納法によって示す。
+        以下，$t\in I'$は任意とする。
+        まず，$m=0$については，三角不等式と\propref{実ノルム-積分の不等式}によって，
+        \begin{align}
+            &\norm{\fun{y_0}{t}}=\norm{\fun{x_1}{t}-\fun{x_0}{t}}
+            =\norm{\pare{b+\int_a^t ds\,\fun{f}{s,\fun{x_0}{s}}}-\fun{x_0}{t}}
+            \\
+            &\leq \norm{\fun{x_0}{t}-b}+\norm{\int_a^t ds\,\fun{f}{s,\fun{x_0}{s}}}
+            \\
+            &\leq \abs{-1}\norm{\fun{x_0}{t}-b} +\abs{\int_a^t ds\,\norm{\fun{f}{s,\fun{x_0}{s}}}}
+            \leq \rho+M\cdot\abs{t-a}
+        \end{align}
+        となるから成立。
+        但し，最後の$\rho$と$M$に関する不等号では，\equref{ODE_R-x0の不等式,ODE_R-Mrの定義}を用いた。
+        ある自然数$m$について\equref{ODE_R-一様収束性の準備}が成立することを仮定すると，Lipschitz条件\equref{ODE_R-Lipschitz条件}から，
+        \begin{align}
+            &\norm{\fun{y_{m+1}}{t}}=\norm{\fun{x_{m+2}}{t}-\fun{x_{m+1}}{t}}=\norm{\int_a^t ds\,\pare{\fun{f}{s,\fun{x_{m+1}}{s}}-\fun{f}{s,\fun{x_{m}}{s}}}}
+            \\
+            &\leq \abs{\int_a^t ds\,\norm{\fun{f}{s,\fun{x_{m+1}}{s}}-\fun{f}{s,\fun{x_{m}}{s}}}}
+            \leq \abs{\int_a^t ds\,L\norm{\fun{x_{m+1}}{s}-\fun{x_m}{s}}}
+            \\
+            &\leq \abs{\int_a^t ds\, L\pare{\rho L^m\frac{\abs{s-a}^m}{m!}+mL^m\frac{\abs{s-a}^{m+1}}{\pare{m+1}!}}}
+            \\
+            &=\rho L^{m+1}\frac{\abs{t-a}^{m+1}}{\pare{m+1}!}
+            +ML^{m+1}\frac{\abs{t-a}^{m+2}}{\pare{m+2}!}
+        \end{align}
+        となるから$\pare{m+1}$でも成立する。
+        ここで，$m$の偶奇や$t$と$a$の大小に依らず，
+        \begin{equation}
+            \int_a^t ds\,\abs{s-a}^m=\frac{\abs{t-a}^{m+1}}{\pare{m+1}!}
+        \end{equation}
+        が成立することに注意。
+        これにより\equref{ODE_R-一様収束性の準備}の成立が確かめられた。
+
+        \equref{ODE_R-一様収束性の準備}と$\abs{t-a}\leq r$から，
+        \begin{equation}
+            \norm{\fun{y_{m}}{t}}=\norm{\fun{x_{m+1}}{t}-\fun{x_{m}}{t}}\leq \rho L^m\frac{\abs{t-a}^m}{m!}+mL^m\frac{\abs{t-a}^{m+1}}{\pare{m+1}!}
+            \leq \rho \frac{\pare{Lr}^m}{m!}+\frac{M}{L}\frac{\pare{Lr}^{m+1}}{\pare{m+1}!}
+        \end{equation}
+        が言える。
+        特に，
+        \begin{equation}
+            \forall m\in\N,\, \forall t\in I',\ \norm{\fun{y_m}{t}}\leq \rho \frac{\pare{Lr}^m}{m!}+\frac{M}{L}\frac{\pare{Lr}^{m+1}}{\pare{m+1}!}
+        \end{equation}
+        から，
+        \begin{equation}
+            \forall m\in\N,\ \norm{y_m}\leq \frac{\pare{Lr}^m}{m!}+\frac{M}{L}\frac{\pare{Lr}^{m+1}}{\pare{m+1}!}
+        \end{equation}
+        である。
+
+        更に，
+        \begin{equation}
+            a_m\coloneqq \rho \frac{\pare{Lr}^m}{m!}+\frac{M}{L}\frac{\pare{Lr}^{m+1}}{\pare{m+1}!}
+        \end{equation}
+        と置くと，
+        \begin{equation}
+            \sum_{m=0}^\infty a_m
+            =\sum_{m=0}^\infty\pare{\rho \frac{\pare{Lr}^m}{m!}+\frac{M}{L}\frac{\pare{Lr}^{m+1}}{\pare{m+1}!}}
+            \leq \pare{\rho+\frac{M}{L}}\sum_{m=0}^\infty\frac{\pare{Lr}^m}{m!}
+            =\pare{\rho+\frac{M}{L}}e^{Lr}<\infty
+        \end{equation}
+        である。
+        これより，
+        \begin{align}
+            \forall m\in\N,\ \norm{y_m}\leq a_m
+            \\
+            \sum_{m=0}^\infty a_m<\infty
+        \end{align}
+        であり，\thmref{一様収束-WeierstrassのM判定法}に拠れば，$\sum_{m=0}^\infty y_m$は$I'$上一様収束する。
+        特に，\equref{ODE_R-ykの和}で確かめたように
+        \begin{equation}
+            \sum_{k=0}^{m-1}y_k=x_m-x_0
+        \end{equation}
+        であるから，$x_m$も$I'$上で一様収束するので，その極限関数を$x$とする。
+
+        $x_m$の定義式：
+        \begin{equation}
+            \fun{x_{m+1}}{t}=b+\int_a^t ds\,\fun{f}{s,\fun{x_m}{s}}
+        \end{equation}
+        の両辺で$m\to\infty$の極限を取ることを考える。
+        \corref{Lipschitz-Lipschitz連続なら連続}から$f$は連続であり，$\seq{\fun{x_m}{s}}{m\in\N}$は$s\in[a,t]$上一様収束するから，
+        \begin{equation}
+            \lim_{m\to\infty}\squ{b + \int_a^t ds\, \fun{f}{s,\fun{x_{m}}{s}}}
+            =b + \int_a^t ds\, \lim_{m\to\infty}\fun{f}{s,\fun{x_{m}}{s}}
+            =b + \int_a^t ds\, \fun{f}{s,\fun{x}{s}}
+        \end{equation}
+        となる。
+        左辺は$\fun{x_m}{t}\to\fun{x}{t}$であるから，関数列$\seq{x_m}{m\in\N}$の極限関数$x$は，
+        \begin{equation}
+            \fun{x}{t}=b+\int_a^t ds\,\fun{f}{s,\fun{x}{s}}
+        \end{equation}
+        を満たすが，これは元の積分方程式の\equref{ODE_R-積分方程式}すなわち\equref{ODE_R-微分方程式}を満たすことに他ならない。
+        これにより，解の存在性は確かめられた。
+
+        最後に，\thmref{ODE_R-Gronwall-Bellmanの不等式}から得られた\corref{ODE_R-Gronwall-Bellmanの不等式の系}を用いて解の一意性を示す。
+        共通定義区間が$J\coloneqq[c,c']$であるような二つの関数$x$, $y$が共に\equref{ODE_R-積分方程式}の積分方程式を満たすとする。
+        すなわち，
+        \begin{equation}
+            \fun{x}{t}=b+\int_a^t ds\,\fun{f}{s,\fun{x}{s}},
+            \
+            \fun{y}{t}=b+\int_a^t ds\,\fun{f}{s,\fun{y}{s}}
+        \end{equation}
+        が成立しているとする。
+        示すべきことは，
+        \begin{equation}
+            \forall t\in I'\cap J,\ \fun{x}{t}=\fun{y}{t}
+        \end{equation}
+        である。
+        このとき，Lipschitz条件\equref{ODE_R-Lipschitz条件}から，
+        \begin{equation}
+            \norm{\fun{x}{t}-\fun{y}{t}}=\norm{\int_a^tds\,\pare{\fun{f}{s,\fun{x}{s}}-\fun{f}{s,\fun{y}{s}}}}
+            \leq \abs{\int_a^tds\,L\norm{\fun{x}{s}-\fun{y}{s}}}
+        \end{equation}
     \end{proof}
 \end{thm}
 
