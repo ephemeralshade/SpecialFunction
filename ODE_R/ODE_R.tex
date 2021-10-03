@@ -446,6 +446,7 @@ $E$を$\R\times\R^{n}$の部分集合とし，
             \fun{x}{t}=b+\int_a^t ds\,\fun{f}{s,\fun{x}{s}},
             \
             \fun{y}{t}=b+\int_a^t ds\,\fun{f}{s,\fun{y}{s}}
+            \equlabel{ODE_R-一意性-仮定}
         \end{equation}
         が成立しているとする。
         示すべきことは，
@@ -453,11 +454,43 @@ $E$を$\R\times\R^{n}$の部分集合とし，
             \forall t\in I'\cap J,\ \fun{x}{t}=\fun{y}{t}
         \end{equation}
         である。
-        このとき，Lipschitz条件\equref{ODE_R-Lipschitz条件}から，
+
+        共通定義区間$J=[c,c']$について考察する。
+        \equref{ODE_R-一意性-仮定}において，右辺の積分区間は$t$と$a$の大小によって$[a,t]$か$[t,a]$のいずれかであるが，いずれの場合も区間の端の一方は$a$に等しい。
+        そのため，$c=a$の場合（積分区間は$[a,t]$）と，$c'=a$の場合（積分区間は$[t,a]$）だけ考えれば十分である。
+        今回はまず，$c=a$の場合について考えるが，$c'=a$のときも積分区間を反転させて符号を付け替えれば同じ議論が適用できる。
+
+        共通区間が$J=[a,c']$であり，共に\equref{ODE_R-積分方程式}の積分方程式を満たす二つの関数$x$, $y$について，
+        Lipschitz条件\equref{ODE_R-Lipschitz条件}から，
+        \begin{align}
+            &\norm{\fun{x}{t}-\fun{y}{t}}=\norm{\int_a^tds\,\pare{\fun{f}{s,\fun{x}{s}}-\fun{f}{s,\fun{y}{s}}}}
+            \\
+            &\leq \int_a^tds\,L\norm{\fun{x}{s}-\fun{y}{s}}
+            \leq L\int_a^t ds\,\norm{\fun{x}{s}-\fun{y}{s}}
+        \end{align}
+        が成立するから，$\fun{X}{t}\coloneqq\norm{\fun{x}{t}-\fun{y}{t}}$
+        と置けばノルムの非負性と併せて，
         \begin{equation}
-            \norm{\fun{x}{t}-\fun{y}{t}}=\norm{\int_a^tds\,\pare{\fun{f}{s,\fun{x}{s}}-\fun{f}{s,\fun{y}{s}}}}
-            \leq \abs{\int_a^tds\,L\norm{\fun{x}{s}-\fun{y}{s}}}
+            \forall t\in I'\cap J,\ 0\leq \fun{X}{t}\leq 0+ L\int_a^t ds\,\fun{X}{s}
         \end{equation}
+        が成立する。
+        Lipschitz定数$L$は非負定数であるから，\corref{ODE_R-Gronwall-Bellmanの不等式の系}が使えて，
+        \begin{equation}
+            \forall t\in I'\cap J,\ 0\leq \fun{X}{t}\leq 0\cdot e^{\pare{t-a}L}=0
+        \end{equation}
+        すなわち，
+        \begin{equation}
+            \forall t\in I'\cap J,\ \fun{X}{t}=\norm{\fun{x}{t}-\fun{y}{t}}=0
+        \end{equation}
+        である。
+        これとノルムの\defiref{実ノルム-定義}の一意性から，
+        \begin{equation}
+            \forall t\in I'\cap J,\ \fun{x}{t}=\fun{y}{t}
+        \end{equation}
+        であり，これは解の一意性を意味する。
+
+        Picardの逐次近似法によって解が構成され，Gr\"{o}nwall-Bellmanの不等式の\corref{ODE_R-Gronwall-Bellmanの不等式の系}によって解の一意性が示された。
+        これにより，$f$がLipschitz条件\equref{ODE_R-Lipschitz条件}を満たすとき，\equref{ODE_R-微分方程式}の解は区間$I'$上で一意的に存在する。
     \end{proof}
 \end{thm}
 

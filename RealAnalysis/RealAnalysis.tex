@@ -706,7 +706,7 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
         と定めておくと，$I$上で常に$\abs{\fun{f^j}{t}}\leq L$であり，\equref{実ノルム-積分絶対値不等式}により，
         \begin{equation}
             \abs{\fun{F^j}{x}-\fun{F^j}{y}}=\abs{\int_y^x dt\, \fun{f^j}{t}}
-            \leq \abs{\int_x^y dt\, \abs{\fun{f^j}{t}}}\leq \abs{\int_x^y dt\, L}
+            \leq \abs{\int_y^x dt\, \abs{\fun{f^j}{t}}}\leq \abs{\int_y^x dt\, L}
             = L\abs{x-y}
         \end{equation}
         である。
@@ -723,6 +723,7 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
     $f\colon [a,b]\to \R^n$は$[a,b]$上で連続，$(a,b)$上で微分可能とし，$(a,b)$上で$\norm{\fun{f'}{t}}$は有限であるとする。
     このとき，$f$は$[a,b]$上でLipschitz連続である。
     \begin{proof}
+        $f$の$j$成分$f^j$の導関数を$(f^j)'$と記すことにする。
         $(a,b)$上での$\norm{\fun{f'}{t}}$の有界性から，
         \begin{equation}
             L\coloneqq \sup_{t\in(a,b)}\max_{j}\bra{\abs{\fun{(f^j)'}{t}}}<\infty
