@@ -44,10 +44,8 @@
 
 \usepackage{prooftrees} % 証明木
 
-\newcommand{\pdiff}[2]{\frac{\partial #1}{\partial #2}} % 偏微分
-\newcommand{\pdiffn}[3]{\frac{\partial^{#3} #1}{\partial #2^{#3}}} % n階偏微分
-\newcommand{\diff}[2]{\frac{d #1}{d #2}} % 常微分
-\newcommand{\diffn}[3]{\frac{d^{#3} #1}{d #2^{#3}}} % n階常備分
+\newcommand{\pdiff}[3]{\frac{\partial^{#1} #2}{\partial #3^{#1}}} % 偏微分
+\newcommand{\diff}[3]{\frac{d^{#1} #2}{d #3^{#1}}} % 常備分
 \newcommand{\substitute}[2]{\mleft. #1 \mright|_{#2}} % 代入
 \newcommand{\Res}[2]{\underset{#2}{\mathrm{Res}}\pare{#1}} % 留数
 
