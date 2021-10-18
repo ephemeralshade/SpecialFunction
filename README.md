@@ -36,3 +36,6 @@ Gaussの超幾何微分方程式におけるFrobenius法の数値計算プログ
 
 ### 超幾何関数
 以前のPDFは[こちら（ブログ）](https://fugaciousshade.blogspot.com/2021/05/HypergeometricFunction-PDF.html)または[こちら](OldFile/HypergeometricFunction.pdf)から。
+
+#### このページ（github.io）のリンク
+[ephemeralshade.github.io/SpecialFunction/](https://ephemeralshade.github.io/SpecialFunction/)
