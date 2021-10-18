@@ -44,8 +44,9 @@
 
 \usepackage{prooftrees} % 証明木
 
-\newcommand{\pdiff}[3]{\frac{\partial^{#1} #2}{\partial #3^{#1}}} % 偏微分
-\newcommand{\diff}[3]{\frac{d^{#1} #2}{d #3^{#1}}} % 常備分
+\newcommand{\pdiff}[3][]{\frac{\partial^{#1} #2}{\partial #3^{#1}}} % 偏微分
+\newcommand{\diff}[3][]{\frac{d^{#1} #2}{d #3^{#1}}} % 常備分
+\newcommand{\sdiff}[2]{#1^{\mleft(#2\mright)}} % w^(n)の形の常微分
 \newcommand{\substitute}[2]{\mleft. #1 \mright|_{#2}} % 代入
 \newcommand{\Res}[2]{\underset{#2}{\mathrm{Res}}\pare{#1}} % 留数
 
