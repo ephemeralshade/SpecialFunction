@@ -169,7 +169,7 @@
         によって定め，関数$f\colon S\to \R$を$\fun{f}{y}\coloneqq \norm{y}_1$と定める。
         $f$の連続性（\propref{実ノルム-連続性}）と$S$がコンパクト集合であることから，$f$の値域には最小元$m$と最大元$M$が存在する。
         $S$上で$y\ne {0}$であり，ノルムの正値性から$0<m\leq M$である。
-        特に，$\norm{y}=1$ならば$y\in S$であり，$m$, $M$の定義から$m\leq \fun{f}{y}\leq M$及び$\fun{f}{y}=\norm{y}_1$なので$m\leq \norm{x}_1\leq M$が従う。
+        特に，$\norm{y}=1$ならば$y\in S$であり，$m$, $M$の定義から$m\leq \fun{f}{y}\leq M$及び$\fun{f}{y}=\norm{y}_1$なので$m\leq \norm{y}_1\leq M$が従う。
         ここで，$V$上の一般の$x\ne 0$に対して$y\coloneqq x / \norm{x}$とすると$\norm{y}=\norm{x/\norm{x}}=\norm{x}/\norm{x}=1$より$y\in S$であるから$\fun{f}{y}=\norm{x/\norm{x}}_1=\norm{x}_1/\norm{x}$であって，$m\leq \norm{x}_1/\norm{x}\leq M$より$m\norm{x}\leq \norm{x}_1\leq M\norm{x}$である。
         $x=0$についても$\norm{0}=\norm{0}_1=0$であって，$m \norm{0}_1\leq \norm{0}\leq M\norm{0}_1$は成立するので，$\norm{\dummy}_1$と$\norm{\dummy}$は同値である。
 
@@ -613,6 +613,21 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
     実際，$L$がLipschitz定数のとき，$c>1$を用いると$\norm{\fun{f}{x}-\fun{f}{y}}\leq L \norm{x - y}\leq cL \norm{x-y}$も成立するので，$(L\neq )cL$もLipschitz定数である。
     上の条件を満たすLipschitz定数全体の下限を改めてLipschitz定数と呼ぶことにすれば，これは一意である。
 \end{rem}
+
+\begin{eg}\eglabel{Lipschitz-AxはLipschitz連続}
+    $M$を$n$次正方行列とし，$f\colon \R^n\to \R^n$を$\fun{f}{x}\coloneqq Mx$によって定めると，$f$は$\R^n$上Lipschitz連続である。
+    \begin{proof}
+        \propref{実ノルム-作用素ノルム不等式1}の不等式を用いると，
+        \begin{equation}
+            \norm{\fun{f}{x}-\fun{f}{y}}
+            =\norm{Mx-My}
+            =\norm{M\pare{x-y}}
+            \leq \norm{M}\cdot \norm{x-y}
+        \end{equation}
+        により，$\norm{M}$をLipschitz定数として$f$は$\R^n$上Lipschitz連続である。
+    \end{proof}
+\end{eg}
+
 
 \begin{prop}\proplabel{Lipschitz-Lipschitz連続なら一様連続}
     $A$上Lipschitz連続な関数は$A$上一様連続である。
