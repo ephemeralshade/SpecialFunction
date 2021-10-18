@@ -44,7 +44,8 @@ $E$を$\R\times\R^{n}$の部分集合とし，
 \end{equation}
 を満たす解に関して考察する。
 
-\section{Picardの逐次近似法}
+\section{常微分方程式の解の存在と一意性}
+\subsection{Gr\"{o}nwall-Bellmanの不等式}
 \begin{thm}[Gr\"{o}nwall-Bellmanの不等式]\thmlabel{ODE_R-Gronwall-Bellmanの不等式}
     $a<a'$とし，$I\coloneqq [a,a']$とする。
     関数$X\colon I\to \R$は$I$上で連続とする，
@@ -177,7 +178,7 @@ $E$を$\R\times\R^{n}$の部分集合とし，
 
 \thmref{ODE_R-Gronwall-Bellmanの不等式}から得られた\corref{ODE_R-Gronwall-Bellmanの不等式の系}は，後述する\thmref{ODE_R-Picardの定理}の証明において，Picardの逐次近似法によって構成した解が唯一の解であることを示す際に有用である。
 
-
+\subsection{Picardの逐次近似法}
 \begin{thm}[Picardの定理]\thmlabel{ODE_R-Picardの定理}
     $r$, $\rho$を正数とする。
     $\fun{f}{t,x}$が$\R\times\R^n$上の有界閉領域
@@ -494,5 +495,144 @@ $E$を$\R\times\R^{n}$の部分集合とし，
     \end{proof}
 \end{thm}
 
+\subsection{具体的な常微分方程式の解の存在と一意性}\subseclabel{ODE_R-具体的な常微分方程式の解の存在と一意性}
+\begin{prop}[定数係数斉次連立1階常微分方程式の解の存在と一意性]\proplabel{ODE_R-定数行列の解の一意性}
+    $A$を$x$に依らない$n$次正方行列とする。
+    \begin{equation}
+        \diff{x}{t} = Ax,\
+        \fun{x}{t_0}=b
+        \equlabel{ODE_R-定数行列係数常微分方程式}
+    \end{equation}
+    について考えると，この常微分方程式は$a$を含む任意の$\R$上の閉区間で唯一の解$x=\fun{x}{t}$を持つ。
+    \begin{proof}
+        \eqref{Lipschitz-AxはLipschitz連続}で確かめたように，$f\colon \R\times \R^n\to \R^n$, $\fun{f}{t,x}\coloneqq Ax$は$\R\times \R^n$の任意の有界閉領域上でLipschitz連続である。
+        \thmref{ODE_R-Picardの定理}において$r$, $\rho$はいくらでも大きく取れるので，$I'=[a-r',a+r']$はいくらでも広く取れる。
+        これによって\equref{ODE_R-定数行列係数常微分方程式}は$a$を含む任意の$\R$上の閉区間上で解を持ち，かつそれは一意的である。
+    \end{proof}
+\end{prop}
 
+\begin{supple}
+    実際には，\equref{ODE_R-定数行列係数常微分方程式}は行列の指数関数を用いることで解を具体的に構成することができる。
+\end{supple}
+
+\begin{prop}[定数係数線型斉次常微分方程式の解の存在と一意性]\proplabel{ODE_R-定数係数線型常微分方程式}
+    $\seq{a_k}{0\leq k\leq n}$（但し，$a_0=1$）, $\seq{b^k}{0\leq k\leq n-1}$をそれぞれ勝手な実定数として，$x\in\R$に関する以下の$n$階線型斉次常微分方程式：
+    \begin{align}
+        \sum_{k=0}^n a_{n-k}\diff[k]{x}{t} &=0,\equlabel{ODE_R-定数係数線型常微分方程式}\\
+        \fun{\diff[k]{x}{t}}{a} &=b^k\quad\pare{1\leq k\leq n-1}\equlabel{ODE_R-定数係数線型常微分方程式-IC}
+    \end{align}
+    について考えると，この常微分方程式は$a$を含む任意の$\R$上の閉区間で唯一の解$x=\fun{x}{t}$を持つ。
+    \begin{policy}
+        高階の常微分方程式は，変数を増やすことで1階の連立常微分方程式に帰着させられることを確かめる。
+    \end{policy}
+    \begin{proof}
+        新たな変数$\seq{q^k}{0\leq k\leq n-1}$を，
+        \begin{equation}
+            q^0\coloneqq x,\
+            q^k\coloneqq \diff{q^{k-1}}{t}\quad\pare{0\leq k\leq n-1}
+        \end{equation}
+        で定めると，
+        \begin{equation}
+            q^k=\diff[k]{x}{t}\quad\pare{0\leq k\leq n-1}
+        \end{equation}
+        であり，\equref{ODE_R-定数係数線型常微分方程式}は，
+        \begin{equation}
+            0=\sum_{k=0}^n a_{n-k}\diff[k]{x}{t}
+            =a_0\diff[n]{x}{t} + \sum_{k=0}^{n-1} a_{n-k}\diff[k]{x}{t}
+            =\diff{q^{n-1}}{t}+\sum_{k=0}^{n-1}a_{n-k}q^k
+        \end{equation}
+        と書けるので，
+        \begin{align}
+            \diff{q^k}{t}&=q^{k+1}\quad\pare{0\leq k\leq n-2},
+            \\
+            \diff{q^{n-1}}{t}&=-\sum_{k=0}^{n-1} a_{n-k} q^k
+        \end{align}
+        という$n$元連立1階線型常微分方程式になる。
+        これをベクトルと行列を用いて書き直すと，
+        \begin{equation}
+            \diff{}{t}
+            \begin{pmatrix}
+                q^0
+                \\
+                q^1
+                \\
+                \vdots
+                \\
+                q^{n-2}
+                \\
+                q^{n-1}
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                0 & 1 &&&
+                \\
+                 & 0 & 1 & &
+                \\
+                 &  & \ddots & \ddots &
+                \\
+                 &  & & 0 & 1
+                \\
+                -a_n & -a_{n-1} & \cdots & \cdots & -a_1
+            \end{pmatrix}
+            \begin{pmatrix}
+                q^0
+                \\
+                q^1
+                \\
+                \vdots
+                \\
+                q^{n-2}
+                \\
+                q^{n-1}
+            \end{pmatrix}
+        \end{equation}
+        となり，
+        \begin{equation}
+            q\coloneqq\begin{pmatrix}
+                q^0
+                \\
+                q^1
+                \\
+                \vdots
+                \\
+                q^{n-2}
+                \\
+                q^{n-1}
+            \end{pmatrix},\quad
+            A\coloneqq\begin{pmatrix}
+                0 & 1 &&&
+                \\
+                 & 0 & 1 & &
+                \\
+                 &  & \ddots & \ddots &
+                \\
+                 &  & & 0 & 1
+                \\
+                -a_n & -a_{n-1} & \cdots & \cdots & -a_1
+            \end{pmatrix}
+        \end{equation}
+        とすることで，
+        \begin{equation}
+            \diff{q}{t}=Aq
+        \end{equation}
+        と書き直せる。
+        また，
+        \equref{ODE_R-定数係数線型常微分方程式-IC}は，
+        \begin{equation}
+            \fun{q^k}{a}=b^k
+        \end{equation}
+        となるから，これをまとめて書けば
+        \begin{equation}
+            \fun{q}{a}=b
+        \end{equation}
+        となる。
+        これにより，\equref{ODE_R-定数係数線型常微分方程式, ODE_R-定数係数線型常微分方程式-IC}は，
+        \begin{equation}
+            \diff{q}{t}=Aq,\
+            \fun{q}{a}=b
+        \end{equation}
+        となるが，これは\equref{ODE_R-定数行列係数常微分方程式}と全く同じ形をしているので\propref{ODE_R-定数行列の解の一意性}の議論に帰着される。
+        特に，$q^0=x$であるから，$q$の第0成分を取り出せば$x=\fun{x}{t}$が得られる。
+    \end{proof}
+\end{prop}
 \end{document}
