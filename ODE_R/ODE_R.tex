@@ -410,7 +410,7 @@ $E$を$\R\times\R^{n}$の部分集合とし，
         である。
         これより，
         \begin{align}
-            \forall m\in\N,\ \norm{y_m}\leq a_m
+            \forall m\in\N,\ \norm{y_m}\leq a_m,
             \\
             \sum_{m=0}^\infty a_m<\infty
         \end{align}
@@ -494,6 +494,10 @@ $E$を$\R\times\R^{n}$の部分集合とし，
         これにより，$f$がLipschitz条件\equref{ODE_R-Lipschitz条件}を満たすとき，\equref{ODE_R-微分方程式}の解は区間$I'$上で一意的に存在する。
     \end{proof}
 \end{thm}
+
+\begin{supple}
+    一意性の証明の部分は，\thmref{ODE_R-Gronwall-Bellmanの不等式}の不等式を用いずに，数学的帰納法によって直接示すこともできる\cite{takano}。
+\end{supple}
 
 \subsection{具体的な常微分方程式の解の存在と一意性}\subseclabel{ODE_R-具体的な常微分方程式の解の存在と一意性}
 \begin{prop}[定数係数斉次連立1階常微分方程式の解の存在と一意性]\proplabel{ODE_R-定数行列の解の一意性}
