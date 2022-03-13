@@ -376,9 +376,9 @@ $2$ノルムはEuclidノルムに一致する。
     \end{equation}
     \begin{proof}
         $\norm{x}=1$のとき，$x$の各成分の絶対値は$1$以下である。
-        このとき，$Ax$の第$j$成分$\pare{Ax}_j$に関して，
+        このとき，$Ax$の第$j$成分$\pare{Ax}^j$に関して，
         \begin{equation}
-            \abs{\pare{Ax}_j}=\abs{\sum_{k=0}^{n-1}a^j_k x^k}
+            \abs{\pare{Ax}^j}=\abs{\sum_{k=0}^{n-1}a^j_k x^k}
             \leq \sum_{k=0}^{n-1}\abs{a^j_k}\abs{x^k}\leq \sum_{k=0}^{n-1}\abs{a^j_k}
         \end{equation}
         となり，1つ目の等号成立は，
@@ -406,7 +406,7 @@ $2$ノルムはEuclidノルムに一致する。
         各$k$について$\abs{x^k}\leq \norm{x}$であるから，
         $Ax$の第$j$成分について，
         \begin{equation}
-            \abs{\pare{Ax}_j}=\abs{\sum_{k=0}^{n-1}a^j_kx^k}
+            \abs{\pare{Ax}^j}=\abs{\sum_{k=0}^{n-1}a^j_kx^k}
             \leq \sum_{k=0}^{n-1} \abs{a^j_k}\abs{x^k}
             \leq \pare{\sum_{k=0}^{n-1}\abs{a^j_k}}\cdot \norm{x}
         \end{equation}
@@ -516,7 +516,7 @@ $2$ノルムはEuclidノルムに一致する。
 \end{defi}
 
 \begin{rem}\remlabel{実ノルム-ベクトルと関数のノルム}
-    \defiref{実ノルム-pノルム, 実ノルム-Lpノルム}及び\egref{実ノルム-一様}, \defiref{実ノルム-Linftyノルム}について，一般には$\norm{f}_p\ne\norm{\fun{f}{x}}$及び$\norm{f}_\infty\ne\norm{\fun{f}{x}}_\infty$であることに注意。
+    \defiref{実ノルム-pノルム, 実ノルム-Lpノルム}及び\egref{実ノルム-一様}, \defiref{実ノルム-Linftyノルム}について，一般には$\norm{f}_p\ne\norm{\fun{f}{x}}_p$及び$\norm{f}_\infty\ne\norm{\fun{f}{x}}_\infty$であることに注意。
     $\norm{f}$は関数のノルムであるが，$\norm{\fun{f}{x}}$は$f$に$x$を入れた$\fun{f}{x}$というベクトルに対するノルムである。
 \end{rem}
 
@@ -735,7 +735,7 @@ $A\subseteq \R^m$とし，$f\colon A\to \R^n$について考える。
 
 \begin{prop}[微分が有界ならLipschitz連続]\proplabel{Lipschitz-微分が有界ならLipschitz連続}
     $a<b$とする。
-    $f\colon [a,b]\to \R^n$は$[a,b]$上で連続，$(a,b)$上で微分可能とし，$(a,b)$上で$\norm{\fun{f'}{t}}$は有限であるとする。
+    $f\colon [a,b]\to \R^n$は$[a,b]$上で連続，$(a,b)$上で微分可能とし，$(a,b)$上で$\norm{\fun{f'}{t}}$は有界であるとする。
     このとき，$f$は$[a,b]$上でLipschitz連続である。
     \begin{proof}
         $f$の$j$成分$f^j$の導関数を$(f^j)'$と記すことにする。
